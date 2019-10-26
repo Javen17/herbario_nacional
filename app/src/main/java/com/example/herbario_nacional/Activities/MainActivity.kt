@@ -1,5 +1,6 @@
 package com.example.herbario_nacional.Activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
@@ -30,7 +31,9 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_profile -> {
-                replaceFragment(ProfileFragment())
+                val intent = Intent(this@MainActivity, NoLoginActivity::class.java)
+                startActivity(intent)
+                finish()
                 return@OnNavigationItemSelectedListener true
             }
         }

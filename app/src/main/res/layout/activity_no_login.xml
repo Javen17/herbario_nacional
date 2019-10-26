@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.NoLoginActivity"
+    android:background="@color/background_color"
+    >
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/close_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="20dp"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        app:icon="@drawable/ic_close"
+        app:iconGravity="textStart"
+        app:iconTint="@color/inactive_color"
+        app:backgroundTint="@color/transparent"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+    />
+
+
+    <TextView
+        android:text="@string/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/brand"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/close_btn"
+        android:textColor="@color/colorPrimary"
+        android:textSize="36sp"
+        android:layout_marginTop="50dp"
+    />
+
+    <TextView
+        android:id="@+id/textLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="@string/attention"
+        android:textAlignment="center"
+        android:textColor="@color/gray"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/brand" />
+
+    <com.google.android.material.button.MaterialButton
+        android:text="@string/register"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/btnRegistro"
+        app:layout_constraintBottom_toTopOf="@id/btnIniciarSesion"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:elevation="0dp"
+        android:stateListAnimator="@null"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+    />
+
+    <com.google.android.material.button.MaterialButton
+        android:text="@string/login"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:id="@+id/btnIniciarSesion"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:strokeColor="@color/colorPrimary"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@id/plantsImage"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+
+    />
+
+    <ImageView
+        android:id="@+id/plantsImage"
+        android:layout_width="445dp"
+        android:layout_height="134dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/specimens"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/plants" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
