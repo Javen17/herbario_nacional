@@ -18,5 +18,7 @@
     <string name="password">Contraseña</string>
 
     <string name="forgotten_password">¿Has olvidado tu contraseña?</string>
+    <string name="reset_your_password">Restablecimiento de contraseña</string>
+    <string name="reset">Restablecer</string>
     <string name="terms">Al crear tu cuenta, aceptas los Términos de Servicio y Políticas de Privacidad</string>
 </resources>

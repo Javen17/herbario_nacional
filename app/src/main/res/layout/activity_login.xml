@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.LoginActivity"
+    android:background="@color/background_color"
     android:focusableInTouchMode="true"
     >
 
@@ -37,8 +38,8 @@
         >
         <com.google.android.material.button.MaterialButton
             android:id="@+id/back_btn"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             app:icon="@drawable/ic_back"
             app:iconGravity="textStart"
@@ -97,7 +98,7 @@
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/gray"
                 />
 
@@ -160,7 +161,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/forgotPassword"
+                android:id="@+id/forgot_password"
                 android:text="@string/forgotten_password"
                 app:layout_constraintTop_toBottomOf="@id/btnLogin"
                 app:layout_constraintLeft_toLeftOf="parent"
