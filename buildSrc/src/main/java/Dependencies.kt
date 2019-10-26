@@ -8,6 +8,7 @@ object Versions {
     const val recyclerviewV = "28.0.0"
     const val cardviewV = "1.0.0"
     const val glideV = "4.10.0"
+    const val material_version = "1.0.0"
 }
 
 object Kotlin{
@@ -17,6 +18,7 @@ object Kotlin{
 
 object Android {
     val recyclerview = "com.android.support:recyclerview-v7:${Versions.recyclerviewV}"
+    val material = "com.google.android.material:material:${Versions.material_version}"
 }
 
 object Androidx{

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Herbario Nacional</string>
+    <string name="specimens">Especímenes</string>
+    <string name="search">Buscar</string>
+    <string name="notifications">Notificaciones</string>
+    <string name="profile">Perfil</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

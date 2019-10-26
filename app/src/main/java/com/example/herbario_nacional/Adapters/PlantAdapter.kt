@@ -1,4 +1,4 @@
-package com.example.herbario_nacional
+package com.example.herbario_nacional.Adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.herbario_nacional.Models.Plant
+import com.example.herbario_nacional.R
 
 class PlantAdapter(var list:ArrayList<Plant>): RecyclerView.Adapter<PlantAdapter.ViewHolder>() {
 
