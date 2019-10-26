@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/specimen_option"
+        android:title="@string/specimen"/>
+
+    <item
+        android:id="@+id/fungus_option"
+        android:title="@string/fungus"/>
+
+</menu>

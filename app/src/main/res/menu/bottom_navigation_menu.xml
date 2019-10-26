@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_specimens"
-        android:icon="@drawable/ic_leaf"
-        android:title="@string/specimens"
+        android:id="@+id/navigation_data_sheet"
+        android:icon="@drawable/ic_data_sheet"
+        android:title="@string/data_sheet"
         />
 
     <item
