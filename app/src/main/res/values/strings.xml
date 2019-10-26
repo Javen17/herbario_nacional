@@ -8,4 +8,15 @@
     <string name="login">Iniciar sesión</string>
     <string name="attention">Inicia sesión para que puedas obtener todas tus fichas técnicas registradas.</string>
 
+    <!-- Datos de Colector -->
+    <!-- hints -->
+    <string name="firstName">Nombre</string>
+    <string name="lastName">Apellido</string>
+    <string name="cellphoneNumber">Teléfono celular</string>
+    <string name="referenceNumber">Número de referencia</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+
+    <string name="forgotten_password">¿Has olvidado tu contraseña?</string>
+    <string name="terms">Al crear tu cuenta, aceptas los Términos de Servicio y Políticas de Privacidad</string>
 </resources>

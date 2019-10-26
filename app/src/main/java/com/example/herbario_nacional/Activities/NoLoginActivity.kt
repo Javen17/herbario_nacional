@@ -17,5 +17,17 @@ class NoLoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        register_btn.setOnClickListener {
+            val intent = Intent (this@NoLoginActivity, RegisterActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        login_btn.setOnClickListener {
+            val intent = Intent (this@NoLoginActivity, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }
