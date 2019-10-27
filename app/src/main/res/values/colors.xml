@@ -8,4 +8,5 @@
     <color name="inactive_color">#C5C8C7</color>
     <color name="gray">#b5b5b5</color>
     <color name="transparent">#00000000</color>
+    <color name="white70">#FFFFFFB3</color>
 </resources>

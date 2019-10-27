@@ -96,7 +96,7 @@
         android:layout_width="445dp"
         android:layout_height="134dp"
         android:adjustViewBounds="true"
-        android:contentDescription="@string/specimens"
+        android:contentDescription="@string/plants"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

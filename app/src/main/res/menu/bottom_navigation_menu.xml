@@ -3,7 +3,7 @@
     <item
         android:id="@+id/navigation_data_sheet"
         android:icon="@drawable/ic_data_sheet"
-        android:title="@string/data_sheet"
+        android:title="@string/specimens"
         />
 
     <item

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Herbario Nacional</string>
-    <string name="data_sheet">Fichas Técnicas</string>
     <string name="specimens">Especímenes</string>
+    <string name="plants">Plantas</string>
     <string name="fungi">Hongos</string>
     <string name="search">Buscar</string>
     <string name="notifications">Notificaciones</string>
