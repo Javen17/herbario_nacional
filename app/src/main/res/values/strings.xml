@@ -16,6 +16,7 @@
     <string name="lastName">Apellido</string>
     <string name="cellphoneNumber">Teléfono celular</string>
     <string name="referenceNumber">Número de referencia</string>
+    <string name="username">Nombre de usuario</string>
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
 

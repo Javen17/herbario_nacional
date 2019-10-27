@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
 import com.example.herbario_nacional.Fragments.NotificationsFragment
 import com.example.herbario_nacional.Fragments.SearchFragment
 import com.example.herbario_nacional.Fragments.DataSheetFragment
@@ -13,6 +14,27 @@ import com.example.herbario_nacional.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
+
+    fun showDataSheetOption(view: View) {
+        val popupMenu = PopupMenu(this, view)
+        popupMenu.setOnMenuItemClickListener(onMenuItemClickListener)
+        popupMenu.inflate(R.menu.data_sheet_options)
+        popupMenu.show()
+    }
+
+    private val onMenuItemClickListener = PopupMenu.OnMenuItemClickListener { item ->
+        when (item.itemId) {
+            R.id.specimen_option -> {
+                println("Especímen")
+                return@OnMenuItemClickListener true
+            }
+            R.id.fungus_option -> {
+                println("Hongo")
+                return@OnMenuItemClickListener true
+            }
+        }
+        false
+    }
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -42,27 +64,6 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransition = supportFragmentManager.beginTransaction()
         fragmentTransition.replace(R.id.fragmentContainer, fragment)
         fragmentTransition.commit()
-    }
-
-    fun showDataSheetOption(view: View) {
-        val popupMenu = PopupMenu(this, view)
-        popupMenu.setOnMenuItemClickListener(onMenuItemClickListener)
-        popupMenu.inflate(R.menu.data_sheet_options)
-        popupMenu.show()
-    }
-
-    private val onMenuItemClickListener = PopupMenu.OnMenuItemClickListener { item ->
-        when (item.itemId) {
-            R.id.specimen_option -> {
-                println("Especímen")
-                return@OnMenuItemClickListener true
-            }
-            R.id.fungus_option -> {
-                println("Hongo")
-                return@OnMenuItemClickListener true
-            }
-        }
-        false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
