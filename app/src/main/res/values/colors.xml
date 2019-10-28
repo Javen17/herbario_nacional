@@ -6,7 +6,7 @@
     <color name="white">#FFFFFF</color>
     <color name="background_color">#FBFFF8</color>
     <color name="inactive_color">#C5C8C7</color>
-    <color name="gray">#b5b5b5</color>
+    <color name="gray">#a8a8a8</color>
     <color name="transparent">#00000000</color>
     <color name="white70">#FFFFFFB3</color>
 </resources>

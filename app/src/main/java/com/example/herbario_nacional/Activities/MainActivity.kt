@@ -24,12 +24,16 @@ class MainActivity : AppCompatActivity() {
 
     private val onMenuItemClickListener = PopupMenu.OnMenuItemClickListener { item ->
         when (item.itemId) {
-            R.id.specimen_option -> {
-                println("Especímen")
+            R.id.plant_option -> {
+                val intent = Intent(this@MainActivity, NewPlantActivity::class.java)
+                startActivity(intent)
+                finish()
                 return@OnMenuItemClickListener true
             }
             R.id.fungus_option -> {
-                println("Hongo")
+                val intent = Intent(this@MainActivity, NewPlantActivity::class.java)
+                startActivity(intent)
+                finish()
                 return@OnMenuItemClickListener true
             }
         }

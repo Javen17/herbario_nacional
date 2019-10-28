@@ -9,14 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.ForgottenPasswordActivity"></activity>
+        <activity android:name=".Activities.NewFungusActivity"></activity>
+        <activity android:name=".Activities.ForgottenPasswordActivity" />
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.RegisterActivity" />
         <activity
             android:name=".Activities.NoLoginActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.NewSpecimenActivity" />
+        <activity android:name=".Activities.NewPlantActivity" />
         <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

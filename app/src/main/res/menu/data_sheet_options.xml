@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/specimen_option"
-        android:title="@string/specimen"/>
+        android:id="@+id/plant_option"
+        android:title="@string/plant"/>
 
     <item
         android:id="@+id/fungus_option"

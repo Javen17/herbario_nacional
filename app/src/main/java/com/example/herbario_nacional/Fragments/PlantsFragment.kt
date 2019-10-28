@@ -1,7 +1,6 @@
 package com.example.herbario_nacional.Fragments
 
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,14 +16,14 @@ import com.example.herbario_nacional.R
 /**
  * A simple [Fragment] subclass.
  */
-class SpecimensFragment : Fragment() {
+class PlantsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_specimens, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_plants, container, false)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.plant_specimen_list)
 
