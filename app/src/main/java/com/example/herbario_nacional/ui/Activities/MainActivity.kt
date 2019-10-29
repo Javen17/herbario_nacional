@@ -1,4 +1,4 @@
-package com.example.herbario_nacional.Activities
+package com.example.herbario_nacional.ui.Activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,10 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
-import com.example.herbario_nacional.Fragments.NotificationsFragment
-import com.example.herbario_nacional.Fragments.SearchFragment
-import com.example.herbario_nacional.Fragments.DataSheetFragment
+import com.example.herbario_nacional.ui.Fragments.NotificationsFragment
+import com.example.herbario_nacional.ui.Fragments.SearchFragment
+import com.example.herbario_nacional.ui.Fragments.DataSheetFragment
 import com.example.herbario_nacional.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

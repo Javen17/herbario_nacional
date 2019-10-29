@@ -1,4 +1,4 @@
-package com.example.herbario_nacional.Activities
+package com.example.herbario_nacional.ui.Activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

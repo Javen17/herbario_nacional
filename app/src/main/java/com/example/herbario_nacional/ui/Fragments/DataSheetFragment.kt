@@ -1,4 +1,4 @@
-package com.example.herbario_nacional.Fragments
+package com.example.herbario_nacional.ui.Fragments
 
 
 import android.os.Bundle
@@ -10,9 +10,7 @@ import androidx.viewpager.widget.ViewPager
 import com.example.herbario_nacional.Adapters.PagerAdapter
 
 import com.example.herbario_nacional.R
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.fragment_data_sheet.*
 
 class DataSheetFragment : Fragment() {
 

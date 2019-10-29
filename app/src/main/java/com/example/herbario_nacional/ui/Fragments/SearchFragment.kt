@@ -1,4 +1,4 @@
-package com.example.herbario_nacional.Fragments
+package com.example.herbario_nacional.ui.Fragments
 
 
 import android.os.Bundle
@@ -12,15 +12,13 @@ import com.example.herbario_nacional.R
 /**
  * A simple [Fragment] subclass.
  */
-class ProfileFragment : Fragment() {
+class SearchFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        return inflater.inflate(R.layout.fragment_search, container, false)
     }
-
-
 }

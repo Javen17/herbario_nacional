@@ -3,8 +3,8 @@ package com.example.herbario_nacional.Adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.herbario_nacional.Fragments.FungiFragment
-import com.example.herbario_nacional.Fragments.PlantsFragment
+import com.example.herbario_nacional.ui.Fragments.FungiFragment
+import com.example.herbario_nacional.ui.Fragments.PlantsFragment
 
 class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 

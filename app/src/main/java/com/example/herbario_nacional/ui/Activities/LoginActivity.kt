@@ -1,11 +1,10 @@
-package com.example.herbario_nacional.Activities
+package com.example.herbario_nacional.ui.Activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.herbario_nacional.R
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_register.back_btn
 
 class LoginActivity : AppCompatActivity() {

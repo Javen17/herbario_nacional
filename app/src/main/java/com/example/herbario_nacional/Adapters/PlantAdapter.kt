@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.herbario_nacional.Models.Plant
 import com.example.herbario_nacional.R
 
@@ -33,7 +32,7 @@ class PlantAdapter(var list:ArrayList<Plant>): RecyclerView.Adapter<PlantAdapter
             val thumbnail: ImageView = itemView.findViewById(R.id.plant_image)
 
             title.text = data.name
-            Glide.with(itemView.context).load(data.image).into(thumbnail)
+            //Glide.with(itemView.context).load(data.image).into(thumbnail)
 
             itemView.setOnClickListener {
                 Toast.makeText(itemView.context, "${data.name}", Toast.LENGTH_SHORT).show()

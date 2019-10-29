@@ -1,4 +1,4 @@
-package com.example.herbario_nacional.Fragments
+package com.example.herbario_nacional.ui.Fragments
 
 
 import android.os.Bundle
