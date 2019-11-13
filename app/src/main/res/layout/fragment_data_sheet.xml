@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.DataSheetFragment"
+    android:background="@color/background_color"
     >
 
     <com.google.android.material.appbar.AppBarLayout

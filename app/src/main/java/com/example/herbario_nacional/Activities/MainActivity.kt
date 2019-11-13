@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
 import com.example.herbario_nacional.Fragments.NotificationsFragment
 import com.example.herbario_nacional.Fragments.SearchFragment
 import com.example.herbario_nacional.Fragments.DataSheetFragment

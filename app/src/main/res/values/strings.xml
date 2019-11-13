@@ -29,6 +29,25 @@
     <string name="plant">Planta</string>
     <string name="fungus">Hongo</string>
 
+    <!-- Plant -->
+    <string name="number_specimens">Número de ejemplares</string>
+    <string name="common_name">Nombre común</string>
+    <string name="family">Familia</string>
+    <string name="genus">Género</string>
+    <string name="specimen_description">Descripción del espécimen</string>
+    <string name="location_data">Datos de Ubicación</string>
+    <string name="specimen_data">Datos de Espécimen</string>
+    <string name="habitat_data">Datos de Hábitat</string>
+
+    <!-- Location -->
+    <string name="state">Estado/Provincia/Condado</string>
+    <string name="city">Ciudad</string>
+    <string name="specific_collection_area">Área de recolección específica</string>
+    
+    <!-- Buttons -->
+    <string name="cancel">Cancelar</string>
+    <string name="registerSpecimen">Registrar</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

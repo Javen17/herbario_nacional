@@ -49,6 +49,42 @@ class PlantsFragment : Fragment() {
                 R.drawable.plant3
             )
         )
+        plants.add(
+            Plant(
+                "Girasol",
+                R.drawable.plant1
+            )
+        )
+        plants.add(
+            Plant(
+                "Trompeta China Trepadora",
+                R.drawable.plant2
+            )
+        )
+        plants.add(
+            Plant(
+                "Galio Blanco",
+                R.drawable.plant3
+            )
+        )
+        plants.add(
+            Plant(
+                "Girasol",
+                R.drawable.plant1
+            )
+        )
+        plants.add(
+            Plant(
+                "Trompeta China Trepadora",
+                R.drawable.plant2
+            )
+        )
+        plants.add(
+            Plant(
+                "Galio Blanco",
+                R.drawable.plant3
+            )
+        )
 
         val adapter = PlantAdapter(plants)
 
