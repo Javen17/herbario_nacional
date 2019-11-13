@@ -18,8 +18,8 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/add_a_photo"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         app:layout_anchorGravity="center|center_vertical"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_add_a_photo"

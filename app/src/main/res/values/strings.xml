@@ -30,7 +30,7 @@
     <string name="fungus">Hongo</string>
 
     <!-- Plant -->
-    <string name="number_specimens">Número de ejemplares</string>
+    <string name="number_specimens">Número de ejemplares colectados</string>
     <string name="common_name">Nombre común</string>
     <string name="family">Familia</string>
     <string name="genus">Género</string>
@@ -38,6 +38,11 @@
     <string name="location_data">Datos de Ubicación</string>
     <string name="specimen_data">Datos de Espécimen</string>
     <string name="habitat_data">Datos de Hábitat</string>
+
+    <!-- Fungi -->
+    <string name="color">Color</string>
+    <string name="change_of_color">Cambios de color</string>
+    <string name="smell">Olor</string>
 
     <!-- Location -->
     <string name="state">Estado/Provincia/Condado</string>
