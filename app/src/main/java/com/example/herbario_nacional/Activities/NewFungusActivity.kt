@@ -27,8 +27,8 @@ class NewFungusActivity : AppCompatActivity() {
             showDialog()
         }
 
-        val newPlant: ConstraintLayout = findViewById(R.id.new_fungus)
-        val bottomSheetBehavior = BottomSheetBehavior.from(newPlant)
+        val newFungus: ConstraintLayout = findViewById(R.id.new_fungus)
+        val bottomSheetBehavior = BottomSheetBehavior.from(newFungus)
 
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }

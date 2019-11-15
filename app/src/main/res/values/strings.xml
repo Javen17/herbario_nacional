@@ -45,6 +45,9 @@
     <string name="smell">Olor</string>
 
     <!-- Location -->
+    <string name="coordinates">Coordenadas</string>
+    <string name="latitude">Latitud</string>
+    <string name="longitude">Longitud</string>
     <string name="state">Estado/Provincia/Condado</string>
     <string name="city">Ciudad</string>
     <string name="specific_collection_area">Área de recolección específica</string>

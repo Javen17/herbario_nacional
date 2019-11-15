@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
-    android:id="@+id/new_fungus"
+    app:layout_behavior="@string/bottom_sheet_behavior"
 >
 
     <ImageView
@@ -14,7 +14,7 @@
         android:layout_height="220dp"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/plants"
+        android:contentDescription="@string/fungus"
         android:background="@color/colorPrimary"
     />
 

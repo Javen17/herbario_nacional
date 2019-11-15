@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
                 return@OnMenuItemClickListener true
             }
             R.id.fungus_option -> {
-                val intent = Intent(this@MainActivity, NewPlantActivity::class.java)
+                val intent = Intent(this@MainActivity, NewFungusActivity::class.java)
                 startActivity(intent)
                 finish()
                 return@OnMenuItemClickListener true

@@ -7,7 +7,7 @@
     android:background="@color/background_color"
     android:focusableInTouchMode="true"
     app:layout_behavior="@string/bottom_sheet_behavior"
-    android:id="@+id/new_plant"
+    android:id="@+id/new_fungus"
     >
 
     <ScrollView
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/smell"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@+id/colorTextInputLayout"
+                app:layout_constraintTop_toBottomOf="@+id/changeOfColorTextInputLayout"
                 android:layout_margin="20dp"
                 >
 
@@ -319,10 +319,64 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/habitat_data"
+                android:id="@+id/coordinates"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/specificCollectionAreaTextInputLayout"
+                android:paddingTop="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/coordinates"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+            />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/latitudeTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/latitude"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/coordinates"
+                android:layout_margin="20dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/latitudeInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="text"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/longitudeTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/longitude"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/latitudeTextInputLayout"
+                android:layout_margin="20dp"
+            >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/longitudeInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="text"
+                />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/habitat_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/longitudeTextInputLayout"
                 android:paddingTop="20dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
