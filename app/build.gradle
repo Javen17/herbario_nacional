@@ -10,7 +10,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        buildConfigField "String", "HERBARIO_URL", "\"http://localhost\""
+        buildConfigField "String", "HERBARIO_URL", "\"https://django-acacia.herokuapp.com\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

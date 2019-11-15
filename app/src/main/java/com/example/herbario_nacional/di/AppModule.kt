@@ -24,4 +24,4 @@ val appModule = module {
     }
 }
 
-val allAppModules = listOf(appModule, remoteDataSourceModule, coilModule, roomModule)
+val allAppModules = listOf(appModule, remoteDataSourceModule, coilModule)

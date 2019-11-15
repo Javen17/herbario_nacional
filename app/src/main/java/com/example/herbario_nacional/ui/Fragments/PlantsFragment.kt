@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.herbario_nacional.Adapters.PlantAdapter
-import com.example.herbario_nacional.Models.Plant
+import com.example.herbario_nacional.models.Plant
 
 import com.example.herbario_nacional.R
 
