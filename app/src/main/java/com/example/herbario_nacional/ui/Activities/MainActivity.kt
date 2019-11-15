@@ -5,14 +5,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.example.herbario_nacional.ui.Fragments.NotificationsFragment
 import com.example.herbario_nacional.ui.Fragments.SearchFragment
 import com.example.herbario_nacional.ui.Fragments.DataSheetFragment
 import com.example.herbario_nacional.R
+import com.example.herbario_nacional.ui.viewModels.CredentialsViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
+
+    private val credentialsViewModel: CredentialsViewModel by viewModel()
 
     fun showDataSheetOption(view: View) {
         val popupMenu = PopupMenu(this, view)
@@ -72,6 +78,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        credentialsViewModel.uiState.observe(this, Observer {
+            val dataState = it ?: return@Observer
+            if (dataState.sessionToken != null && !dataState.sessionToken.consumed){
+                dataState.sessionToken.consume()?.let {
+                }
+            }
+            if (dataState.error != null && !dataState.error.consumed){
+                dataState.error.consume()?.let { error ->
+                    Toast.makeText(this, resources.getString(error), Toast.LENGTH_LONG).show()
+                }
+            }
+        })
 
         // Fragment por defecto
         replaceFragment(DataSheetFragment())

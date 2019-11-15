@@ -1,4 +1,4 @@
-package ni.abril.azb.megaboicotapp.preferences
+package com.example.herbario_nacional.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,12 +10,25 @@ class AppPreferences{
     private var mBulkUpdate = false
 
     enum class Key {
-        token_refresh, token_access, token_permanent
+        token_refresh, token_access, token_permanent, cookies
     }
 
     init {
         mPref = BaseApplication.context.getSharedPreferences(SETTINGS_NAME, Context.MODE_PRIVATE)
     }
+
+    /*
+    val cookies = PreferenceManager.getDefaultSharedPreferences(context).getStringSet("PREF_COOKIES", HashSet()) as HashSet<String>
+            cookies.clear()
+
+            for (header in originalResponse.headers("Set-Cookie")) {
+                cookies.add(header)
+            }
+
+            val memes = PreferenceManager.getDefaultSharedPreferences(context).edit()
+            memes.putStringSet("PREF_COOKIES", cookies).apply()
+            memes.commit()
+     */
 
     fun put(key: Key, `val`: Any) {
         doEdit()
@@ -26,6 +39,13 @@ class AppPreferences{
             is Boolean -> mEditor!!.putBoolean(key.name, `val`)
             is Float -> mEditor!!.putFloat(key.name, `val`)
             is Long -> mEditor!!.putLong(key.name, `val`)
+            is HashSet<*> -> {
+                val hashSet: HashSet<String> = hashSetOf()
+                `val`.forEach {
+                    hashSet.add(it as String)
+                }
+                mEditor!!.putStringSet(key.name, hashSet)
+            }
             else -> throw IllegalArgumentException("The PreferenceManager can't obtain value outside the expected range.")
         }
         doCommit()
@@ -39,6 +59,7 @@ class AppPreferences{
             is Boolean -> mPref.getBoolean(key.name, defaultValue)
             is Float -> mPref.getFloat(key.name, defaultValue)
             is Long -> mPref.getLong(key.name, defaultValue)
+            is HashSet<*> -> mPref.getStringSet(key.name, HashSet()) as HashSet<*>
             else -> throw IllegalArgumentException("The PreferenceManager can't obtain value outside the expected range.")
         }
     }

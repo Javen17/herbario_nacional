@@ -2,7 +2,7 @@ package com.example.herbario_nacional.base
 
 import android.app.Application
 import com.example.herbario_nacional.BuildConfig
-import ni.abril.azb.megaboicotapp.di.allAppModules
+import com.example.herbario_nacional.di.allAppModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

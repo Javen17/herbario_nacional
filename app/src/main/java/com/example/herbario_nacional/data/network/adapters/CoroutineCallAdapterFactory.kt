@@ -1,4 +1,4 @@
-package ni.abril.azb.megaboicotapp.data.network.adapters
+package com.example.herbario_nacional.data.network.adapters
 
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type

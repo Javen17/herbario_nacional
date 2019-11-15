@@ -1,73 +1,47 @@
-package ni.abril.azb.megaboicotapp.data.network.headerInterceptor
+package com.example.herbario_nacional.data.network.headerInterceptor
 
-import ni.abril.azb.megaboicotapp.preferences.AppPreferences
+import com.example.herbario_nacional.preferences.AppPreferences
 import okhttp3.Interceptor
 import okhttp3.Response
 
 class HeaderInterceptor(var refreshToken: String, var permanentToken: String, var accessToken: String) : Interceptor {
     companion object ApiConstants{
-        const val SET_SESSION = "/api/setSession"
-        const val GET_DEPARTMENTS_WITH_BUSINESS = "/secured/obtainDepartmentsWithBusiness"
+        const val LOGIN = "/api/login/"
+        const val PERMANENT_LOGIN = "/api/permanent_login/"
         const val GET_DEPARTMENTS = "/secured/obtainAllDepartments"
         const val GET_BUSINESS = "/secured/obtainAllBusiness"
         const val SEARCH_BUSINESS = "/secured/searchBusiness"
-        const val PLATFORM = "M0b1l3"
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
+        val cookies = AppPreferences().get(AppPreferences.Key.cookies, HashSet<String>()) as HashSet<*>
+        println(cookies)
         when (request.url().url().path) {
-            SET_SESSION -> {
+            LOGIN -> {
                 request = request
                     .newBuilder()
                     .addHeader("Content-Type", "application/json")
-                    .addHeader("platform", PLATFORM)
-                    .addHeader("platformImei", "517449654288856")
                     .build()
             }
-            GET_DEPARTMENTS -> {
+            PERMANENT_LOGIN -> {
                 request = request
                     .newBuilder()
-                    .addHeader("Authorization", authToken)
                     .addHeader("Content-Type", "application/json")
-                    .addHeader("platform", PLATFORM)
-                    .addHeader("platformImei", "517449654288856")
-                    .addHeader("Cookie", AppPreferences().get(
-                        AppPreferences.Key.mega_token, "") as String)
-                    .build()
-            }
-
-            GET_DEPARTMENTS_WITH_BUSINESS -> {
-                request = request
-                    .newBuilder()
-                    .addHeader("Authorization", authToken)
-                    .addHeader("Content-Type", "application/json")
-                    .addHeader("platform", PLATFORM)
-                    .addHeader("platformImei", "517449654288856")
-                    .addHeader("Cookie", AppPreferences().get(
-                        AppPreferences.Key.mega_token, "") as String)
                     .build()
             }
             GET_BUSINESS -> {
                 request = request
                     .newBuilder()
-                    .addHeader("Authorization", authToken)
                     .addHeader("Content-Type", "application/json")
-                    .addHeader("platform", PLATFORM)
-                    .addHeader("platformImei", "517449654288856")
-                    .addHeader("Cookie", AppPreferences().get(
-                        AppPreferences.Key.mega_token, "") as String)
+                    //.addHeader("Cookie", AppPreferences().get(AppPreferences.Key.mega_token, "") as String)
                     .build()
             }
             SEARCH_BUSINESS -> {
                 request = request
                     .newBuilder()
-                    .addHeader("Authorization", authToken)
                     .addHeader("Content-Type", "application/json")
-                    .addHeader("platform", PLATFORM)
-                    .addHeader("platformImei", "517449654288856")
-                    .addHeader("Cookie", AppPreferences().get(
-                        AppPreferences.Key.mega_token, "") as String)
+                    //.addHeader("Cookie", AppPreferences().get(AppPreferences.Key.mega_token, "") as String)
                     .build()
             }
             else -> {

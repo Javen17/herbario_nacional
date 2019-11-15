@@ -1,6 +1,6 @@
-package ni.abril.azb.megaboicotapp.data.network.cookiesInterceptor
+package com.example.herbario_nacional.data.network.cookiesInterceptor
 
-import ni.abril.azb.megaboicotapp.preferences.AppPreferences
+import com.example.herbario_nacional.preferences.AppPreferences
 import okhttp3.Interceptor
 import okhttp3.Response
 

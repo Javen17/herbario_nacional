@@ -1,11 +1,10 @@
-package ni.abril.azb.megaboicotapp.data.network
+package com.example.herbario_nacional.data.network
 
 import com.example.herbario_nacional.BuildConfig
 import com.example.herbario_nacional.data.network.`interface`.CredentialsInterface
-import ni.abril.azb.megaboicotapp.data.network.adapters.CoroutineCallAdapterFactory
-import ni.abril.azb.megaboicotapp.data.network.cookiesInterceptor.ReceivedCookieInterceptor
-import ni.abril.azb.megaboicotapp.data.network.headerInterceptor.HeaderInterceptor
-import ni.abril.azb.megaboicotapp.preferences.AppPreferences
+import com.example.herbario_nacional.data.network.adapters.CoroutineCallAdapterFactory
+import com.example.herbario_nacional.data.network.cookiesInterceptor.ReceivedCookieInterceptor
+import com.example.herbario_nacional.data.network.headerInterceptor.HeaderInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module

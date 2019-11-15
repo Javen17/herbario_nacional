@@ -9,6 +9,7 @@
     <string name="register">Regístrate</string>
     <string name="login">Iniciar sesión</string>
     <string name="attention">Inicia sesión para que puedas registrar y visualizar todas tus fichas técnicas.</string>
+    <string name="internet_connection_error">Problemas en conexión al Internet</string>
 
     <!-- Datos de Colector -->
     <!-- hints -->

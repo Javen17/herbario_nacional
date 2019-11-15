@@ -1,26 +1,18 @@
-package ni.abril.azb.megaboicotapp.di
+package com.example.herbario_nacional.di
 
-import ni.abril.azb.megaboicotapp.data.network.remoteDataSourceModule
-import ni.abril.azb.megaboicotapp.repo.BusinessRepository
-import ni.abril.azb.megaboicotapp.repo.BusinessRepositoryImpl
-import ni.abril.azb.megaboicotapp.repo.SessionTokenRepository
-import ni.abril.azb.megaboicotapp.repo.SessionTokenRepositoryImpl
-import ni.abril.azb.megaboicotapp.ui.BusinessViewModel
-import ni.abril.azb.megaboicotapp.ui.SessionTokenViewModel
+import com.example.herbario_nacional.data.network.remoteDataSourceModule
+import com.example.herbario_nacional.repo.CredentialsRepository
+import com.example.herbario_nacional.repo.CredentialsRepositoryImpl
+import com.example.herbario_nacional.ui.viewModels.CredentialsViewModel
+import ni.abril.azb.megaboicotapp.di.coilModule
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
+    viewModel { CredentialsViewModel(get()) }
 
-    viewModel { SessionTokenViewModel(get()) }
-    viewModel { BusinessViewModel(get()) }
-
-    single<SessionTokenRepository> {
-        SessionTokenRepositoryImpl(get())
-    }
-
-    single<BusinessRepository> {
-        BusinessRepositoryImpl(get())
+    single<CredentialsRepository> {
+        CredentialsRepositoryImpl(get())
     }
 }
 
