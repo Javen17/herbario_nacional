@@ -13,18 +13,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 val remoteDataSourceModule = module {
-    single { (refreshToken: String, permanentToken: String, accessToken: String) -> createOkHttpClient(refreshToken, permanentToken, accessToken) }
+    single { createOkHttpClient() }
     single { createWebService<CredentialsInterface>(get(), BuildConfig.HERBARIO_URL) }
 }
 
-fun createOkHttpClient(refreshToken: String, permanentToken: String, accessToken: String): OkHttpClient {
-    return getOkHttpClient(refreshToken, permanentToken, accessToken)
+fun createOkHttpClient(): OkHttpClient {
+    return getOkHttpClient()
 }
 
-fun getOkHttpClient(refreshToken: String, permanentToken: String, accessToken: String): OkHttpClient{
+fun getOkHttpClient(): OkHttpClient{
     return OkHttpClient
         .Builder()
-        .addInterceptor(HeaderInterceptor(refreshToken, permanentToken, accessToken))
+        .addInterceptor(HeaderInterceptor())
         .apply {
             addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY

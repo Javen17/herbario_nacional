@@ -4,7 +4,7 @@ import com.example.herbario_nacional.preferences.AppPreferences
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class HeaderInterceptor(var refreshToken: String, var permanentToken: String, var accessToken: String) : Interceptor {
+class HeaderInterceptor : Interceptor {
     companion object ApiConstants{
         const val LOGIN = "/api/login/"
         const val PERMANENT_LOGIN = "/api/permanent_login/"
