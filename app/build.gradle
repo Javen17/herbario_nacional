@@ -45,33 +45,49 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Kotlin.kotlin
-    implementation Libs.appcompat
-    implementation Libs.androidXcore
-    implementation Libs.constraintlayout
+    implementation AndroidX.appcompat
+    implementation AndroidX.androidXcore
+    implementation AndroidX.constraintlayout
+    implementation AndroidX.annotations
+    implementation AndroidX.swipeRefresh
     implementation Retrofit.retrofit
     implementation Retrofit.retrofitConverter
-    implementation Libs.okHttp
+    implementation Retrofit.okHttp
     implementation Libs.timber
     implementation Libs.vault
     implementation Libs.rootBeer
-    implementation Libs.lifecycleViewmodel
-    implementation Libs.lifecycleViewmodelKtx
+    implementation Libs.typeface
+    implementation Libs.iconicTypeface
+    implementation Libs.fontawesomeTypeface
+    implementation Libs.searchBar
+    implementation Libs.lottie
+    implementation AndroidX.lifecycleViewmodel
+    implementation AndroidX.lifecycleViewmodelKtx
+    implementation AndroidX.viewPager2
 
     implementation Coil.coil
     implementation Coil.gif
     implementation Coil.transformation
     implementation Coil.transformationGpu
 
-    implementation Koin.architecture
+    implementation Koin.core
     implementation Koin.android
+    implementation Koin.scope
     implementation Koin.viewModel
-    kapt Libs.databinding
+    implementation Koin.extension
+    kapt Databinding.databinding
 
     implementation Coroutines.coroutine
     implementation Coroutines.coroutineAdapter
 
     implementation GoogleLibs.gson
     implementation GoogleLibs.material
+
+    implementation Navigation.materialDrawer
+    implementation Navigation.materialDrawerNavigation
+    implementation Navigation.runtime
+    implementation Navigation.fragment
+    implementation Navigation.ui
 
     implementation Libs.skeleton
 

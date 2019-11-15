@@ -2,6 +2,7 @@ package com.example.herbario_nacional.data.network.headerInterceptor
 
 import com.example.herbario_nacional.preferences.AppPreferences
 import okhttp3.Interceptor
+import okhttp3.Request
 import okhttp3.Response
 
 class HeaderInterceptor : Interceptor {
@@ -13,44 +14,43 @@ class HeaderInterceptor : Interceptor {
         const val SEARCH_BUSINESS = "/secured/searchBusiness"
     }
 
+
+    private fun setupCookies(){
+        val cookies = AppPreferences().get(AppPreferences.Key.cookies, HashSet<String>()) as HashSet<*>
+        cookies.forEach {
+            requestBuilder.addHeader("Cookie", it as String)
+        }
+    }
+
+    private lateinit var requestBuilder: Request.Builder
+
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
-        val cookies = AppPreferences().get(AppPreferences.Key.cookies, HashSet<String>()) as HashSet<*>
-        println(cookies)
+        requestBuilder = request.newBuilder()
         when (request.url().url().path) {
             LOGIN -> {
-                request = request
-                    .newBuilder()
+                requestBuilder
                     .addHeader("Content-Type", "application/json")
-                    .build()
             }
             PERMANENT_LOGIN -> {
-                request = request
-                    .newBuilder()
+                requestBuilder
                     .addHeader("Content-Type", "application/json")
-                    .build()
             }
             GET_BUSINESS -> {
-                request = request
-                    .newBuilder()
+                requestBuilder
                     .addHeader("Content-Type", "application/json")
-                    //.addHeader("Cookie", AppPreferences().get(AppPreferences.Key.mega_token, "") as String)
-                    .build()
             }
             SEARCH_BUSINESS -> {
-                request = request
-                    .newBuilder()
+                requestBuilder
                     .addHeader("Content-Type", "application/json")
-                    //.addHeader("Cookie", AppPreferences().get(AppPreferences.Key.mega_token, "") as String)
-                    .build()
             }
             else -> {
-                request = request
-                    .newBuilder()
+                requestBuilder
                     .addHeader("Content-Type", "application/json")
-                    .build()
             }
         }
+        setupCookies()
+        request = requestBuilder.build()
         return chain.proceed(request)
     }
 }
