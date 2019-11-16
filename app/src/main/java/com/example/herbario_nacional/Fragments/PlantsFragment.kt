@@ -52,37 +52,37 @@ class PlantsFragment : Fragment() {
         plants.add(
             Plant(
                 "Girasol",
-                R.drawable.plant1
+                R.drawable.plant4
             )
         )
         plants.add(
             Plant(
                 "Trompeta China Trepadora",
-                R.drawable.plant2
+                R.drawable.plant5
             )
         )
         plants.add(
             Plant(
                 "Galio Blanco",
-                R.drawable.plant3
+                R.drawable.plant6
             )
         )
         plants.add(
             Plant(
                 "Girasol",
-                R.drawable.plant1
+                R.drawable.plant7
             )
         )
         plants.add(
             Plant(
                 "Trompeta China Trepadora",
-                R.drawable.plant2
+                R.drawable.plant8
             )
         )
         plants.add(
             Plant(
                 "Galio Blanco",
-                R.drawable.plant3
+                R.drawable.plant9
             )
         )
 

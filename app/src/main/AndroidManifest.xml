@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.NewFungusActivity"></activity>
+        <activity android:name=".Activities.DataSheetInformation"></activity>
+        <activity android:name=".Activities.NewFungusActivity" />
         <activity android:name=".Activities.ForgottenPasswordActivity" />
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.RegisterActivity" />

@@ -29,7 +29,7 @@ class PlantAdapter(var list:ArrayList<Plant>): RecyclerView.Adapter<PlantAdapter
 
     class ViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
         fun bindItems(data: Plant) {
-            val title: TextView = itemView.findViewById(R.id.plant_info)
+            val title: TextView = itemView.findViewById(R.id.commonName)
             val thumbnail: ImageView = itemView.findViewById(R.id.plant_image)
 
             title.text = data.name

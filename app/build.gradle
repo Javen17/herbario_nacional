@@ -39,6 +39,7 @@ dependencies {
     implementation Github.glide
     annotationProcessor Github.glideCompiler
     implementation Android.material
+    implementation Github.circularImageView
 }
 
 configurations.all {

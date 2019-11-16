@@ -9,6 +9,7 @@ object Versions {
     const val cardviewV = "1.0.0"
     const val glideV = "4.10.0"
     const val material_version = "1.0.0"
+    const val circularImageView_version = "3.0.1"
 }
 
 object Kotlin{
@@ -37,4 +38,5 @@ object TestLibs {
 object Github {
     val glide = "com.github.bumptech.glide:glide:${Versions.glideV}"
     val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glideV}"
+    val circularImageView = "de.hdodenhof:circleimageview:${Versions.circularImageView_version}"
 }
