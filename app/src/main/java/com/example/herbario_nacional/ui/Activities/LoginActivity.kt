@@ -1,18 +1,16 @@
 package com.example.herbario_nacional.ui.Activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.ui.viewModels.CredentialsViewModel
-import com.example.herbario_nacional.util.StatusCode
 import com.example.herbario_nacional.util.traveseAnyInput
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.back_btn
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import retrofit2.HttpException
 
 class LoginActivity : AppCompatActivity() {
 
@@ -41,17 +39,7 @@ class LoginActivity : AppCompatActivity() {
             }
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
-                    when(error){
-                        is HttpException -> {
-                            when(StatusCode(error.code()).description){
-                                StatusCode.Status.Unauthorized -> Toast.makeText(applicationContext, getString(R.string.unauthorized), Toast.LENGTH_LONG).show()
-                                else -> {}
-                            }
-                        }
-                        else -> {
-                            Toast.makeText(this, resources.getString(R.string.internet_connection_error), Toast.LENGTH_LONG).show()
-                        }
-                    }
+                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
                 }
             }
         })
