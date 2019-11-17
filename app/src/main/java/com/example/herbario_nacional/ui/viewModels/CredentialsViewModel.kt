@@ -7,51 +7,38 @@ import androidx.lifecycle.viewModelScope
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.data.network.Retry
 import com.example.herbario_nacional.models.Credentials
+import com.example.herbario_nacional.models.Status
 import com.example.herbario_nacional.preferences.AppPreferences
 import com.example.herbario_nacional.repo.CredentialsRepository
 import com.example.herbario_nacional.ui.Event
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 class CredentialsViewModel (private val credentialsRepository: CredentialsRepository): ViewModel() {
 
     private val _uiState = MutableLiveData<CredentialsDataState>()
     val uiState: LiveData<CredentialsDataState> get() = _uiState
 
-    init {
-//        viewModelScope.launch {
-//            Retry().retryIO(times = 3){
-//                runCatching {
-//                    emitUiState(showProgress = true)
-//                    credentialsRepository.getLogin(Credentials("admin","admin"))
-//                }.onSuccess {
-//                    emitUiState(sessionToken = Event(it))
-//                }.onFailure {
-//                    emitUiState(error = Event(R.string.internet_connection_error))
-//                }
-//            }
-//        }
-    }
-
     fun requestLogin(username: String, password: String){
         viewModelScope.launch {
-            Retry().retryIO(times = 3){ 
+            Retry().retryIO(times = 3){
                 runCatching {
                     emitUiState(showProgress = true)
                     credentialsRepository.getLogin(Credentials(password,username))
                 }.onSuccess {
-                    emitUiState(sessionToken = Event(it))
+                    emitUiState(status = Event(it))
                 }.onFailure {
-                    emitUiState(error = Event(R.string.internet_connection_error))
+                    emitUiState(error = Event(it))
                 }
             }
         }
     }
 
-    private fun emitUiState(showProgress: Boolean = false, sessionToken: Event<Void>? = null, error: Event<Int>? = null){
-        val dataState = CredentialsDataState(showProgress, sessionToken, error)
+    private fun emitUiState(showProgress: Boolean = false, status: Event<Status>? = null, error: Event<Throwable>? = null){
+        val dataState = CredentialsDataState(showProgress, status, error)
         _uiState.value = dataState
     }
 
-    data class CredentialsDataState(val showProgress: Boolean, val sessionToken: Event<Void>?, val error: Event<Int>?)
+    data class CredentialsDataState(val showProgress: Boolean, val status: Event<Status>?, val error: Event<Throwable>?)
 
 }
