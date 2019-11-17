@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
-import com.example.herbario_nacional.Adapters.PagerAdapter
+import com.example.herbario_nacional.adapters.PagerAdapter
 
 import com.example.herbario_nacional.R
 import com.google.android.material.tabs.TabLayout

@@ -1,4 +1,4 @@
-package com.example.herbario_nacional.Adapters
+package com.example.herbario_nacional.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
