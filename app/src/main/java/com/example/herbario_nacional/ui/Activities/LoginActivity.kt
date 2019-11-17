@@ -12,23 +12,15 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        back_btn.setOnClickListener { showActivity(NoLoginActivity::class.java) }
+        register_label.setOnClickListener{ showActivity(RegisterActivity::class.java) }
+        forgot_password.setOnClickListener{ showActivity(ForgottenPasswordActivity::class.java) }
+    }
 
-        back_btn.setOnClickListener {
-            val intent = Intent(this@LoginActivity, NoLoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        register_label.setOnClickListener{
-            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        forgot_password.setOnClickListener{
-            val intent = Intent(this@LoginActivity, ForgottenPasswordActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+    private fun showActivity(activityClass: Class<*>) {
+        val intent = Intent(this, activityClass)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        this.finish()
     }
 }

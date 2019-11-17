@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/mainActivity">
+    app:startDestination="@id/dataSheetFragment">
 
     <activity
         android:id="@+id/loginActivity"
@@ -30,13 +30,6 @@
         android:name="com.example.herbario_nacional.ui.Activities.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main">
-        <action
-            android:id="@+id/action_mainActivity_to_businessDetailActivity"
-            app:destination="@+id/businessDetailActivity"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
     </activity>
     <activity
         android:id="@+id/forgottenPasswordActivity"
@@ -72,5 +65,11 @@
         android:id="@+id/noLoginActivity"
         android:name="com.example.herbario_nacional.ui.Activities.NoLoginActivity"
         android:label="activity_no_login"
-        tools:layout="@layout/activity_no_login" />
+        tools:layout="@layout/activity_no_login">
+    </activity>
+    <fragment
+        android:id="@+id/dataSheetFragment"
+        android:name="com.example.herbario_nacional.ui.Fragments.DataSheetFragment"
+        android:label="fragment_data_sheet"
+        tools:layout="@layout/fragment_data_sheet" />
 </navigation>

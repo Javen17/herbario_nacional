@@ -18,11 +18,26 @@ class CredentialsViewModel (private val credentialsRepository: CredentialsReposi
     val uiState: LiveData<CredentialsDataState> get() = _uiState
 
     init {
+//        viewModelScope.launch {
+//            Retry().retryIO(times = 3){
+//                runCatching {
+//                    emitUiState(showProgress = true)
+//                    credentialsRepository.getLogin(Credentials("admin","admin"))
+//                }.onSuccess {
+//                    emitUiState(sessionToken = Event(it))
+//                }.onFailure {
+//                    emitUiState(error = Event(R.string.internet_connection_error))
+//                }
+//            }
+//        }
+    }
+
+    fun requestLogin(username: String, password: String){
         viewModelScope.launch {
-            Retry().retryIO(times = 3){
+            Retry().retryIO(times = 3){ 
                 runCatching {
                     emitUiState(showProgress = true)
-                    credentialsRepository.getLogin(Credentials("admin","admin"))
+                    credentialsRepository.getLogin(Credentials(password,username))
                 }.onSuccess {
                     emitUiState(sessionToken = Event(it))
                 }.onFailure {
