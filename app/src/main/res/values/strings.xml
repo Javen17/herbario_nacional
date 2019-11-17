@@ -60,4 +60,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="description">Imagen</string>
+
+    <!-- Profile -->
+    <string name="logout">Cerrar sesión</string>
+    <string name="my_specimens">Mis fichas técnicas</string>
 </resources>

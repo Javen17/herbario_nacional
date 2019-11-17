@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.herbario_nacional.Fragments.NotificationsFragment
 import com.example.herbario_nacional.Fragments.SearchFragment
 import com.example.herbario_nacional.Fragments.DataSheetFragment
+import com.example.herbario_nacional.Fragments.ProfileFragment
 import com.example.herbario_nacional.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -73,41 +74,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Fragment por defecto
         replaceFragment(DataSheetFragment())
 
         val navView: BottomNavigationView = findViewById(R.id.bottom_navigation)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
-
-        /*
-        val recyclerView:RecyclerView = findViewById(R.id.plant_specimen_list)
-
-        recyclerView.layoutManager=LinearLayoutManager(this, RecyclerView.VERTICAL,false)
-
-        val plants = ArrayList<Plant>()
-
-        plants.add(
-            Plant(
-                "Girasol",
-                R.drawable.plant1
-            )
-        )
-        plants.add(
-            Plant(
-                "Trompeta China Trepadora",
-                R.drawable.plant2
-            )
-        )
-        plants.add(
-            Plant(
-                "Galio Blanco",
-                R.drawable.plant3
-            )
-        )
-
-        val adapter = PlantAdapter(plants)
-
-        recyclerView.adapter = adapter
-        */
     }
 }
