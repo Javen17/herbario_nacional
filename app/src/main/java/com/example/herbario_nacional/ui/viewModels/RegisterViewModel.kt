@@ -2,6 +2,7 @@ package com.example.herbario_nacional.ui.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.data.network.Retry
@@ -13,7 +14,7 @@ import com.example.herbario_nacional.util.StatusCode
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class RegisterViewModel (private val registerRepository: RegisterRepository) {
+class RegisterViewModel (private val registerRepository: RegisterRepository): ViewModel()  {
     private val _uiState = MutableLiveData<RegisterDataState>()
     val uiState: LiveData<RegisterDataState> get() = _uiState
 

@@ -8,6 +8,7 @@ import okhttp3.Response
 class HeaderInterceptor : Interceptor {
     companion object ApiConstants{
         const val LOGIN = "/api/login/"
+        const val SIGN_UP = "/api/sign_up/"
         const val PERMANENT_LOGIN = "/api/permanent_login/"
         const val GET_DEPARTMENTS = "/secured/obtainAllDepartments"
         const val GET_BUSINESS = "/secured/obtainAllBusiness"
@@ -29,6 +30,10 @@ class HeaderInterceptor : Interceptor {
         requestBuilder = request.newBuilder()
         when (request.url().url().path) {
             LOGIN -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            SIGN_UP -> {
                 requestBuilder
                     .addHeader("Content-Type", "application/json")
             }

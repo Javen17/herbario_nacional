@@ -1,4 +1,4 @@
-package ni.abril.azb.megaboicotapp.di
+package com.example.herbario_nacional.di
 
 import com.example.herbario_nacional.imageloader.CoilImageLoader
 import com.example.herbario_nacional.imageloader.ImageLoader
