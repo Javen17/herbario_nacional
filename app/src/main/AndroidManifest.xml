@@ -2,23 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.herbario_nacional">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
+        android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.NewFungusActivity"></activity>
-        <activity android:name=".Activities.ForgottenPasswordActivity" />
-        <activity android:name=".Activities.LoginActivity" />
-        <activity android:name=".Activities.RegisterActivity" />
+        <activity android:name="com.example.herbario_nacional.ui.Activities.NewFungusActivity"></activity>
+        <activity android:name="com.example.herbario_nacional.ui.Activities.ForgottenPasswordActivity" />
+        <activity android:name="com.example.herbario_nacional.ui.Activities.LoginActivity" />
+        <activity android:name="com.example.herbario_nacional.ui.Activities.RegisterActivity" />
         <activity
-            android:name=".Activities.NoLoginActivity"
+            android:name="com.example.herbario_nacional.ui.Activities.NoLoginActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.NewPlantActivity" />
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name="com.example.herbario_nacional.ui.Activities.NewPlantActivity" />
+        <activity android:name="com.example.herbario_nacional.ui.Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

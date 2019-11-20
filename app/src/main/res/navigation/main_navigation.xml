@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/dataSheetFragment">
+
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.example.herbario_nacional.ui.Activities.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login"/>
+    <activity
+        android:id="@+id/registerActivity"
+        android:name="com.example.herbario_nacional.ui.Activities.RegisterActivity"
+        android:label="activity_register"
+        tools:layout="@layout/activity_register" />
+    <activity
+        android:id="@+id/newPlantActivity"
+        android:name="com.example.herbario_nacional.ui.Activities.NewPlantActivity"
+        android:label="activity_new_plant"
+        tools:layout="@layout/activity_new_plant" />
+    <activity
+        android:id="@+id/newFungusActivity"
+        android:name="com.example.herbario_nacional.ui.Activities.NewFungusActivity"
+        android:label="activity_new_fungus"
+        tools:layout="@layout/activity_new_fungus" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.herbario_nacional.ui.Activities.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main">
+    </activity>
+    <activity
+        android:id="@+id/forgottenPasswordActivity"
+        android:name="com.example.herbario_nacional.ui.Activities.ForgottenPasswordActivity"
+        android:label="activity_forgotten_password"
+        tools:layout="@layout/activity_forgotten_password" />
+    <fragment
+        android:id="@+id/fungiFragment"
+        android:name="com.example.herbario_nacional.ui.Fragments.FungiFragment"
+        android:label="fragment_fungi"
+        tools:layout="@layout/fragment_fungi" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.herbario_nacional.ui.Fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.herbario_nacional.ui.Fragments.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/plantsFragment"
+        android:name="com.example.herbario_nacional.ui.Fragments.PlantsFragment"
+        android:label="fragment_plants"
+        tools:layout="@layout/fragment_plants" />
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.example.herbario_nacional.ui.Fragments.NotificationsFragment"
+        android:label="fragment_notifications"
+        tools:layout="@layout/fragment_notifications" />
+    <activity
+        android:id="@+id/noLoginActivity"
+        android:name="com.example.herbario_nacional.ui.Activities.NoLoginActivity"
+        android:label="activity_no_login"
+        tools:layout="@layout/activity_no_login">
+    </activity>
+    <fragment
+        android:id="@+id/dataSheetFragment"
+        android:name="com.example.herbario_nacional.ui.Fragments.DataSheetFragment"
+        android:label="fragment_data_sheet"
+        tools:layout="@layout/fragment_data_sheet" />
+</navigation>
