@@ -8,27 +8,12 @@
     android:background="@color/background_color"
     android:focusableInTouchMode="true"
     >
-    <LinearLayout
-        android:id="@+id/progressBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:id="@+id/progressBar"
-            android:visibility="gone"
-            />
-    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/progressBarLayout"
+        app:layout_constraintTop_toTopOf="parent"
         android:orientation="horizontal"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
