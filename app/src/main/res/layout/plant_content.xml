@@ -42,4 +42,67 @@
         app:layout_constraintBottom_toBottomOf="@+id/plantImage"
         tools:text="@string/plant"/>
 
+    <TextView
+        android:id="@+id/family"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/dark_gray"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/plantImage"
+        tools:text="@string/plant" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/family"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="10dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/profile_picture"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_default_profile_picture"
+            android:gravity="center"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/description" />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/dark_gray"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:text="John Doe" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/registration_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/country"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="10dp"
+        android:paddingBottom="20dp"
+        android:textColor="@color/dark_gray"
+        android:textSize="14sp"
+        android:text="14/11/2019" />
+
+    <TextView
+        android:id="@+id/country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintTop_toBottomOf="@id/family"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@color/dark_gray"
+        android:textSize="14sp"
+        android:text="Nicaragua"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

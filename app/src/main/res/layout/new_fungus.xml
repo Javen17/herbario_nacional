@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:focusableInTouchMode="true"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    android:id="@+id/new_fungus"
+    >
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            >
+
+            <TextView
+                android:id="@+id/specimen_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingTop="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/specimen_data"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/commonNameTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/common_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/specimen_data"
+                android:layout_margin="20dp"
+            >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/commonNameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="text"
+                />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/family"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/commonNameTextInputLayout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_margin="20dp"
+                android:textSize="16sp"
+            />
+
+            <Spinner
+                android:id="@+id/genus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/family"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_margin="20dp"
+                android:textSize="16sp"
+            />
+
+            <Spinner
+                android:id="@+id/specie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/genus"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_margin="20dp"
+                android:textSize="16sp"
+            />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fungusDescriptionTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/specimen_description"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/specie"
+                android:layout_margin="20dp"
+            >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/funguDescriptionInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="textMultiLine"
+                    android:minLines="2"
+                    android:gravity="top"
+                />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/crust"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/fungusDescriptionTextInputLayout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_margin="20dp"
+                android:textSize="16sp"
+            />
+
+            <Spinner
+                android:id="@+id/cap_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/crust"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_margin="20dp"
+                android:textSize="16sp"
+            />
+
+            <Spinner
+                android:id="@+id/form_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/cap_type"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_margin="20dp"
+                android:textSize="16sp"
+            />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/colorTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/color"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/form_type"
+                android:layout_margin="20dp"
+            >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/colorInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="text"
+                />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/changeOfColorTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/change_of_color"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/colorTextInputLayout"
+                android:layout_margin="20dp"
+            >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/changeOfColorInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="textMultiLine"
+                    android:minLines="2"
+                    android:gravity="top"
+                />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/smellTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/smell"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/changeOfColorTextInputLayout"
+                android:layout_margin="20dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/smellInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="textMultiLine"
+                    android:minLines="2"
+                    android:gravity="top"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/fungusStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/smellTextInputLayout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_margin="20dp"
+                android:textSize="16sp"
+            />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/numberSpecimensTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/number_specimens"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/fungusStatus"
+                android:layout_margin="20dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/numberSpecimensInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="number"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/location_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/numberSpecimensTextInputLayout"
+                android:paddingTop="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/location_data"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+            />
+
+            <Spinner
+                android:id="@+id/country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/location_data"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_margin="20dp"
+                android:textSize="16sp"
+            />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/stateTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/state"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/country"
+                android:layout_margin="20dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/stateInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="text"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cityTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/city"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/stateTextInputLayout"
+                android:layout_margin="20dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/cityInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="text"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/specificCollectionAreaTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/specific_collection_area"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/cityTextInputLayout"
+                android:layout_margin="20dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/specificCollectionAreaInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="text"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/coordinates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/specificCollectionAreaTextInputLayout"
+                android:paddingTop="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/coordinates"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+            />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/latitudeTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/latitude"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/coordinates"
+                android:layout_margin="20dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/latitudeInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="text"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/longitudeTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/longitude"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/latitudeTextInputLayout"
+                android:layout_margin="20dp"
+            >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/longitudeInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="text"
+                />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/habitat_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/longitudeTextInputLayout"
+                android:paddingTop="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/habitat_data"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                />
+
+            <Spinner
+                android:id="@+id/habitat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/habitat_data"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_margin="20dp"
+                android:textSize="16sp"
+                />
+
+            <Spinner
+                android:id="@+id/habitatDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/habitat"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_margin="20dp"
+                android:textSize="16sp"
+                />
+
+            <Spinner
+                android:id="@+id/biostatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/habitatDescription"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_margin="20dp"
+                android:textSize="16sp"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:text="@string/cancel"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/cancel_btn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintTop_toBottomOf="@id/biostatus"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:letterSpacing="0.05"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:text="@string/registerSpecimen"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:id="@+id/register_btn"
+                app:layout_constraintTop_toBottomOf="@id/cancel_btn"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:letterSpacing="0.05"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
