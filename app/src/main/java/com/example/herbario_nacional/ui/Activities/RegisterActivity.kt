@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.herbario_nacional.R
+import com.example.herbario_nacional.ui.viewModels.ProfileViewModel
 import com.example.herbario_nacional.ui.viewModels.RegisterViewModel
 import com.example.herbario_nacional.util.traveseAnyInput
 import kotlinx.android.synthetic.main.activity_register.*
@@ -17,6 +18,7 @@ import java.util.*
 class RegisterActivity : AppCompatActivity() {
 
     private val registerViewModel: RegisterViewModel by viewModel()
+    // private val profileViewModel: ProfileViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,12 +29,14 @@ class RegisterActivity : AppCompatActivity() {
 
         btnRegister.setOnClickListener{
             val date = Date()
-            val formatter = SimpleDateFormat("yyyy/mm/dd hh:mm:ss")
+            val formatter = SimpleDateFormat("yyyy/mm/dd hh:mm:ss", Locale.getDefault())
             val currentDate: String = formatter.format(date)
 
-            when(layoutRegister.traveseAnyInput()){
-                true -> Toast.makeText(applicationContext, getString(R.string.empty_fields_register), Toast.LENGTH_LONG).show()
-                false -> registerViewModel.requestRegister(
+            if (layoutRegister.traveseAnyInput()) {
+                Toast.makeText(applicationContext, getString(R.string.empty_fields_register), Toast.LENGTH_LONG).show()
+            }
+            else {
+                registerViewModel.requestRegister(
                     first_name = nameInput.text.toString(),
                     last_name = lastnameInput.text.toString(),
                     username = usernameInput.text.toString(),
@@ -47,14 +51,16 @@ class RegisterActivity : AppCompatActivity() {
                     user_permissions = arrayOf(),
                     last_login = null
                 )
+
+
             }
         }
 
         registerViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
-            if (dataState.status != null && !dataState.status.consumed){
-                dataState.status.consume()?.let { status ->
-                    if(status.status == "Success") {
+            if (dataState.result != null && !dataState.result.consumed){
+                dataState.result.consume()?.let { result ->
+                    if(result.result == "user added") {
                         Toast.makeText(applicationContext, getString(R.string.register_success), Toast.LENGTH_LONG).show()
                         showActivity(LoginActivity::class.java)
                     }
@@ -67,6 +73,24 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         })
+
+        /*profileViewModel.uiState.observe(this, Observer {
+            val dataState = it ?: return@Observer
+            if (dataState.result != null && !dataState.result.consumed){
+                dataState.result.consume()?.let { result ->
+                    if(result.result == "Success") {
+                        Toast.makeText(applicationContext, getString(R.string.register_success), Toast.LENGTH_LONG).show()
+                        showActivity(LoginActivity::class.java)
+                    }
+                }
+            }
+
+            if (dataState.error != null && !dataState.error.consumed){
+                dataState.error.consume()?.let { error ->
+                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
+                }
+            }
+        })*/
     }
 
     private fun showActivity(activityClass: Class<*>) {

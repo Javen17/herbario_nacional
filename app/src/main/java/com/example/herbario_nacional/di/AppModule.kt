@@ -1,11 +1,9 @@
 package com.example.herbario_nacional.di
 
 import com.example.herbario_nacional.data.network.remoteDataSourceModule
-import com.example.herbario_nacional.repo.CredentialsRepository
-import com.example.herbario_nacional.repo.CredentialsRepositoryImpl
-import com.example.herbario_nacional.repo.RegisterRepository
-import com.example.herbario_nacional.repo.RegisterRepositoryImpl
+import com.example.herbario_nacional.repo.*
 import com.example.herbario_nacional.ui.viewModels.CredentialsViewModel
+import com.example.herbario_nacional.ui.viewModels.ProfileViewModel
 import com.example.herbario_nacional.ui.viewModels.RegisterViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -13,6 +11,7 @@ import org.koin.dsl.module
 val appModule = module {
     viewModel { CredentialsViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
+    viewModel { ProfileViewModel(get()) }
 
     single<CredentialsRepository> {
         CredentialsRepositoryImpl(get())
@@ -20,6 +19,10 @@ val appModule = module {
 
     single<RegisterRepository> {
         RegisterRepositoryImpl(get())
+    }
+
+    single<ProfileRepository> {
+        ProfileRepositoryImpl(get())
     }
 }
 

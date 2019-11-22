@@ -26,15 +26,22 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
             when(layoutLogin.traveseAnyInput()){
                 true -> Toast.makeText(applicationContext, getString(R.string.empty_fields), Toast.LENGTH_LONG).show()
-                false -> credentialsViewModel.requestLogin(emailInput.text.toString(), passwordInput.text.toString())
+                false -> credentialsViewModel.requestLogin(usernameInput.text.toString(), passwordInput.text.toString())
             }
         }
 
         credentialsViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
-            if (dataState.status != null && !dataState.status.consumed){
-                dataState.status.consume()?.let { status ->
-                    if(status.status == "Success") Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_LONG).show()
+            if (dataState.result != null && !dataState.result.consumed){
+                dataState.result.consume()?.let { result ->
+                    if(result.result == "success") {
+                        Toast.makeText(
+                            applicationContext,
+                            getString(R.string.login_success),
+                            Toast.LENGTH_LONG
+                        ).show()
+                        // showActivity()
+                    }
                 }
             }
             if (dataState.error != null && !dataState.error.consumed){

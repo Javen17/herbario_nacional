@@ -24,7 +24,7 @@ class RegisterViewModel (private val registerRepository: RegisterRepository): Vi
                     emitUiState(showProgress = true)
                     registerRepository.registerUser(Register(first_name, last_name, username, email, password, is_staff, is_active, is_superuser, date_joined, name, groups, user_permissions, last_login))
                 }.onSuccess {
-                    emitUiState(status = Event(it))
+                    emitUiState(result = Event(it))
                 }.onFailure {
                     when(it){
                         is HttpException -> {
@@ -40,11 +40,10 @@ class RegisterViewModel (private val registerRepository: RegisterRepository): Vi
         }
     }
 
-    private fun emitUiState(showProgress: Boolean = false, status: Event<Status>? = null, error: Event<Int>? = null){
-        val dataState = RegisterDataState(showProgress, status, error)
+    private fun emitUiState(showProgress: Boolean = false, result: Event<Status>? = null, error: Event<Int>? = null){
+        val dataState = RegisterDataState(showProgress, result, error)
         _uiState.value = dataState
     }
 
-    data class RegisterDataState(val showProgress: Boolean, val status: Event<Status>?, val error: Event<Int>?)
-
+    data class RegisterDataState(val showProgress: Boolean, val result: Event<Status>?, val error: Event<Int>?)
 }

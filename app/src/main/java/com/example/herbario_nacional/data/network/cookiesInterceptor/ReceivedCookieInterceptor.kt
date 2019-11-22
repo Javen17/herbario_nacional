@@ -10,10 +10,7 @@ class ReceivedCookieInterceptor : Interceptor {
         if (originalResponse.headers("Set-Cookie").isNotEmpty())
         {
             val cookies: HashSet<String> = hashSetOf()
-            for ((i, header) in originalResponse.headers("Set-Cookie").withIndex())
-            {
-                println(header)
-                println("Iterando: $i")
+            for (header in originalResponse.headers("Set-Cookie")) {
                 cookies.add(header)
             }
             AppPreferences().put(AppPreferences.Key.cookies, cookies)

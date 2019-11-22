@@ -9,10 +9,10 @@
     <string name="register">Regístrate</string>
     <string name="login">Iniciar sesión</string>
     <string name="attention">Inicia sesión para que puedas registrar y visualizar todas tus fichas técnicas.</string>
-    <string name="empty_fields">Favor digitar usuario/contraseña</string>
-    <string name="empty_fields_register">Rellene todos los campos</string>
-    <string name="login_success">Logueado</string>
-    <string name="register_success">Registro exitoso. Inicie sesión</string>
+    <string name="empty_fields">Favor digitar nombre de usuario y contraseña.</string>
+    <string name="empty_fields_register">Rellene todos los campos.</string>
+    <string name="login_success">Inicio de sesión exitoso.</string>
+    <string name="register_success">Registro exitoso. Inicie sesión.</string>
     <string name="unauthorized">Unauthorized</string>
     <string name="internet_connection_error">Problemas en conexión al Internet</string>
 

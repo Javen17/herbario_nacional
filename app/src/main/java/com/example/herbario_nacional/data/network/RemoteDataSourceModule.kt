@@ -2,6 +2,7 @@ package com.example.herbario_nacional.data.network
 
 import com.example.herbario_nacional.BuildConfig
 import com.example.herbario_nacional.data.network.`interface`.CredentialsInterface
+import com.example.herbario_nacional.data.network.`interface`.ProfileInterface
 import com.example.herbario_nacional.data.network.`interface`.RegisterInterface
 import com.example.herbario_nacional.data.network.adapters.CoroutineCallAdapterFactory
 import com.example.herbario_nacional.data.network.cookiesInterceptor.ReceivedCookieInterceptor
@@ -17,6 +18,7 @@ val remoteDataSourceModule = module {
     single { createOkHttpClient() }
     single { createWebService<CredentialsInterface>(get(), BuildConfig.HERBARIO_URL) }
     single { createWebService<RegisterInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<ProfileInterface>(get(), BuildConfig.HERBARIO_URL) }
 }
 
 fun createOkHttpClient(): OkHttpClient {
