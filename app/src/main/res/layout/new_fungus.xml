@@ -21,7 +21,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
+            android:padding="20dp"
             >
 
             <TextView
@@ -29,9 +29,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                android:paddingTop="20dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
                 android:text="@string/specimen_data"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
@@ -45,8 +42,8 @@
                 android:hint="@string/common_name"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:layout_constraintTop_toBottomOf="@+id/specimen_data"
-                android:layout_margin="20dp"
-            >
+                android:paddingTop="20dp"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/commonNameInput"
@@ -54,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:inputType="text"
-                />
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,9 +61,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/commonNameTextInputLayout"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_margin="20dp"
+                android:layout_marginTop="20dp"
                 android:textSize="16sp"
-            />
+                />
 
             <Spinner
                 android:id="@+id/genus"
@@ -74,9 +71,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/family"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_margin="20dp"
+                android:layout_marginTop="20dp"
                 android:textSize="16sp"
-            />
+                />
 
             <Spinner
                 android:id="@+id/specie"
@@ -84,9 +81,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/genus"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_margin="20dp"
+                android:layout_marginTop="20dp"
                 android:textSize="16sp"
-            />
+                />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/fungusDescriptionTextInputLayout"
@@ -95,8 +92,8 @@
                 android:hint="@string/specimen_description"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:layout_constraintTop_toBottomOf="@+id/specie"
-                android:layout_margin="20dp"
-            >
+                android:paddingTop="20dp"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/funguDescriptionInput"
@@ -106,7 +103,7 @@
                     android:inputType="textMultiLine"
                     android:minLines="2"
                     android:gravity="top"
-                />
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,9 +113,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/fungusDescriptionTextInputLayout"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_margin="20dp"
+                android:layout_marginTop="20dp"
                 android:textSize="16sp"
-            />
+                />
 
             <Spinner
                 android:id="@+id/cap_type"
@@ -126,9 +123,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/crust"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_margin="20dp"
+                android:layout_marginTop="20dp"
                 android:textSize="16sp"
-            />
+                />
 
             <Spinner
                 android:id="@+id/form_type"
@@ -136,9 +133,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/cap_type"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_margin="20dp"
+                android:layout_marginTop="20dp"
                 android:textSize="16sp"
-            />
+                />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/colorTextInputLayout"
@@ -147,8 +144,8 @@
                 android:hint="@string/color"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:layout_constraintTop_toBottomOf="@+id/form_type"
-                android:layout_margin="20dp"
-            >
+                android:paddingTop="20dp"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/colorInput"
@@ -156,7 +153,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:inputType="text"
-                />
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -167,8 +164,8 @@
                 android:hint="@string/change_of_color"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:layout_constraintTop_toBottomOf="@+id/colorTextInputLayout"
-                android:layout_margin="20dp"
-            >
+                android:paddingTop="20dp"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/changeOfColorInput"
@@ -178,7 +175,7 @@
                     android:inputType="textMultiLine"
                     android:minLines="2"
                     android:gravity="top"
-                />
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -189,7 +186,7 @@
                 android:hint="@string/smell"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:layout_constraintTop_toBottomOf="@+id/changeOfColorTextInputLayout"
-                android:layout_margin="20dp"
+                android:paddingTop="20dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -210,9 +207,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/smellTextInputLayout"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_margin="20dp"
+                android:layout_marginTop="20dp"
                 android:textSize="16sp"
-            />
+                />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/numberSpecimensTextInputLayout"
@@ -221,7 +218,7 @@
                 android:hint="@string/number_specimens"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:layout_constraintTop_toBottomOf="@+id/fungusStatus"
-                android:layout_margin="20dp"
+                android:paddingTop="20dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -240,13 +237,11 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/numberSpecimensTextInputLayout"
                 android:paddingTop="20dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
                 android:text="@string/location_data"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
-            />
+                />
 
             <Spinner
                 android:id="@+id/country"
@@ -254,9 +249,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/location_data"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_margin="20dp"
+                android:layout_marginTop="20dp"
                 android:textSize="16sp"
-            />
+                />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/stateTextInputLayout"
@@ -265,7 +260,7 @@
                 android:hint="@string/state"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:layout_constraintTop_toBottomOf="@+id/country"
-                android:layout_margin="20dp"
+                android:paddingTop="20dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -285,7 +280,7 @@
                 android:hint="@string/city"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:layout_constraintTop_toBottomOf="@+id/stateTextInputLayout"
-                android:layout_margin="20dp"
+                android:paddingTop="20dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -305,7 +300,7 @@
                 android:hint="@string/specific_collection_area"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:layout_constraintTop_toBottomOf="@+id/cityTextInputLayout"
-                android:layout_margin="20dp"
+                android:paddingTop="20dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -324,13 +319,11 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/specificCollectionAreaTextInputLayout"
                 android:paddingTop="20dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
                 android:text="@string/coordinates"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
-            />
+                />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/latitudeTextInputLayout"
@@ -339,7 +332,7 @@
                 android:hint="@string/latitude"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:layout_constraintTop_toBottomOf="@+id/coordinates"
-                android:layout_margin="20dp"
+                android:paddingTop="20dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -359,8 +352,8 @@
                 android:hint="@string/longitude"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:layout_constraintTop_toBottomOf="@+id/latitudeTextInputLayout"
-                android:layout_margin="20dp"
-            >
+                android:paddingTop="20dp"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/longitudeInput"
@@ -368,7 +361,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:inputType="text"
-                />
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -378,8 +371,6 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/longitudeTextInputLayout"
                 android:paddingTop="20dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
                 android:text="@string/habitat_data"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
@@ -392,7 +383,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/habitat_data"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_margin="20dp"
+                android:layout_marginTop="20dp"
                 android:textSize="16sp"
                 />
 
@@ -402,7 +393,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/habitat"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_margin="20dp"
+                android:layout_marginTop="20dp"
                 android:textSize="16sp"
                 />
 
@@ -412,7 +403,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/habitatDescription"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_margin="20dp"
+                android:layout_marginTop="20dp"
                 android:textSize="16sp"
                 />
 
@@ -421,9 +412,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
                 android:id="@+id/cancel_btn"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 app:strokeColor="@color/colorPrimary"
@@ -440,8 +428,6 @@
                 android:layout_height="60dp"
                 android:id="@+id/register_btn"
                 app:layout_constraintTop_toBottomOf="@id/cancel_btn"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:background="@color/colorPrimary"
                 android:textColor="@color/white"
@@ -450,6 +436,7 @@
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:letterSpacing="0.05"
+                android:textAlignment="center"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

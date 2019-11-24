@@ -10,6 +10,8 @@ import com.example.herbario_nacional.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_new_plant.*
 import kotlinx.android.synthetic.main.new_plant.*
+import okhttp3.*
+import java.io.IOException
 
 class NewPlantActivity : AppCompatActivity() {
 
@@ -18,9 +20,11 @@ class NewPlantActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_plant)
 
         cancel_btn.setOnClickListener {
-            val intent = Intent(this@NewPlantActivity, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            showActivity(MainActivity::class.java)
+        }
+
+        register_btn.setOnClickListener {
+
         }
 
         add_a_photo.setOnClickListener {
@@ -60,5 +64,12 @@ class NewPlantActivity : AppCompatActivity() {
         val dialog = builder.create()
 
         dialog.show()
+    }
+
+    private fun showActivity(activityClass: Class<*>) {
+        val intent = Intent(this, activityClass)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        this.finish()
     }
 }
