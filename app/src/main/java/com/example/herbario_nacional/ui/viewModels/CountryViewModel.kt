@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.herbario_nacional.R
+import com.example.herbario_nacional.models.countries.Country
 import com.example.herbario_nacional.repo.CountryRepository
 import com.example.herbario_nacional.ui.Event
 import kotlinx.coroutines.launch
 
 class CountryViewModel (private val countryRepository: CountryRepository): ViewModel() {
 
-    private val _uiState =
-        MutableLiveData<CountryDataState>()
+    private val _uiState = MutableLiveData<CountryDataState>()
 
     val uiState: LiveData<CountryDataState>
         get() = _uiState
@@ -32,7 +32,7 @@ class CountryViewModel (private val countryRepository: CountryRepository): ViewM
 
     fun emitUiState(
         showProgress: Boolean = false,
-        result: Event<com.example.herbario_nacional.models.Request>? = null,
+        result: Event<List<Country>>? = null,
         error: Event<Int>? = null){
         val dataState = CountryDataState(
             showProgress,
@@ -44,6 +44,6 @@ class CountryViewModel (private val countryRepository: CountryRepository): ViewM
 
     data class CountryDataState(
         val showProgress: Boolean,
-        val result: Event<com.example.herbario_nacional.models.Request>?,
+        val result: Event<List<Country>>?,
         val error: Event<Int>?)
 }

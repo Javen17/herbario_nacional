@@ -1,8 +1,8 @@
 package com.example.herbario_nacional.models
 
 import androidx.annotation.Keep
+import com.example.herbario_nacional.models.countries.Country
 import com.example.herbario_nacional.models.location.City
-import com.example.herbario_nacional.models.location.Country
 import com.example.herbario_nacional.models.location.State
 
 @Keep

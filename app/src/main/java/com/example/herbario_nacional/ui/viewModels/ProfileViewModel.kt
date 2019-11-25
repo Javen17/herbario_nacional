@@ -18,7 +18,9 @@ import retrofit2.HttpException
 
 class ProfileViewModel (private val profileRepository: ProfileRepository): ViewModel()  {
     private val _uiState = MutableLiveData<ProfileDataState>()
-    val uiState: LiveData<ProfileDataState> get() = _uiState
+    val uiState: LiveData<ProfileDataState>
+        get() = _uiState
+
     fun requestProfile(number_id: String, phone: String, photo: String?, user: Int){
         viewModelScope.launch {
             Retry().retryIO(times = 3){

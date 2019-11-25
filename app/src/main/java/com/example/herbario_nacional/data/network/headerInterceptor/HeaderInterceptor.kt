@@ -13,16 +13,15 @@ class HeaderInterceptor : Interceptor {
         const val COUNTRY = "api/country/"
         const val PLANT_SPECIMEN = "api/plant_specimen"
         const val PERMANENT_LOGIN = "/api/permanent_login/"
-        const val GET_DEPARTMENTS = "/secured/obtainAllDepartments"
-        const val GET_BUSINESS = "/secured/obtainAllBusiness"
-        const val SEARCH_BUSINESS = "/secured/searchBusiness"
     }
 
     private fun setupCookies(){
         val cookies = AppPreferences().get(AppPreferences.Key.cookies, HashSet<String>()) as HashSet<*>
+        var content = ""
         cookies.forEach {
-            requestBuilder.addHeader("Cookie", it as String)
+            content += it as String
         }
+        requestBuilder.addHeader("Cookie", content)
     }
 
     private lateinit var requestBuilder: Request.Builder
@@ -52,14 +51,6 @@ class HeaderInterceptor : Interceptor {
                     .addHeader("Content-Type", "application/json")
             }
             PERMANENT_LOGIN -> {
-                requestBuilder
-                    .addHeader("Content-Type", "application/json")
-            }
-            GET_BUSINESS -> {
-                requestBuilder
-                    .addHeader("Content-Type", "application/json")
-            }
-            SEARCH_BUSINESS -> {
                 requestBuilder
                     .addHeader("Content-Type", "application/json")
             }

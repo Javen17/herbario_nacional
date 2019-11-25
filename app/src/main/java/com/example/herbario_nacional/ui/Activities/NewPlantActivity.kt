@@ -4,67 +4,47 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.Observer
 import com.example.herbario_nacional.R
-import com.example.herbario_nacional.data.network.OkHttpRequest
 import com.example.herbario_nacional.ui.viewModels.CountryViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_new_plant.*
 import kotlinx.android.synthetic.main.new_plant.*
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.OkHttpClient
-import okhttp3.Response
-import org.json.JSONException
-import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class NewPlantActivity : AppCompatActivity() {
-
-    var client = OkHttpClient()
-    var request = OkHttpRequest(client)
 
     private val countryViewModel: CountryViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_plant)
-/*
-        val url = "https://django-acacia.herokuapp.com/api/country/"
 
-        request.GET(url, object: Callback {
-            override fun onFailure(call: Call, e: java.io.IOException) {
-                println("Request Failure.")
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val responseData = response.body()?.string()
-                runOnUiThread{
-                    try {
-                        val json = JSONObject(responseData)
-                        println("Request Successful")
-                        println(json)
-                        val responseObject = json.getJSONObject("")
-                        val docs = json.getJSONArray("")
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
+        countryViewModel.uiState.observe(this, Observer {
+            val dataState = it ?: return@Observer
+            if (dataState.result != null && !dataState.result.consumed){
+                dataState.result.consume()?.let { result ->
+                    println(result)
                 }
             }
-
+            if (dataState.error != null && !dataState.error.consumed){
+                dataState.error.consume()?.let { error ->
+                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
+                }
+            }
         })
-*/
+
         cancel_btn.setOnClickListener {
             showActivity(MainActivity::class.java)
         }
 
         register_btn.setOnClickListener {
-            println("Respuesta: ${countryViewModel.requestCountry()}")
+            countryViewModel.requestCountry()
         }
-
-        println("Respuesta: ${countryViewModel.requestCountry()}")
 
         add_a_photo.setOnClickListener {
             showDialog()
