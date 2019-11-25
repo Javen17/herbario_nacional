@@ -18,7 +18,6 @@ class HeaderInterceptor : Interceptor {
         const val SEARCH_BUSINESS = "/secured/searchBusiness"
     }
 
-
     private fun setupCookies(){
         val cookies = AppPreferences().get(AppPreferences.Key.cookies, HashSet<String>()) as HashSet<*>
         cookies.forEach {
