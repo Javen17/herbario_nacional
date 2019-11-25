@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.ui.viewModels.CountryViewModel
+import com.example.herbario_nacional.ui.viewModels.FamilyViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_new_plant.*
 import kotlinx.android.synthetic.main.new_plant.*
@@ -19,10 +20,25 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class NewPlantActivity : AppCompatActivity() {
 
     private val countryViewModel: CountryViewModel by viewModel()
+    private val familyViewModel: FamilyViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_plant)
+
+        familyViewModel.uiState.observe(this, Observer {
+            val dataState = it ?: return@Observer
+            if (dataState.result != null && !dataState.result.consumed){
+                dataState.result.consume()?.let { result ->
+                    println(result)
+                }
+            }
+            if (dataState.error != null && !dataState.error.consumed){
+                dataState.error.consume()?.let { error ->
+                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
+                }
+            }
+        })
 
         countryViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
@@ -44,6 +60,7 @@ class NewPlantActivity : AppCompatActivity() {
 
         register_btn.setOnClickListener {
             countryViewModel.requestCountry()
+            familyViewModel.requestFamily()
         }
 
         add_a_photo.setOnClickListener {

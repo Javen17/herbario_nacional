@@ -11,6 +11,7 @@ class HeaderInterceptor : Interceptor {
         const val SIGN_UP = "/api/sign_up/"
         const val PROFILE = "api/profile/"
         const val COUNTRY = "api/country/"
+        const val FAMILY = "api/family/"
         const val PLANT_SPECIMEN = "api/plant_specimen"
         const val PERMANENT_LOGIN = "/api/permanent_login/"
     }
@@ -47,6 +48,10 @@ class HeaderInterceptor : Interceptor {
                     .addHeader("Content-Type", "application/json")
             }
             COUNTRY -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            FAMILY -> {
                 requestBuilder
                     .addHeader("Content-Type", "application/json")
             }
