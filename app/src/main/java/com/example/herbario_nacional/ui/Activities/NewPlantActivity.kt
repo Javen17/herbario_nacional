@@ -4,6 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -21,16 +25,46 @@ class NewPlantActivity : AppCompatActivity() {
 
     private val countryViewModel: CountryViewModel by viewModel()
     private val familyViewModel: FamilyViewModel by viewModel()
+    private lateinit var familySpinner: Spinner
+    private lateinit var genusSpinner: Spinner
+    private lateinit var specieSpinner: Spinner
+    private lateinit var plantStatusSpinner: Spinner
+    private lateinit var countrySpinner: Spinner
+    private lateinit var habitatSpinner: Spinner
+    private lateinit var habitatDescriptionSpinner: Spinner
+    private lateinit var biostatusSpinner: Spinner
+
+    val families: ArrayList<String> = ArrayList()
+    val genuses: ArrayList<String> = ArrayList()
+    val species: ArrayList<String> = ArrayList()
+    val status: ArrayList<String> = ArrayList()
+    val countries: ArrayList<String> = ArrayList()
+    val habitats: ArrayList<String> = ArrayList()
+    val habitatDescription: ArrayList<String> = ArrayList()
+    val biostatus: ArrayList<String> = ArrayList()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_plant)
 
+        familySpinner = findViewById(R.id.family)
+        genusSpinner = findViewById(R.id.genus)
+        specieSpinner = findViewById(R.id.specie)
+        plantStatusSpinner = findViewById(R.id.plantStatus)
+        countrySpinner = findViewById(R.id.country)
+        habitatSpinner = findViewById(R.id.habitat)
+        habitatDescriptionSpinner = findViewById(R.id.habitatDescription)
+        biostatusSpinner = findViewById(R.id.biostatus)
+
+        //familySpinner.setOnItemSelectedListener(this)
         familyViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
-                    println("Nombre de familia: ${result[1].name}")
+                    result.forEach{
+                        families.add(it.name)
+                    }
                 }
             }
             if (dataState.error != null && !dataState.error.consumed){
@@ -40,11 +74,18 @@ class NewPlantActivity : AppCompatActivity() {
             }
         })
 
+        val familyAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, families)
+        familyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        familyAdapter.notifyDataSetChanged()
+        familySpinner.adapter = familyAdapter
+
         countryViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
-                    println("Nombre del país: ${result[1].name}")
+                    result.forEach{
+                        countries.add(it.name)
+                    }
                 }
             }
             if (dataState.error != null && !dataState.error.consumed){
@@ -53,6 +94,10 @@ class NewPlantActivity : AppCompatActivity() {
                 }
             }
         })
+
+        val countryAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, countries)
+        countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        countrySpinner.adapter = countryAdapter
 
         cancel_btn.setOnClickListener {
             showActivity(MainActivity::class.java)

@@ -64,7 +64,7 @@
                 app:layout_constraintTop_toBottomOf="@id/commonNameTextInputLayout"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:textSize="16sp"
-                />
+            />
 
             <Spinner
                 android:id="@+id/genus"
