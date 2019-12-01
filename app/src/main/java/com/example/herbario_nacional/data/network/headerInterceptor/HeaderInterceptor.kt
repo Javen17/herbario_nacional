@@ -11,6 +11,8 @@ class HeaderInterceptor : Interceptor {
         const val SIGN_UP = "/api/sign_up/"
         const val PROFILE = "api/profile/"
         const val COUNTRY = "api/country/"
+        const val STATE = "api/state/"
+        const val CITY = "api/city/"
         const val FAMILY = "api/family/"
         const val GENUS = "api/genus/"
         const val SPECIES = "api/species/"
@@ -20,6 +22,7 @@ class HeaderInterceptor : Interceptor {
         const val BIOSTATUS = "api/biostatus/"
         const val PLANT_SPECIMEN = "api/plant_specimen"
         const val PERMANENT_LOGIN = "/api/permanent_login/"
+        const val ME = "api/me/"
     }
 
     private fun setupCookies(){
@@ -57,6 +60,14 @@ class HeaderInterceptor : Interceptor {
                 requestBuilder
                     .addHeader("Content-Type", "application/json")
             }
+            STATE -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            CITY -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
             FAMILY -> {
                 requestBuilder
                     .addHeader("Content-Type", "application/json")
@@ -86,6 +97,10 @@ class HeaderInterceptor : Interceptor {
                     .addHeader("Content-Type", "application/json")
             }
             PERMANENT_LOGIN -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            ME -> {
                 requestBuilder
                     .addHeader("Content-Type", "application/json")
             }

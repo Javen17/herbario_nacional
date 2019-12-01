@@ -18,7 +18,10 @@ val remoteDataSourceModule = module {
     single { createWebService<CredentialsInterface>(get(), BuildConfig.HERBARIO_URL) }
     single { createWebService<RegisterInterface>(get(), BuildConfig.HERBARIO_URL) }
     single { createWebService<ProfileInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<MeInterface>(get(), BuildConfig.HERBARIO_URL) }
     single { createWebService<CountryInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<StateInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<CityInterface>(get(), BuildConfig.HERBARIO_URL) }
     single { createWebService<FamilyInterface>(get(), BuildConfig.HERBARIO_URL) }
     single { createWebService<GenusInterface>(get(), BuildConfig.HERBARIO_URL) }
     single { createWebService<SpecieInterface>(get(), BuildConfig.HERBARIO_URL) }

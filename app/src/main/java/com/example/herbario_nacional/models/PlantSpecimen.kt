@@ -4,12 +4,12 @@ import androidx.annotation.Keep
 import com.example.herbario_nacional.models.countries.Country
 import com.example.herbario_nacional.models.location.City
 import com.example.herbario_nacional.models.location.State
+import com.google.gson.annotations.SerializedName
 
 @Keep
 data class PlantSpecimen(
-    val user: String,
-
-    val photoURL: String,
+    val user: Int,
+    val photoURL: String?,
     val dateReceived: String,
     val family: PlantFamily,
     val genus: Genus,
@@ -22,25 +22,7 @@ data class PlantSpecimen(
     val country: Country,
     val state: State,
     val city: City,
-    val latitude: Double,
-    val longitude: Double,
+    val latitude: Double?,
+    val longitude: Double?,
     val location: String
 )
-
-//user
-//photo
-//date_received
-//family
-//genus
-//species
-//status
-//number_of_samples
-//description
-//ecosystem
-//recolection_area_status
-//country
-//state
-//city
-//latitude
-//longitude
-//location

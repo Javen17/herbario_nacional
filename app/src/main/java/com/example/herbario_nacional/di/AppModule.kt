@@ -10,7 +10,10 @@ val appModule = module {
     viewModel { CredentialsViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
     viewModel { ProfileViewModel(get()) }
+    viewModel { MeViewModel(get()) }
     viewModel { CountryViewModel(get()) }
+    viewModel { CityViewModel(get()) }
+    viewModel { StateViewModel(get()) }
     viewModel { FamilyViewModel(get()) }
     viewModel { GenusViewModel(get()) }
     viewModel { SpecieViewModel(get()) }
@@ -19,6 +22,7 @@ val appModule = module {
     viewModel { HabitatDescriptionViewModel(get()) }
     viewModel { BiostatusViewModel(get()) }
     viewModel { PlantViewModel(get()) }
+    viewModel { NewPlantViewModel(get()) }
 
     single<CredentialsRepository> {
         CredentialsRepositoryImpl(get())
@@ -30,6 +34,14 @@ val appModule = module {
 
     single<CountryRepository> {
         CountryRepositoryImpl(get())
+    }
+
+    single<StateRepository> {
+        StateRepositoryImpl(get())
+    }
+
+    single<CityRepository> {
+        CityRepositoryImpl(get())
     }
 
     single<FamilyRepository> {
@@ -66,6 +78,10 @@ val appModule = module {
 
     single<ProfileRepository> {
         ProfileRepositoryImpl(get())
+    }
+
+    single<MeRepository> {
+        MeRepositoryImpl(get())
     }
 }
 

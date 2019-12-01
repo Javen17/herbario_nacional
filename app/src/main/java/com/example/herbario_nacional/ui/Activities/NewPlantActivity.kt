@@ -13,16 +13,27 @@ import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import com.example.herbario_nacional.R
+import com.example.herbario_nacional.models.PlantSpecimen
+import com.example.herbario_nacional.models.PostPlantSpecimen
 import com.example.herbario_nacional.ui.viewModels.*
+import com.example.herbario_nacional.util.StatusCode
+import com.example.herbario_nacional.util.traveseAnyInput
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_new_plant.*
 import kotlinx.android.synthetic.main.new_plant.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class NewPlantActivity : AppCompatActivity() {
 
     private val countryViewModel: CountryViewModel by viewModel()
+    private val stateViewModel: StateViewModel by viewModel()
+    private val cityViewModel: CityViewModel by viewModel()
     private val familyViewModel: FamilyViewModel by viewModel()
     private val genusViewModel: GenusViewModel by viewModel()
     private val specieViewModel: SpecieViewModel by viewModel()
@@ -30,12 +41,15 @@ class NewPlantActivity : AppCompatActivity() {
     private val habitatViewModel: HabitatViewModel by viewModel()
     private val habitatDescriptionViewModel: HabitatDescriptionViewModel by viewModel()
     private val biostatusViewModel: BiostatusViewModel by viewModel()
+    private val newPlantViewModel: NewPlantViewModel by viewModel()
 
     private lateinit var familySpinner: Spinner
     private lateinit var genusSpinner: Spinner
     private lateinit var specieSpinner: Spinner
     private lateinit var plantStatusSpinner: Spinner
     private lateinit var countrySpinner: Spinner
+    private lateinit var stateSpinner: Spinner
+    private lateinit var citySpinner: Spinner
     private lateinit var habitatSpinner: Spinner
     private lateinit var habitatDescriptionSpinner: Spinner
     private lateinit var biostatusSpinner: Spinner
@@ -45,6 +59,8 @@ class NewPlantActivity : AppCompatActivity() {
     val species: ArrayList<String> = ArrayList()
     val status: ArrayList<String> = ArrayList()
     val countries: ArrayList<String> = ArrayList()
+    val states: ArrayList<String> = ArrayList()
+    val cities: ArrayList<String> = ArrayList()
     val habitats: ArrayList<String> = ArrayList()
     val habitatDescription: ArrayList<String> = ArrayList()
     val biostatus: ArrayList<String> = ArrayList()
@@ -59,6 +75,8 @@ class NewPlantActivity : AppCompatActivity() {
         specieSpinner = findViewById(R.id.specie)
         plantStatusSpinner = findViewById(R.id.plantStatus)
         countrySpinner = findViewById(R.id.country)
+        stateSpinner = findViewById(R.id.state)
+        citySpinner = findViewById(R.id.city)
         habitatSpinner = findViewById(R.id.habitat)
         habitatDescriptionSpinner = findViewById(R.id.habitatDescription)
         biostatusSpinner = findViewById(R.id.biostatus)
@@ -167,6 +185,46 @@ class NewPlantActivity : AppCompatActivity() {
         countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         countrySpinner.adapter = countryAdapter
 
+        stateViewModel.uiState.observe(this, Observer {
+            val dataState = it ?: return@Observer
+            if (dataState.result != null && !dataState.result.consumed){
+                dataState.result.consume()?.let { result ->
+                    result.forEach{
+                        states.add(it.name)
+                    }
+                }
+            }
+            if (dataState.error != null && !dataState.error.consumed){
+                dataState.error.consume()?.let { error ->
+                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+
+        val stateAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, states)
+        stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        stateSpinner.adapter = stateAdapter
+
+        cityViewModel.uiState.observe(this, Observer {
+            val dataState = it ?: return@Observer
+            if (dataState.result != null && !dataState.result.consumed){
+                dataState.result.consume()?.let { result ->
+                    result.forEach{
+                        cities.add(it.name)
+                    }
+                }
+            }
+            if (dataState.error != null && !dataState.error.consumed){
+                dataState.error.consume()?.let { error ->
+                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+
+        val cityAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, cities)
+        cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        citySpinner.adapter = cityAdapter
+
         habitatViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
@@ -235,8 +293,60 @@ class NewPlantActivity : AppCompatActivity() {
         }
 
         register_btn.setOnClickListener {
+            val date = Date()
+            val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val currentDate: String = formatter.format(date)
 
+            if (layoutNewPlant.traveseAnyInput()) {
+                Toast.makeText(applicationContext, getString(R.string.empty_fields_register), Toast.LENGTH_LONG).show()
+            }
+            else {
+                // Prueba
+                newPlantViewModel.requestPostPlant(
+                    PostPlantSpecimen(
+                        user = 1,
+                        photo = null,
+                        date_received = currentDate,
+                        biostatus = 1,
+                        family = 1,
+                        genus = 1,
+                        species = 1,
+                        complete = true,
+                        status = 1,
+                        number_of_samples = 5,
+                        description = "Rosa del monte",
+                        ecosystem = 1,
+                        recolection_area_status = 1,
+                        country = 1,
+                        state = 1,
+                        city = 1,
+                        latitude = null,
+                        longitude = null,
+                        location = "Nueva Segovia"
+                    )
+                )
+
+            }
         }
+
+        newPlantViewModel.uiState.observe(this, Observer {
+            val dataState = it ?: return@Observer
+            if (dataState.status != null && !dataState.status.consumed){
+                dataState.status.consume()?.let { status ->
+                    println("Estado: $status")
+                    if(status.result == "plant added") {
+                        Toast.makeText(applicationContext, getString(R.string.sucess), Toast.LENGTH_LONG).show()
+                        showActivity(MainActivity::class.java)
+                    }
+                }
+            }
+
+            if (dataState.error != null && !dataState.error.consumed){
+                dataState.error.consume()?.let { error ->
+                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
+                }
+            }
+        })
 
         add_a_photo.setOnClickListener {
             showDialog()

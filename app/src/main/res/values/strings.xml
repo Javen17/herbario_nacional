@@ -44,6 +44,7 @@
     <string name="location_data">Datos de Ubicación</string>
     <string name="specimen_data">Datos de Espécimen</string>
     <string name="habitat_data">Datos de Hábitat</string>
+    <string name="sucess">Ficha técnica registrada exitosamente.</string>
 
     <!-- Fungi -->
     <string name="color">Color</string>

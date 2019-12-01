@@ -18,5 +18,4 @@ class CredentialsRepositoryImpl(private val credentialService: CredentialsInterf
     override suspend fun getPermanentLogin(): Message {
         return credentialService.requestPermanetLogin()
     }
-
 }
