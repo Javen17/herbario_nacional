@@ -12,6 +12,12 @@ class HeaderInterceptor : Interceptor {
         const val PROFILE = "api/profile/"
         const val COUNTRY = "api/country/"
         const val FAMILY = "api/family/"
+        const val GENUS = "api/genus/"
+        const val SPECIES = "api/species/"
+        const val STATUS = "api/status/"
+        const val ECOSYSTEM = "api/ecosystem/"
+        const val RECOLECTION_AREA_STATUS = "api/recolection_area_status/"
+        const val BIOSTATUS = "api/biostatus/"
         const val PLANT_SPECIMEN = "api/plant_specimen"
         const val PERMANENT_LOGIN = "/api/permanent_login/"
     }
@@ -52,6 +58,30 @@ class HeaderInterceptor : Interceptor {
                     .addHeader("Content-Type", "application/json")
             }
             FAMILY -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            GENUS -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            SPECIES -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            STATUS -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            ECOSYSTEM -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            RECOLECTION_AREA_STATUS -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            BIOSTATUS -> {
                 requestBuilder
                     .addHeader("Content-Type", "application/json")
             }

@@ -10,7 +10,7 @@ import com.example.herbario_nacional.viewHolder.PlantViewHolder
 class PlantAdapter(var imageLoader: ImageLoader) : ListAdapter<PlantSpecimen, PlantViewHolder>(DIFF_CALLBACK){
     companion object{
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<PlantSpecimen>() {
-            override fun areItemsTheSame(oldItem: PlantSpecimen, newItem: PlantSpecimen) = oldItem.species.commonName == newItem.species.commonName
+            override fun areItemsTheSame(oldItem: PlantSpecimen, newItem: PlantSpecimen) = oldItem.species.common_name == newItem.species.common_name
             override fun areContentsTheSame(oldItem: PlantSpecimen, newItem: PlantSpecimen) = oldItem == newItem
         }
     }

@@ -17,7 +17,7 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
 
     fun bind(plant: PlantSpecimen, imageLoader: ImageLoader) {
         plantImage?.let { imageLoader.load(/*"${BuildConfig.HERBARIO_URL}/gallery/${plant.image}"*/ "https://source.unsplash.com/random", it) }
-        plantName.text = plant.species.commonName
+        plantName.text = plant.species.common_name
         plantImage.layoutParams.height = ImageSizer().getRandomIntInRange(250, 180)
     }
 
