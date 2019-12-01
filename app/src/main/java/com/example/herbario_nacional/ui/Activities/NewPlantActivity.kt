@@ -30,7 +30,7 @@ class NewPlantActivity : AppCompatActivity() {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
-                    println(result)
+                    println("Nombre de familia: ${result[1].name}")
                 }
             }
             if (dataState.error != null && !dataState.error.consumed){
@@ -44,7 +44,7 @@ class NewPlantActivity : AppCompatActivity() {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
-                    println(result)
+                    println("Nombre del país: ${result[1].name}")
                 }
             }
             if (dataState.error != null && !dataState.error.consumed){
@@ -59,8 +59,7 @@ class NewPlantActivity : AppCompatActivity() {
         }
 
         register_btn.setOnClickListener {
-            countryViewModel.requestCountry()
-            familyViewModel.requestFamily()
+
         }
 
         add_a_photo.setOnClickListener {

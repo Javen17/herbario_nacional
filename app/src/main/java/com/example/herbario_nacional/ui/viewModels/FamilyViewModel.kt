@@ -17,6 +17,10 @@ class FamilyViewModel (private val familyRepository: FamilyRepository): ViewMode
     val uiState: LiveData<FamilyDataState>
         get() = _uiState
 
+    init {
+        requestFamily()
+    }
+
     fun requestFamily() {
         viewModelScope.launch {
             runCatching {

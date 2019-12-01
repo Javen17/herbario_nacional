@@ -1,4 +1,4 @@
-package ni.abril.azb.megaboicotapp.ui.view_holders
+package com.example.herbario_nacional.viewHolder
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,15 +8,16 @@ import com.example.herbario_nacional.BuildConfig
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.imageloader.ImageLoader
 import com.example.herbario_nacional.models.Plant
+import com.example.herbario_nacional.models.PlantSpecimen
 import com.example.herbario_nacional.util.ImageSizer
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.plant_content.*
 
 class PlantViewHolder constructor(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-    fun bind(plant: Plant, imageLoader: ImageLoader) {
-        plantImage?.let { imageLoader.load("${BuildConfig.HERBARIO_URL}/gallery/${plant.image}", it) }
-        plantName.text = plant.name
+    fun bind(plant: PlantSpecimen, imageLoader: ImageLoader) {
+        plantImage?.let { imageLoader.load(/*"${BuildConfig.HERBARIO_URL}/gallery/${plant.image}"*/ "https://source.unsplash.com/random", it) }
+        plantName.text = plant.species.commonName
         plantImage.layoutParams.height = ImageSizer().getRandomIntInRange(250, 180)
     }
 

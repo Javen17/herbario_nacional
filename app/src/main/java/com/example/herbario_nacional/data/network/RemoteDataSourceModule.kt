@@ -19,6 +19,7 @@ val remoteDataSourceModule = module {
     single { createWebService<ProfileInterface>(get(), BuildConfig.HERBARIO_URL) }
     single { createWebService<CountryInterface>(get(), BuildConfig.HERBARIO_URL) }
     single { createWebService<FamilyInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<PlantInterface>(get(), BuildConfig.HERBARIO_URL) }
 }
 
 fun createOkHttpClient(): OkHttpClient {

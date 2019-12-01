@@ -12,6 +12,7 @@ val appModule = module {
     viewModel { ProfileViewModel(get()) }
     viewModel { CountryViewModel(get()) }
     viewModel { FamilyViewModel(get()) }
+    viewModel { PlantViewModel(get()) }
 
     single<CredentialsRepository> {
         CredentialsRepositoryImpl(get())
@@ -27,6 +28,10 @@ val appModule = module {
 
     single<FamilyRepository> {
         FamilyRepositoryImpl(get())
+    }
+
+    single<PlantRepository> {
+        PlantRepositoryImpl(get())
     }
 
     single<ProfileRepository> {
