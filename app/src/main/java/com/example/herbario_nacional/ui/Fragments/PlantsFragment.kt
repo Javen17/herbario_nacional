@@ -38,16 +38,18 @@ class PlantsFragment : Fragment() {
 
         setupRecycler()
 
-        plantViewModel.uiState.observe(viewLifecycleOwner, Observer {
+        plantViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
+                    println("Familia: ${result[1].family.name}")
+                    println(result)
                     plantAdapter.submitList(result)
                 }
             }
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
-                    //Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
+                    println("Error: ${error}")
                 }
             }
         })
@@ -58,7 +60,7 @@ class PlantsFragment : Fragment() {
 
     private fun setupRecycler(){
         rv_plants.apply {
-            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
             addItemDecoration(GridItemDecoration(4, 2))
             adapter = plantAdapter
         }

@@ -42,6 +42,7 @@ class NewPlantActivity : AppCompatActivity() {
     private val habitatDescriptionViewModel: HabitatDescriptionViewModel by viewModel()
     private val biostatusViewModel: BiostatusViewModel by viewModel()
     private val newPlantViewModel: NewPlantViewModel by viewModel()
+    private val plantViewModel: PlantViewModel by viewModel()
 
     private lateinit var familySpinner: Spinner
     private lateinit var genusSpinner: Spinner
@@ -211,6 +212,22 @@ class NewPlantActivity : AppCompatActivity() {
                 dataState.result.consume()?.let { result ->
                     result.forEach{
                         cities.add(it.name)
+                    }
+                }
+            }
+            if (dataState.error != null && !dataState.error.consumed){
+                dataState.error.consume()?.let { error ->
+                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+
+        plantViewModel.uiState.observe(this, Observer {
+            val dataState = it ?: return@Observer
+            if (dataState.result != null && !dataState.result.consumed){
+                dataState.result.consume()?.let { result ->
+                    result.forEach{
+                        println("País: ${it.country}")
                     }
                 }
             }
