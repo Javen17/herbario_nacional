@@ -18,8 +18,9 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
     fun bind(plant: PlantSpecimen, imageLoader: ImageLoader) {
         plantImage?.let { imageLoader.load(/*"${BuildConfig.HERBARIO_URL}/gallery/${plant.image}"*/ "https://source.unsplash.com/random", it) }
         plantName.text = plant.species.common_name
+        plantFamily.text = plant.family.name
         username.text = "${plant.user.first_name} ${plant.user.last_name}"
-        country.text = plant.country.name
+        country.text = "${plant.city.name}, ${plant.country.name}"
         registration_date.text = plant.date_received
     }
 

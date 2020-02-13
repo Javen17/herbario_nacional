@@ -49,7 +49,7 @@ class PlantsFragment : Fragment() {
             }
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
-                    println("Error: ${error}")
+                    println("Error: $error")
                 }
             }
         })
