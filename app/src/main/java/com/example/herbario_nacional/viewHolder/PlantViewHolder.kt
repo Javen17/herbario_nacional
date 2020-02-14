@@ -43,6 +43,9 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
         intent.putExtra("habitat", plant.ecosystem.name)
         intent.putExtra("habitatDescription", plant.recolection_area_status.name)
         intent.putExtra("biostatus", plant.biostatus.name)
+        intent.putExtra("location", "${plant.city.name}, ${plant.country.name}")
+        intent.putExtra("specificLocation", plant.location)
+        intent.putExtra("date", plant.date_received)
         intent.putExtra("recolector", "${plant.user.first_name} ${plant.user.last_name}")
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(intent)

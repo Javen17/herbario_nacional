@@ -55,15 +55,45 @@
                     app:layout_anchorGravity="top|left" />
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-            <TextView
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/leafIcon"
                 app:layout_constraintTop_toBottomOf="@id/picture"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_margin="20dp"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_leaf"
+                android:scaleX="1.2"
+                android:scaleY="1.2"
+            />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/header"
+                app:layout_constraintTop_toBottomOf="@id/leafIcon"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="Ficha Técnica"
+                android:textStyle="bold"
+                android:textColor="@color/primary"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/header"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:id="@+id/commonNameTitle"
                 android:layout_margin="20dp"
                 android:textColor="@color/dark_gray"
                 android:text="Nombre Común"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -75,7 +105,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginStart="20dp"
                 android:textColor="@color/dark_gray"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -88,7 +118,7 @@
                 android:textColor="@color/dark_gray"
                 android:text="Familia"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -100,7 +130,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginStart="20dp"
                 android:textColor="@color/dark_gray"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -113,7 +143,7 @@
                 android:textColor="@color/dark_gray"
                 android:text="Género"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -125,7 +155,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginStart="20dp"
                 android:textColor="@color/dark_gray"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -138,7 +168,7 @@
                 android:textColor="@color/dark_gray"
                 android:text="Especie"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -150,7 +180,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginStart="20dp"
                 android:textColor="@color/dark_gray"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -163,7 +193,7 @@
                 android:textColor="@color/dark_gray"
                 android:text="Hábitat"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -175,7 +205,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginStart="20dp"
                 android:textColor="@color/dark_gray"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -188,7 +218,7 @@
                 android:textColor="@color/dark_gray"
                 android:text="Descripción de Hábitat"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -200,7 +230,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginStart="20dp"
                 android:textColor="@color/dark_gray"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -213,7 +243,7 @@
                 android:textColor="@color/dark_gray"
                 android:text="Bioestado"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -225,7 +255,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginStart="20dp"
                 android:textColor="@color/dark_gray"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -233,12 +263,87 @@
             <TextView
                 app:layout_constraintTop_toBottomOf="@id/biostatus"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/locationTitle"
+                android:layout_margin="20dp"
+                android:textColor="@color/dark_gray"
+                android:text="Localización"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/locationTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/location"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/location"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/specificLocationTitle"
+                android:layout_margin="20dp"
+                android:textColor="@color/dark_gray"
+                android:text="Área de Recolección"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/specificLocationTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/specificLocation"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/specificLocation"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/dateTitle"
+                android:layout_margin="20dp"
+                android:textColor="@color/dark_gray"
+                android:text="Fecha de Recolección"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/dateTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/date"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/date"
+                app:layout_constraintLeft_toLeftOf="parent"
                 android:id="@+id/recolectorTitle"
                 android:layout_margin="20dp"
                 android:textColor="@color/dark_gray"
                 android:text="Recolector"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -250,7 +355,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginStart="20dp"
                 android:textColor="@color/dark_gray"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />

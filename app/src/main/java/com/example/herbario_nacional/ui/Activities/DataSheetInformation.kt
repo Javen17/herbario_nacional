@@ -22,6 +22,9 @@ class DataSheetInformation : AppCompatActivity() {
         habitat.text = intent.getStringExtra("habitat")
         habitatDescription.text = intent.getStringExtra("habitatDescription")
         biostatus.text = intent.getStringExtra("biostatus")
+        location.text = intent.getStringExtra("location")
+        specificLocation.text = intent.getStringExtra("specificLocation")
+        date.text = intent.getStringExtra("date")
         recolector.text = intent.getStringExtra("recolector")
 
         close_btn.setOnClickListener { showActivity(MainActivity::class.java) }
