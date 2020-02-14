@@ -16,6 +16,7 @@
         <activity android:name="com.example.herbario_nacional.ui.Activities.ForgottenPasswordActivity" />
         <activity android:name="com.example.herbario_nacional.ui.Activities.LoginActivity" />
         <activity android:name="com.example.herbario_nacional.ui.Activities.RegisterActivity" />
+        <activity android:name="com.example.herbario_nacional.ui.Activities.DataSheetInformation" />
         <activity
             android:name="com.example.herbario_nacional.ui.Activities.NoLoginActivity"
             android:configChanges="orientation|keyboardHidden"

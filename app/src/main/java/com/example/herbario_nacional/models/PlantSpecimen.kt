@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 data class PlantSpecimen(
+    val id: Int,
     val user: Register,
     val photo: String?,
     val date_received: String,
@@ -16,6 +17,7 @@ data class PlantSpecimen(
     val species: PlantSpecies,
     val status: Status,
     val number_of_samples: Int,
+    val biostatus: Biostatus,
     val description: String,
     val ecosystem: Ecosystem,
     val recolection_area_status: RecolectionAreaStatus,
