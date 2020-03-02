@@ -95,6 +95,7 @@ dependencies {
     testImplementation TestLibs.junit
     androidTestImplementation TestLibs.testrunner
     androidTestImplementation TestLibs.espresso
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha02'
 }
 
 configurations.all {
