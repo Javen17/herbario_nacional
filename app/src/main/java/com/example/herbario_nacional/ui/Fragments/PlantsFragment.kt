@@ -1,17 +1,15 @@
 package com.example.herbario_nacional.ui.Fragments
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.herbario_nacional.adapters.PlantAdapter
 
 import com.example.herbario_nacional.R
+import com.example.herbario_nacional.adapters.PlantAdapter
 import com.example.herbario_nacional.imageloader.ImageLoader
 import com.example.herbario_nacional.ui.viewModels.PlantViewModel
 import com.example.herbario_nacional.util.GridItemDecoration
