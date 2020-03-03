@@ -41,6 +41,7 @@ class PlantsFragment : Fragment() {
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     plantAdapter.submitList(result)
+                    loading.visibility = View.GONE
                 }
             }
             if (dataState.error != null && !dataState.error.consumed){
