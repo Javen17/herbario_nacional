@@ -37,7 +37,7 @@ class FungusViewModel(private val fungusRepository: FungusRepository): ViewModel
         showProgress: Boolean = false,
         result: Event<MutableList<FunghiSpecimen>>? = null,
         error: Event<Int>? = null){
-        val dataState = FungusViewModel.FunghiDataState(
+        val dataState = FunghiDataState(
             showProgress,
             result,
             error
