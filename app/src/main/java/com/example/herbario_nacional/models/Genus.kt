@@ -4,6 +4,7 @@ import androidx.annotation.Keep
 
 @Keep
 data class Genus(
+    val id: Int,
     val name: String,
     val family: PlantFamily,
     val type: String

@@ -17,12 +17,12 @@ import retrofit2.HttpException
 class RegisterViewModel (private val registerRepository: RegisterRepository): ViewModel()  {
     private val _uiState = MutableLiveData<RegisterDataState>()
     val uiState: LiveData<RegisterDataState> get() = _uiState
-    fun requestRegister(first_name: String, last_name: String, username: String, email: String, password: String, is_staff: Boolean, is_active: Boolean, is_superuser: Boolean, date_joined: String?, name: String, groups: Array<String?>, user_permissions: Array<String?>, last_login: String?){
+    fun requestRegister(first_name: String, last_name: String, username: String, email: String, password: String, is_staff: Boolean, is_active: Boolean, is_superuser: Boolean, date_joined: String?, name: String, last_login: String?){
         viewModelScope.launch {
             Retry().retryIO(times = 3){
                 runCatching {
                     emitUiState(showProgress = true)
-                    registerRepository.registerUser(Register(first_name, last_name, username, email, password, is_staff, is_active, is_superuser, date_joined, name, groups, user_permissions, last_login))
+                    registerRepository.registerUser(Register(first_name, last_name, username, email, password, is_staff, is_active, is_superuser, date_joined, name, last_login))
                 }.onSuccess {
                     emitUiState(result = Event(it))
                 }.onFailure {

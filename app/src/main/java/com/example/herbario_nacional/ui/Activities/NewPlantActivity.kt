@@ -5,22 +5,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import com.example.herbario_nacional.R
-import com.example.herbario_nacional.models.PlantSpecimen
 import com.example.herbario_nacional.models.PostPlantSpecimen
 import com.example.herbario_nacional.ui.viewModels.*
-import com.example.herbario_nacional.util.StatusCode
 import com.example.herbario_nacional.util.traveseAnyInput
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.gson.Gson
-import com.google.gson.JsonObject
+import com.isapanah.awesomespinner.AwesomeSpinner
 import kotlinx.android.synthetic.main.activity_new_plant.*
 import kotlinx.android.synthetic.main.new_plant.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -31,6 +26,7 @@ import kotlin.collections.ArrayList
 
 class NewPlantActivity : AppCompatActivity() {
 
+    private val meViewModel: MeViewModel by viewModel()
     private val countryViewModel: CountryViewModel by viewModel()
     private val stateViewModel: StateViewModel by viewModel()
     private val cityViewModel: CityViewModel by viewModel()
@@ -42,52 +38,76 @@ class NewPlantActivity : AppCompatActivity() {
     private val habitatDescriptionViewModel: HabitatDescriptionViewModel by viewModel()
     private val biostatusViewModel: BiostatusViewModel by viewModel()
     private val newPlantViewModel: NewPlantViewModel by viewModel()
-    private val plantViewModel: PlantViewModel by viewModel()
 
-    private lateinit var familySpinner: Spinner
-    private lateinit var genusSpinner: Spinner
-    private lateinit var specieSpinner: Spinner
-    private lateinit var plantStatusSpinner: Spinner
-    private lateinit var countrySpinner: Spinner
-    private lateinit var stateSpinner: Spinner
-    private lateinit var citySpinner: Spinner
-    private lateinit var habitatSpinner: Spinner
-    private lateinit var habitatDescriptionSpinner: Spinner
-    private lateinit var biostatusSpinner: Spinner
+    var currentUser: Int = 0
 
     val families: ArrayList<String> = ArrayList()
-    val genuses: ArrayList<String> = ArrayList()
-    val species: ArrayList<String> = ArrayList()
-    val status: ArrayList<String> = ArrayList()
-    val countries: ArrayList<String> = ArrayList()
-    val states: ArrayList<String> = ArrayList()
-    val cities: ArrayList<String> = ArrayList()
-    val habitats: ArrayList<String> = ArrayList()
-    val habitatDescription: ArrayList<String> = ArrayList()
-    val biostatus: ArrayList<String> = ArrayList()
+    val familyMap: MutableMap<Int, String> = mutableMapOf()
+    var selectedFamily: Int = 0
 
+    val genuses: ArrayList<String> = ArrayList()
+    val genusMap: MutableMap<Int, String> = mutableMapOf()
+    var selectedGenus: Int = 0
+
+    val species: ArrayList<String> = ArrayList()
+    val specieMap: MutableMap<Int, String> = mutableMapOf()
+    var selectedSpecie: Int = 0
+
+    val status: ArrayList<String> = ArrayList()
+    val statusMap: MutableMap<Int, String> = mutableMapOf()
+    var selectedStatus: Int = 0
+
+    val countries: ArrayList<String> = ArrayList()
+    val countryMap: MutableMap<Int, String> = mutableMapOf()
+    var selectedCountry: Int = 0
+
+    val states: ArrayList<String> = ArrayList()
+    val stateMap: MutableMap<Int, String> = mutableMapOf()
+    var selectedState: Int = 0
+
+    val cities: ArrayList<String> = ArrayList()
+    val cityMap: MutableMap<Int, String> = mutableMapOf()
+    var selectedCity: Int = 0
+
+    val habitats: ArrayList<String> = ArrayList()
+    val habitatMap: MutableMap<Int, String> = mutableMapOf()
+    var selectedHabitat: Int = 0
+
+    val habitatDescription: ArrayList<String> = ArrayList()
+    val habitatDescriptionMap: MutableMap<Int, String> = mutableMapOf()
+    var selectedHabitatDescription: Int = 0
+
+    val biostatus: ArrayList<String> = ArrayList()
+    val biostatusMap: MutableMap<Int, String> = mutableMapOf()
+    var selectedBiostatus: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_plant)
 
-        familySpinner = findViewById(R.id.family)
-        genusSpinner = findViewById(R.id.genus)
-        specieSpinner = findViewById(R.id.specie)
-        plantStatusSpinner = findViewById(R.id.plantStatus)
-        countrySpinner = findViewById(R.id.country)
-        stateSpinner = findViewById(R.id.state)
-        citySpinner = findViewById(R.id.city)
-        habitatSpinner = findViewById(R.id.habitat)
-        habitatDescriptionSpinner = findViewById(R.id.habitatDescription)
-        biostatusSpinner = findViewById(R.id.biostatus)
+        meViewModel.uiState.observe(this, Observer {
+            val dataState = it ?: return@Observer
+            if (dataState.result != null && !dataState.result.consumed){
+                dataState.result.consume()?.let { result ->
+                    currentUser = result.data.id
+                }
+            }
+            if (dataState.error != null && !dataState.error.consumed){
+                dataState.error.consume()?.let { error ->
+                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
+                }
+            }
+        })
 
         familyViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
-                        families.add(it.name)
+                        if (it.type == "planta") {
+                            familyMap[it.id] = it.name
+                            families.add(it.name)
+                        }
                     }
                 }
             }
@@ -98,16 +118,22 @@ class NewPlantActivity : AppCompatActivity() {
             }
         })
 
-        val familyAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, families)
-        familyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        familyAdapter.notifyDataSetChanged()
-        familySpinner.adapter = familyAdapter
+        val familySpinner = findViewById<View>(R.id.familySpinner) as AwesomeSpinner
+        val familiesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, families)
+        familySpinner.setAdapter(familiesAdapter)
+
+        familySpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
+            for ((id, value) in familyMap) {
+                if (value == itemAtPosition) selectedFamily = id
+            }
+        }
 
         genusViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
+                        genusMap[it.id] = it.name
                         genuses.add(it.name)
                     }
                 }
@@ -119,17 +145,23 @@ class NewPlantActivity : AppCompatActivity() {
             }
         })
 
-        val genusAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genuses)
-        genusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        genusAdapter.notifyDataSetChanged()
-        genusSpinner.adapter = genusAdapter
+        val genusSpinner = findViewById<View>(R.id.genusSpinner) as AwesomeSpinner
+        val genusesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, genuses)
+        genusSpinner.setAdapter(genusesAdapter)
+
+        genusSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
+            for ((id, value) in genusMap) {
+                if (value == itemAtPosition) selectedGenus = id
+            }
+        }
 
         specieViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
-                        species.add(it.scientific_name)
+                        specieMap[it.id] = it.common_name
+                        species.add(it.common_name)
                     }
                 }
             }
@@ -140,16 +172,22 @@ class NewPlantActivity : AppCompatActivity() {
             }
         })
 
-        val specieAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, species)
-        specieAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        specieAdapter.notifyDataSetChanged()
-        specieSpinner.adapter = specieAdapter
+        val specieSpinner = findViewById<View>(R.id.specieSpinner) as AwesomeSpinner
+        val speciesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, species)
+        specieSpinner.setAdapter(speciesAdapter)
+
+        specieSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
+            for ((id, value) in specieMap) {
+                if (value == itemAtPosition) selectedSpecie = id
+            }
+        }
 
         statusViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
+                        statusMap[it.id] = it.name
                         status.add(it.name)
                     }
                 }
@@ -161,16 +199,22 @@ class NewPlantActivity : AppCompatActivity() {
             }
         })
 
-        val statusAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, status)
-        statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        statusAdapter.notifyDataSetChanged()
-        plantStatusSpinner.adapter = statusAdapter
+        val statusSpinner = findViewById<View>(R.id.plantStatusSpinner) as AwesomeSpinner
+        val statusAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, status)
+        statusSpinner.setAdapter(statusAdapter)
+
+        statusSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
+            for ((id, value) in statusMap) {
+                if (value == itemAtPosition) selectedStatus = id
+            }
+        }
 
         countryViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
+                        countryMap[it.id] = it.name
                         countries.add(it.name)
                     }
                 }
@@ -182,15 +226,22 @@ class NewPlantActivity : AppCompatActivity() {
             }
         })
 
-        val countryAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, countries)
-        countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        countrySpinner.adapter = countryAdapter
+        val countrySpinner = findViewById<View>(R.id.countrySpinner) as AwesomeSpinner
+        val countriesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, countries)
+        countrySpinner.setAdapter(countriesAdapter)
+
+        countrySpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
+            for ((id, value) in countryMap) {
+                if (value == itemAtPosition) selectedCountry = id
+            }
+        }
 
         stateViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
+                        stateMap[it.id] = it.name
                         states.add(it.name)
                     }
                 }
@@ -202,15 +253,22 @@ class NewPlantActivity : AppCompatActivity() {
             }
         })
 
-        val stateAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, states)
-        stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        stateSpinner.adapter = stateAdapter
+        val stateSpinner = findViewById<View>(R.id.stateSpinner) as AwesomeSpinner
+        val statesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, states)
+        stateSpinner.setAdapter(statesAdapter)
+
+        stateSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
+            for ((id, value) in stateMap) {
+                if (value == itemAtPosition) selectedState = id
+            }
+        }
 
         cityViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
+                        cityMap[it.id] = it.name
                         cities.add(it.name)
                     }
                 }
@@ -222,31 +280,22 @@ class NewPlantActivity : AppCompatActivity() {
             }
         })
 
-        plantViewModel.uiState.observe(this, Observer {
-            val dataState = it ?: return@Observer
-            if (dataState.result != null && !dataState.result.consumed){
-                dataState.result.consume()?.let { result ->
-                    result.forEach{
-                        println("País: ${it.country}")
-                    }
-                }
-            }
-            if (dataState.error != null && !dataState.error.consumed){
-                dataState.error.consume()?.let { error ->
-                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
-                }
-            }
-        })
+        val citySpinner = findViewById<View>(R.id.citySpinner) as AwesomeSpinner
+        val citiesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cities)
+        citySpinner.setAdapter(citiesAdapter)
 
-        val cityAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, cities)
-        cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        citySpinner.adapter = cityAdapter
-
+        citySpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
+            for ((id, value) in cityMap) {
+                if (value == itemAtPosition) selectedCity = id
+            }
+        }
+        
         habitatViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
+                        habitatMap[it.id] = it.name
                         habitats.add(it.name)
                     }
                 }
@@ -258,16 +307,22 @@ class NewPlantActivity : AppCompatActivity() {
             }
         })
 
-        val habitatAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, habitats)
-        habitatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        habitatAdapter.notifyDataSetChanged()
-        habitatSpinner.adapter = habitatAdapter
+        val habitatSpinner = findViewById<View>(R.id.habitatSpinner) as AwesomeSpinner
+        val habitatsAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, habitats)
+        habitatSpinner.setAdapter(habitatsAdapter)
+
+        habitatSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
+            for ((id, value) in habitatMap) {
+                if (value == itemAtPosition) selectedHabitat = id
+            }
+        }
 
         habitatDescriptionViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
+                        habitatDescriptionMap[it.id] = it.name
                         habitatDescription.add(it.name)
                     }
                 }
@@ -279,16 +334,22 @@ class NewPlantActivity : AppCompatActivity() {
             }
         })
 
-        val habitatDescriptionAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, habitatDescription)
-        habitatDescriptionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        habitatDescriptionAdapter.notifyDataSetChanged()
-        habitatDescriptionSpinner.adapter = habitatDescriptionAdapter
+        val habitatDescriptionSpinner = findViewById<View>(R.id.habitatDescriptionSpinner) as AwesomeSpinner
+        val habitatDescriptionAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, habitatDescription)
+        habitatDescriptionSpinner.setAdapter(habitatDescriptionAdapter)
+
+        habitatDescriptionSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
+            for ((id, value) in habitatDescriptionMap) {
+                if (value == itemAtPosition) selectedHabitatDescription = id
+            }
+        }
 
         biostatusViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
+                        biostatusMap[it.id] = it.name
                         biostatus.add(it.name)
                     }
                 }
@@ -300,10 +361,15 @@ class NewPlantActivity : AppCompatActivity() {
             }
         })
 
-        val biostatusAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, biostatus)
-        biostatusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        biostatusAdapter.notifyDataSetChanged()
-        biostatusSpinner.adapter = biostatusAdapter
+        val biostatusSpinner = findViewById<View>(R.id.biostatusSpinner) as AwesomeSpinner
+        val biostatusAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, biostatus)
+        biostatusSpinner.setAdapter(biostatusAdapter)
+
+        biostatusSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
+            for ((id, value) in biostatusMap) {
+                if (value == itemAtPosition) selectedBiostatus = id
+            }
+        }
 
         cancel_btn.setOnClickListener {
             showActivity(MainActivity::class.java)
@@ -318,31 +384,29 @@ class NewPlantActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, getString(R.string.empty_fields_register), Toast.LENGTH_LONG).show()
             }
             else {
-                // Prueba
                 newPlantViewModel.requestPostPlant(
                     PostPlantSpecimen(
-                        user = 1,
+                        user = currentUser,
                         photo = null,
                         date_received = currentDate,
-                        biostatus = 1,
-                        family = 1,
-                        genus = 1,
-                        species = 1,
+                        biostatus = selectedBiostatus,
+                        family = selectedFamily,
+                        genus = selectedGenus,
+                        species = selectedSpecie,
                         complete = true,
-                        status = 1,
-                        number_of_samples = 5,
-                        description = "Rosa del monte",
-                        ecosystem = 1,
-                        recolection_area_status = 1,
-                        country = 1,
-                        state = 1,
-                        city = 1,
-                        latitude = null,
-                        longitude = null,
-                        location = "Nueva Segovia"
+                        status = selectedStatus,
+                        number_of_samples = latitudeInput.text.toString().toDouble().toInt(),
+                        description = plantDescriptionInput.text.toString(),
+                        ecosystem = selectedHabitat,
+                        recolection_area_status = selectedHabitatDescription,
+                        country = selectedCountry,
+                        state = selectedState,
+                        city = selectedCity,
+                        latitude = latitudeInput.text.toString().toDouble(),
+                        longitude = longitudeInput.text.toString().toDouble(),
+                        location = specificCollectionAreaInput.text.toString()
                     )
                 )
-
             }
         }
 
@@ -350,8 +414,7 @@ class NewPlantActivity : AppCompatActivity() {
             val dataState = it ?: return@Observer
             if (dataState.status != null && !dataState.status.consumed){
                 dataState.status.consume()?.let { status ->
-                    println("Estado: $status")
-                    if(status.result == "plant added") {
+                    if(status.result == "") {
                         Toast.makeText(applicationContext, getString(R.string.sucess), Toast.LENGTH_LONG).show()
                         showActivity(MainActivity::class.java)
                     }

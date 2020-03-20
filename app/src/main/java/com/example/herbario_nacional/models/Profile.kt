@@ -4,6 +4,7 @@ import androidx.annotation.Keep
 
 @Keep
 data class Profile(
+    val id: Int,
     val number_id: String,
     val phone: String = "",
     val photo: String? = null,

@@ -58,33 +58,81 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Spinner
-                android:id="@+id/family"
+            <TextView
+                android:id="@+id/familyLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
                 app:layout_constraintTop_toBottomOf="@id/commonNameTextInputLayout"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="Familia"
+                android:textSize="16sp" />
+
+            <com.isapanah.awesomespinner.AwesomeSpinner
+                android:id="@+id/familySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:spinnerDirection="ltr"
+                app:spinnerHint="Seleccione una familia"
+                app:layout_constraintTop_toBottomOf="@id/familyLabel"
+            />
+
+            <TextView
+                android:id="@+id/genusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toBottomOf="@id/familySpinner"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:text="Género"
+                android:textSize="16sp"
+                />
+
+            <com.isapanah.awesomespinner.AwesomeSpinner
+                android:id="@+id/genusSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:spinnerDirection="ltr"
+                app:spinnerHint="Seleccione un género"
+                app:layout_constraintTop_toBottomOf="@id/genusLabel"
+                />
+
+            <TextView
+                android:id="@+id/specieLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toBottomOf="@id/genusSpinner"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:text="Especie"
                 android:textSize="16sp"
             />
 
-            <Spinner
-                android:id="@+id/genus"
-                android:layout_width="wrap_content"
+            <com.isapanah.awesomespinner.AwesomeSpinner
+                android:id="@+id/specieSpinner"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/family"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:textSize="16sp"
-                android:layout_marginTop="20dp"
+                app:spinnerDirection="ltr"
+                app:spinnerHint="Seleccione una especie"
+                app:layout_constraintTop_toBottomOf="@id/specieLabel"
+                android:paddingBottom="20dp"
                 />
 
-            <Spinner
-                android:id="@+id/specie"
+            <TextView
+                android:id="@+id/plantDescriptionLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/genus"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toBottomOf="@id/specieSpinner"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="Descripción de especímen"
                 android:textSize="16sp"
-                android:layout_marginTop="20dp"
                 />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -93,30 +141,40 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/specimen_description"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@+id/specie"
+                app:layout_constraintTop_toBottomOf="@+id/plantDescriptionLabel"
                 android:paddingBottom="20dp"
-                android:paddingTop="20dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/plantDescriptionInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:gravity="top"
                     android:inputType="textMultiLine"
                     android:minLines="2"
-                    android:gravity="top"
-                    />
+                    android:textSize="16sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Spinner
-                android:id="@+id/plantStatus"
+            <TextView
+                android:id="@+id/plantStatusLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
                 app:layout_constraintTop_toBottomOf="@id/plantDescriptionTextInputLayout"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="Estado de Planta"
                 android:textSize="16sp"
+            />
+
+            <com.isapanah.awesomespinner.AwesomeSpinner
+                android:id="@+id/plantStatusSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:spinnerDirection="ltr"
+                app:spinnerHint="Seleccione el estado de la planta"
+                app:layout_constraintTop_toBottomOf="@id/plantStatusLabel"
                 />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -125,9 +183,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/number_specimens"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@+id/plantStatus"
-                android:paddingBottom="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/plantStatusSpinner"
                 android:paddingTop="20dp"
+                android:paddingBottom="20dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -152,33 +210,69 @@
                 android:paddingBottom="20dp"
                 />
 
-            <Spinner
-                android:id="@+id/country"
+            <TextView
+                android:id="@+id/countryLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
                 app:layout_constraintTop_toBottomOf="@id/location_data"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="País"
                 android:textSize="16sp"
             />
 
-            <Spinner
-                android:id="@+id/state"
-                android:layout_width="wrap_content"
+            <com.isapanah.awesomespinner.AwesomeSpinner
+                android:id="@+id/countrySpinner"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/country"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:textSize="16sp"
-                android:layout_marginTop="20dp"
-            />
+                app:spinnerDirection="ltr"
+                app:spinnerHint="Seleccione un país"
+                app:layout_constraintTop_toBottomOf="@id/countryLabel"
+                />
 
-            <Spinner
-                android:id="@+id/city"
+            <TextView
+                android:id="@+id/stateLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/state"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toBottomOf="@id/countrySpinner"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:textSize="16sp"
                 android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:text="Estado"
+                android:textSize="16sp"
+                />
+
+            <com.isapanah.awesomespinner.AwesomeSpinner
+                android:id="@+id/stateSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:spinnerDirection="ltr"
+                app:spinnerHint="Seleccione un estado"
+                app:layout_constraintTop_toBottomOf="@id/stateLabel"
+                />
+
+            <TextView
+                android:id="@+id/cityLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toBottomOf="@id/stateSpinner"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:text="Ciudad:"
+                android:textSize="16sp"
+                />
+
+            <com.isapanah.awesomespinner.AwesomeSpinner
+                android:id="@+id/citySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:spinnerDirection="ltr"
+                app:spinnerHint="Seleccione una ciudad"
+                app:layout_constraintTop_toBottomOf="@id/cityLabel"
                 />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -189,7 +283,7 @@
                 android:hint="@string/specific_collection_area"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/city"
+                app:layout_constraintTop_toBottomOf="@+id/citySpinner"
                 tools:layout_editor_absoluteX="24dp">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -265,33 +359,69 @@
                 android:paddingBottom="20dp"
                 />
 
-            <Spinner
-                android:id="@+id/habitat"
+            <TextView
+                android:id="@+id/habitatLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
                 app:layout_constraintTop_toBottomOf="@id/habitat_data"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="Habitat"
                 android:textSize="16sp"
                 />
 
-            <Spinner
-                android:id="@+id/habitatDescription"
-                android:layout_width="wrap_content"
+            <com.isapanah.awesomespinner.AwesomeSpinner
+                android:id="@+id/habitatSpinner"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/habitat"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:textSize="16sp"
-                android:layout_marginTop="20dp"
+                app:spinnerDirection="ltr"
+                app:spinnerHint="Seleccione un habitat"
+                app:layout_constraintTop_toBottomOf="@id/habitatLabel"
                 />
 
-            <Spinner
-                android:id="@+id/biostatus"
+            <TextView
+                android:id="@+id/habitatDescriptionLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/habitatDescription"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toBottomOf="@id/habitatSpinner"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:textSize="16sp"
                 android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:text="Descripción de Habitat"
+                android:textSize="16sp"
+                />
+
+            <com.isapanah.awesomespinner.AwesomeSpinner
+                android:id="@+id/habitatDescriptionSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:spinnerDirection="ltr"
+                app:spinnerHint="Seleccione una descripción de habitat"
+                app:layout_constraintTop_toBottomOf="@id/habitatDescriptionLabel"
+                />
+
+            <TextView
+                android:id="@+id/biostatusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toBottomOf="@id/habitatDescriptionSpinner"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:text="Bioestado"
+                android:textSize="16sp"
+                />
+
+            <com.isapanah.awesomespinner.AwesomeSpinner
+                android:id="@+id/biostatusSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:spinnerDirection="ltr"
+                app:spinnerHint="Seleccione un bioestado"
+                app:layout_constraintTop_toBottomOf="@id/biostatusLabel"
                 />
 
             <com.google.android.material.button.MaterialButton
@@ -302,7 +432,7 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 app:strokeColor="@color/colorPrimary"
                 android:textColor="@color/colorPrimary"
-                app:layout_constraintTop_toBottomOf="@id/biostatus"
+                app:layout_constraintTop_toBottomOf="@id/biostatusSpinner"
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:letterSpacing="0.05"

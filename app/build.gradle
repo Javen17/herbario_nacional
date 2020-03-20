@@ -75,6 +75,8 @@ dependencies {
     implementation Koin.scope
     implementation Koin.viewModel
     implementation Koin.extension
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     kapt Databinding.databinding
 
     implementation Coroutines.coroutine
@@ -96,6 +98,10 @@ dependencies {
     androidTestImplementation TestLibs.testrunner
     androidTestImplementation TestLibs.espresso
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha02'
+
+    implementation 'com.jaredrummler:material-spinner:1.3.1'
+
+    implementation 'com.github.sadra:AwesomeSpinner:1.5.2'
 }
 
 configurations.all {

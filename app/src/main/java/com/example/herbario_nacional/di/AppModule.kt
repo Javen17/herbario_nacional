@@ -22,6 +22,7 @@ val appModule = module {
     viewModel { HabitatDescriptionViewModel(get()) }
     viewModel { BiostatusViewModel(get()) }
     viewModel { PlantViewModel(get()) }
+    viewModel { FungusViewModel(get()) }
     viewModel { NewPlantViewModel(get()) }
 
     single<CredentialsRepository> {
@@ -74,6 +75,10 @@ val appModule = module {
 
     single<PlantRepository> {
         PlantRepositoryImpl(get())
+    }
+
+    single<FungusRepository> {
+        FunghusRepositoryImpl(get())
     }
 
     single<ProfileRepository> {

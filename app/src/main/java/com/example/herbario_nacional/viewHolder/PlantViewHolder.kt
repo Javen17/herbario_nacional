@@ -9,7 +9,7 @@ import com.example.herbario_nacional.R
 import com.example.herbario_nacional.base.BaseApplication.Companion.context
 import com.example.herbario_nacional.imageloader.ImageLoader
 import com.example.herbario_nacional.models.PlantSpecimen
-import com.example.herbario_nacional.ui.Activities.DataSheetInformation
+import com.example.herbario_nacional.ui.Activities.DataSheetInformationPlant
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.plant_content.*
 
@@ -17,10 +17,10 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
 
     fun bind(plant: PlantSpecimen, imageLoader: ImageLoader) {
         plant_content.setOnClickListener{
-            showActivity(DataSheetInformation::class.java, plant)
+            showActivity(DataSheetInformationPlant::class.java, plant)
         }
 
-        plantImage?.let { imageLoader.load(/*"${BuildConfig.HERBARIO_URL}/gallery/${plant.image}"*/ "https://source.unsplash.com/random", it) }
+        plantImage?.let { imageLoader.load(/*"${BuildConfig.HERBARIO_URL}/media/uploads/specimen/${plant.image}"*/ "https://source.unsplash.com/random", it) }
         plantName.text = "${plant.species.common_name}"
         plantFamily.text = plant.family.name
         username.text = "${plant.user.first_name} ${plant.user.last_name}"

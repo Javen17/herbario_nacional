@@ -47,12 +47,10 @@ class RegisterActivity : AppCompatActivity() {
                     is_superuser = false,
                     date_joined = currentDate,
                     name = nameInput.text.toString(),
-                    groups = arrayOf(),
-                    user_permissions = arrayOf(),
+                    //groups = arrayOf(),
+                    //user_permissions = arrayOf(),
                     last_login = null
                 )
-
-
             }
         }
 

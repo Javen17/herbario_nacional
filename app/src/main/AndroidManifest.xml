@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.herbario_nacional">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".base.BaseApplication"
@@ -12,17 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.herbario_nacional.ui.Activities.NewFungusActivity"></activity>
-        <activity android:name="com.example.herbario_nacional.ui.Activities.ForgottenPasswordActivity" />
-        <activity android:name="com.example.herbario_nacional.ui.Activities.LoginActivity" />
-        <activity android:name="com.example.herbario_nacional.ui.Activities.RegisterActivity" />
-        <activity android:name="com.example.herbario_nacional.ui.Activities.DataSheetInformation" />
+        <activity android:name=".ui.Activities.DataSheetInformationFungus"></activity>
+        <activity android:name=".ui.Activities.NewFungusActivity" />
+        <activity android:name=".ui.Activities.ForgottenPasswordActivity" />
+        <activity android:name=".ui.Activities.LoginActivity" />
+        <activity android:name=".ui.Activities.RegisterActivity" />
+        <activity android:name=".ui.Activities.DataSheetInformationPlant" />
         <activity
-            android:name="com.example.herbario_nacional.ui.Activities.NoLoginActivity"
+            android:name=".ui.Activities.NoLoginActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name="com.example.herbario_nacional.ui.Activities.NewPlantActivity" />
-        <activity android:name="com.example.herbario_nacional.ui.Activities.MainActivity">
+        <activity android:name=".ui.Activities.NewPlantActivity" />
+        <activity android:name=".ui.Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

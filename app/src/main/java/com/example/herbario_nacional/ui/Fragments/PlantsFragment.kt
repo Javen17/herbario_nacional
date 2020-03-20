@@ -21,7 +21,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlantsFragment : Fragment() {
     private val imageLoader: ImageLoader by inject()
-    private lateinit var skeleton: Skeleton
     private val plantAdapter: PlantAdapter by lazy { PlantAdapter(imageLoader) }
     private val plantViewModel: PlantViewModel by viewModel()
 
@@ -58,10 +57,4 @@ class PlantsFragment : Fragment() {
         }
     }
 
-    private fun setupSkeleton(){
-        skeleton = rv_plants.applySkeleton(R.layout.plant_card, 6)
-        skeleton.showShimmer = true
-        skeleton.shimmerDurationInMillis = 900
-        skeleton.maskCornerRadius = 0f
-    }
 }

@@ -17,16 +17,14 @@ import com.example.herbario_nacional.util.GridItemDecoration
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import kotlinx.android.synthetic.main.fragment_fungi.*
+import kotlinx.android.synthetic.main.fragment_fungi.loading
+import kotlinx.android.synthetic.main.fragment_plants.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-/**
- * A simple [Fragment] subclass.
- */
 class FungiFragment : Fragment() {
 
     private val imageLoader: ImageLoader by inject()
-    private lateinit var skeleton: Skeleton
     private val fungiAdapter: FungiAdapter by lazy{ FungiAdapter(imageLoader)}
     private val fungusViewModel: FungusViewModel by viewModel()
 
@@ -44,7 +42,7 @@ class FungiFragment : Fragment() {
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     fungiAdapter.submitList(result)
-
+                    loading.visibility = View.GONE
                 }
             }
             if (dataState.error != null && !dataState.error.consumed){
@@ -62,13 +60,4 @@ class FungiFragment : Fragment() {
             adapter = fungiAdapter
         }
     }
-
-    private fun setupSkeleton(){
-        skeleton = rv_fungus.applySkeleton(R.layout.fungus_card, 6)
-        skeleton.showShimmer = true
-        skeleton.shimmerDurationInMillis = 900
-        skeleton.maskCornerRadius = 0f
-    }
-
-
 }

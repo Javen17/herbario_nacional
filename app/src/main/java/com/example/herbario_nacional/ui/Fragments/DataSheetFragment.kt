@@ -1,7 +1,6 @@
 package com.example.herbario_nacional.ui.Fragments
 
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import androidx.viewpager.widget.ViewPager
 import com.example.herbario_nacional.adapters.PagerAdapter
 
 import com.example.herbario_nacional.R
-import com.example.herbario_nacional.ui.Activities.DataSheetInformation
 import com.google.android.material.tabs.TabLayout
 
 class DataSheetFragment : Fragment() {

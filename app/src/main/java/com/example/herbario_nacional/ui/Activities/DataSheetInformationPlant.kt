@@ -6,13 +6,13 @@ import android.os.Bundle
 import coil.api.load
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.imageloader.ImageLoader
-import kotlinx.android.synthetic.main.activity_data_sheet_information.*
+import kotlinx.android.synthetic.main.activity_data_sheet_information_plant.*
 
-class DataSheetInformation : AppCompatActivity() {
+class DataSheetInformationPlant : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_data_sheet_information)
+        setContentView(R.layout.activity_data_sheet_information_plant)
 
         plant_picture.load("https://source.unsplash.com/random")
         commonName.text = intent.getStringExtra("commonName")
