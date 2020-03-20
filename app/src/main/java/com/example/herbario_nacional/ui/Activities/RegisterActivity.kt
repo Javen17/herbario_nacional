@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.herbario_nacional.R
+import com.example.herbario_nacional.models.Register
 import com.example.herbario_nacional.ui.viewModels.ProfileViewModel
 import com.example.herbario_nacional.ui.viewModels.RegisterViewModel
 import com.example.herbario_nacional.util.traveseAnyInput
@@ -37,19 +38,21 @@ class RegisterActivity : AppCompatActivity() {
             }
             else {
                 registerViewModel.requestRegister(
-                    first_name = nameInput.text.toString(),
-                    last_name = lastnameInput.text.toString(),
-                    username = usernameInput.text.toString(),
-                    email = emailInput.text.toString(),
-                    password = passwordInput.text.toString(),
-                    is_staff = false,
-                    is_active = true,
-                    is_superuser = false,
-                    date_joined = currentDate,
-                    name = nameInput.text.toString(),
-                    //groups = arrayOf(),
-                    //user_permissions = arrayOf(),
-                    last_login = null
+                    Register(
+                        first_name = nameInput.text.toString(),
+                        last_name = lastnameInput.text.toString(),
+                        username = usernameInput.text.toString(),
+                        email = emailInput.text.toString(),
+                        password = passwordInput.text.toString(),
+                        is_staff = false,
+                        is_active = true,
+                        is_superuser = false,
+                        date_joined = currentDate,
+                        name = nameInput.text.toString(),
+                        //groups = arrayOf(),
+                        //user_permissions = arrayOf(),
+                        last_login = null
+                    )
                 )
             }
         }

@@ -1,6 +1,5 @@
 package com.example.herbario_nacional.ui.viewModels
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +8,6 @@ import com.example.herbario_nacional.R
 import com.example.herbario_nacional.data.network.Retry
 import com.example.herbario_nacional.models.Credentials
 import com.example.herbario_nacional.models.Status
-import com.example.herbario_nacional.preferences.AppPreferences
 import com.example.herbario_nacional.repo.CredentialsRepository
 import com.example.herbario_nacional.ui.Event
 import com.example.herbario_nacional.util.StatusCode
@@ -50,5 +48,4 @@ class CredentialsViewModel (private val credentialsRepository: CredentialsReposi
     }
 
     data class CredentialsDataState(val showProgress: Boolean, val result: Event<Status>?, val error: Event<Int>?)
-
 }
