@@ -10,22 +10,19 @@ import com.example.herbario_nacional.repo.PlantRepository
 import com.example.herbario_nacional.ui.Event
 import kotlinx.coroutines.launch
 
-class PlantViewModel (private val plantRepository: PlantRepository): ViewModel() {
+class SearchViewModel (private val plantRepository: PlantRepository): ViewModel() {
 
     private val _uiState = MutableLiveData<PlantDataState>()
 
     val uiState: LiveData<PlantDataState>
         get() = _uiState
 
-    init {
-        requestPlant()
-    }
-
-    private fun requestPlant() {
+    fun searchPlantByName(value: String) {
         viewModelScope.launch {
             runCatching {
                 emitUiState(showProgress = true)
-                plantRepository.getPlants()
+                plantRepository.searchByName(value)
+
             }.onSuccess {
                 emitUiState(result = Event(it))
             }.onFailure {

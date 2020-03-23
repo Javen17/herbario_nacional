@@ -23,6 +23,7 @@ val appModule = module {
     viewModel { BiostatusViewModel(get()) }
     viewModel { PlantViewModel(get()) }
     viewModel { NewPlantViewModel(get()) }
+    viewModel { SearchViewModel(get()) }
 
     single<CredentialsRepository> {
         CredentialsRepositoryImpl(get())

@@ -9,6 +9,7 @@ import com.example.herbario_nacional.util.StatusCode
 interface PlantRepository {
     suspend fun getPlants(): MutableList<PlantSpecimen>
     suspend fun postPlant(data: PostPlantSpecimen): Status
+    suspend fun searchByName(value: String): MutableList<PlantSpecimen>
 }
 
 class PlantRepositoryImpl(private val plantService: PlantInterface): PlantRepository{
@@ -18,5 +19,9 @@ class PlantRepositoryImpl(private val plantService: PlantInterface): PlantReposi
 
     override suspend fun postPlant(data: PostPlantSpecimen): Status {
         return plantService.requestPostPlant(data)
+    }
+
+    override suspend fun searchByName(value: String): MutableList<PlantSpecimen> {
+        return plantService.searchPlantByName(value)
     }
 }

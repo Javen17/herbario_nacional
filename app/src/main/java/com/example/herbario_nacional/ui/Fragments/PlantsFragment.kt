@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 
@@ -24,6 +25,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlantsFragment : Fragment() {
+
     private val imageLoader: ImageLoader by inject()
     private lateinit var skeleton: Skeleton
     private val plantAdapter: PlantAdapter by lazy { PlantAdapter(imageLoader) }
@@ -43,7 +45,6 @@ class PlantsFragment : Fragment() {
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     println("Familia: ${result[1].family.name}")
-                    println(result)
                     plantAdapter.submitList(result)
                 }
             }
@@ -53,9 +54,6 @@ class PlantsFragment : Fragment() {
                 }
             }
         })
-
-        //plantAdapter.submitList(plants)
-        //setupSkeleton()
     }
 
     private fun setupRecycler(){
