@@ -23,7 +23,10 @@ val appModule = module {
     viewModel { BiostatusViewModel(get()) }
     viewModel { PlantViewModel(get()) }
     viewModel { FungusViewModel(get()) }
+    viewModel { FormTypeViewModel(get()) }
+    viewModel { CapTypeViewModel(get()) }
     viewModel { NewPlantViewModel(get()) }
+    viewModel { NewFungusViewModel(get()) }
 
     single<CredentialsRepository> {
         CredentialsRepositoryImpl(get())
@@ -51,6 +54,14 @@ val appModule = module {
 
     single<GenusRepository> {
         GenusRepositoryImpl(get())
+    }
+
+    single<FormTypeRepository> {
+        FormTypeRepositoryImpl(get())
+    }
+
+    single<CapTypeRepository> {
+        CapTypeRepositoryImpl(get())
     }
 
     single<SpecieRepository> {

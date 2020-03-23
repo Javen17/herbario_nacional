@@ -2,12 +2,14 @@ package com.example.herbario_nacional.ui.Activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.ui.viewModels.CredentialsViewModel
 import com.example.herbario_nacional.util.traveseAnyInput
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.back_btn
 import org.koin.androidx.viewmodel.ext.android.viewModel

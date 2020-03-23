@@ -25,7 +25,8 @@ class FungusViewHolder constructor(override val containerView: View) : RecyclerV
         fungusImage?.let { imageLoader.load(/*"${BuildConfig.HERBARIO_URL}/gallery/${plant.image}"*/ "https://source.unsplash.com/random", it) }
         fungusName.text = funghi.species.common_name
         fungusFamily.text = funghi.family.name
-        username.text = "${funghi.user.first_name}, ${funghi.user.last_name}"
+        username.text = "${funghi.user.first_name} ${funghi.user.last_name}"
+        country.text = "${funghi.city.name}, ${funghi.country.name}"
         registration_date.text = funghi.date_received
     }
 

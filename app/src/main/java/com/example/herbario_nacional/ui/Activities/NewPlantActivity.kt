@@ -25,7 +25,6 @@ import kotlin.collections.ArrayList
 
 
 class NewPlantActivity : AppCompatActivity() {
-
     private val meViewModel: MeViewModel by viewModel()
     private val countryViewModel: CountryViewModel by viewModel()
     private val stateViewModel: StateViewModel by viewModel()
@@ -395,7 +394,7 @@ class NewPlantActivity : AppCompatActivity() {
                         species = selectedSpecie,
                         complete = true,
                         status = selectedStatus,
-                        number_of_samples = latitudeInput.text.toString().toDouble().toInt(),
+                        number_of_samples = numberSpecimensInput.text.toString().toInt(),
                         description = plantDescriptionInput.text.toString(),
                         ecosystem = selectedHabitat,
                         recolection_area_status = selectedHabitatDescription,
