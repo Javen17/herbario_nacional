@@ -39,7 +39,7 @@ class SearchFragment : Fragment() {
 
         setupRecycler()
 
-        searchViewModel.uiState.observe(this, Observer {
+        searchViewModel.uiState.observe(viewLifecycleOwner, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
@@ -58,7 +58,11 @@ class SearchFragment : Fragment() {
             override fun onQueryTextSubmit(s:String):Boolean {
 
                 searchViewModel.searchPlantByName(s)
+
                 Toast.makeText(context, "Keep a gold chain in my neck", Toast.LENGTH_SHORT).show()
+
+
+
                 return false
             }
 

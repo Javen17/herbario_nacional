@@ -40,7 +40,7 @@ class PlantsFragment : Fragment() {
 
         setupRecycler()
 
-        plantViewModel.uiState.observe(this, Observer {
+        plantViewModel.uiState.observe(viewLifecycleOwner, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->

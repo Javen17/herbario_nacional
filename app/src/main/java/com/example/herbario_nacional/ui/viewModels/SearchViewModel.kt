@@ -9,6 +9,8 @@ import com.example.herbario_nacional.models.PlantSpecimen
 import com.example.herbario_nacional.repo.PlantRepository
 import com.example.herbario_nacional.ui.Event
 import kotlinx.coroutines.launch
+import java.io.PrintWriter
+import java.io.StringWriter
 
 class SearchViewModel (private val plantRepository: PlantRepository): ViewModel() {
 
@@ -22,10 +24,13 @@ class SearchViewModel (private val plantRepository: PlantRepository): ViewModel(
             runCatching {
                 emitUiState(showProgress = true)
                 plantRepository.searchByName(value)
-
             }.onSuccess {
                 emitUiState(result = Event(it))
             }.onFailure {
+                val sw = StringWriter()
+                it.printStackTrace(PrintWriter(sw))
+                val exceptionAsString = sw.toString()
+                println(exceptionAsString)
                 emitUiState(error = Event(R.string.internet_connection_error))
             }
         }
