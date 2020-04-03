@@ -16,6 +16,8 @@ import com.example.herbario_nacional.ui.Event
 import com.example.herbario_nacional.util.StatusCode
 import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.HttpException
 
 class NewPlantViewModel (private val plantRepository: PlantRepository): ViewModel()  {
@@ -23,12 +25,44 @@ class NewPlantViewModel (private val plantRepository: PlantRepository): ViewMode
 
     val uiState: LiveData<PlantDataState> get() = _uiState
 
-    fun requestPostPlant(plant: PostPlantSpecimen){
+    fun requestPostPlant(
+        photo: MultipartBody.Part,
+        user: RequestBody,
+        date_received: RequestBody,
+        biostatus: RequestBody,
+        species: RequestBody,
+        complete: RequestBody,
+        status: RequestBody,
+        number_of_samples: RequestBody,
+        description: RequestBody,
+        ecosystem: RequestBody,
+        recolection_area_status: RequestBody,
+        city: RequestBody,
+        latitude: RequestBody,
+        longitude: RequestBody,
+        location: RequestBody
+    ){
         viewModelScope.launch {
             Retry().retryIO(times = 3){
                 runCatching {
                     emitUiState(showProgress = true)
-                    plantRepository.postPlant(plant)
+                    plantRepository.postPlant(
+                        photo,
+                        user,
+                        date_received,
+                        biostatus,
+                        species,
+                        complete,
+                        status,
+                        number_of_samples,
+                        description,
+                        ecosystem,
+                        recolection_area_status,
+                        city,
+                        latitude,
+                        longitude,
+                        location
+                    )
                 }.onSuccess {
                     emitUiState(status = Event(it))
                 }.onFailure {

@@ -57,7 +57,7 @@ class HeaderInterceptor : Interceptor {
             }
             PLANT_SPECIMEN -> {
                 requestBuilder
-                    .addHeader("Content-Type", "application/json")
+                    .addHeader("Content-Type","multipart/form-data")
             }
             FUNGHI_SPECIMEN -> {
                 requestBuilder

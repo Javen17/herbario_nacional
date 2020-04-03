@@ -14,7 +14,7 @@
     <string name="login_success">Inicio de sesión exitoso.</string>
     <string name="register_success">Registro exitoso. Inicie sesión.</string>
     <string name="unauthorized">No autorizado</string>
-    <string name="internet_connection_error">Problemas de conexión a Internet</string>
+    <string name="internet_connection_error">Ha ocurrido un error. Inténtelo nuevamente.</string>
 
     <!-- Datos de Colector -->
     <!-- hints -->

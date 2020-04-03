@@ -11,7 +11,7 @@
     <ImageView
         android:id="@+id/plant_picture"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="260dp"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/plants"
@@ -29,6 +29,6 @@
         app:layout_anchor="@id/plant_picture"
         />
 
-    <include layout="@layout/new_plant"/>
+    <include layout="@layout/new_plant" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

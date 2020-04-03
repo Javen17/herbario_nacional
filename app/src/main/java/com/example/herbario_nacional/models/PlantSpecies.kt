@@ -7,7 +7,7 @@ data class PlantSpecies(
     val id: Int,
     val common_name: String,
     val scientific_name: String,
-    val family: PlantFamily,
+    // val family: PlantFamily,
     val genus: Genus,
     val description: String,
     val photoURL: String,

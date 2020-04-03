@@ -21,10 +21,10 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
         }
 
         plantImage?.let { imageLoader.load(/*"${BuildConfig.HERBARIO_URL}/media/uploads/specimen/${plant.image}"*/ "https://source.unsplash.com/random", it) }
-        plantName.text = "${plant.species.common_name}"
-        plantFamily.text = plant.family.name
+        plantName.text = plant.species.common_name
+        plantFamily.text = plant.species.genus.family.name
         username.text = "${plant.user.first_name} ${plant.user.last_name}"
-        country.text = "${plant.city.name}, ${plant.country.name}"
+        country.text = "${plant.city.name}, ${plant.city.state.country.name}"
         registration_date.text = plant.date_received
     }
 
@@ -37,13 +37,13 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
     private fun showActivity(activityClass: Class<*>, plant: PlantSpecimen) {
         val intent = Intent(context, activityClass)
         intent.putExtra("commonName", plant.species.common_name)
-        intent.putExtra("family", plant.family.name)
+        intent.putExtra("family", plant.species.genus.family.name)
         intent.putExtra("genus", plant.species.genus.name)
         intent.putExtra("specie", plant.species.scientific_name)
         intent.putExtra("habitat", plant.ecosystem.name)
         intent.putExtra("habitatDescription", plant.recolection_area_status.name)
         intent.putExtra("biostatus", plant.biostatus.name)
-        intent.putExtra("location", "${plant.city.name}, ${plant.country.name}")
+        intent.putExtra("location", "${plant.city.name}, ${plant.city.state.country.name}")
         intent.putExtra("specificLocation", plant.location)
         intent.putExtra("date", plant.date_received)
         intent.putExtra("recolector", "${plant.user.first_name} ${plant.user.last_name}")

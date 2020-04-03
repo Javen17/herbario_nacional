@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.fungus_content.*
 
 class FungusViewHolder constructor(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer{
 
-    @SuppressLint("SetTextI18n")
     fun bind(funghi: FunghiSpecimen, imageLoader: ImageLoader) {
         fungus_content.setOnClickListener {
             showActivity(DataSheetInformationFungus::class.java, funghi)
@@ -24,12 +23,11 @@ class FungusViewHolder constructor(override val containerView: View) : RecyclerV
 
         fungusImage?.let { imageLoader.load(/*"${BuildConfig.HERBARIO_URL}/gallery/${plant.image}"*/ "https://source.unsplash.com/random", it) }
         fungusName.text = funghi.species.common_name
-        fungusFamily.text = funghi.family.name
+        fungusFamily.text = funghi.species.genus.family.name
         username.text = "${funghi.user.first_name} ${funghi.user.last_name}"
-        country.text = "${funghi.city.name}, ${funghi.country.name}"
+        country.text = "${funghi.city.name}, ${funghi.city.state.country.name}"
         registration_date.text = funghi.date_received
     }
-
 
     companion object {
         fun create(parent: ViewGroup): FungusViewHolder {
@@ -41,12 +39,12 @@ class FungusViewHolder constructor(override val containerView: View) : RecyclerV
         val intent = Intent(BaseApplication.context, activityClass)
 
         intent.putExtra("commonName", funghi.species.common_name)
-        intent.putExtra("family", funghi.family.name)
+        intent.putExtra("family", funghi.species.genus.family.name)
         intent.putExtra("genus", funghi.species.genus.name)
         intent.putExtra("specie", funghi.species.scientific_name)
         intent.putExtra("habitat", funghi.ecosystem.name)
         intent.putExtra("habitatDescription", funghi.recolection_area_status.name)
-        intent.putExtra("location", "${funghi.city.name}, ${funghi.country.name}")
+        intent.putExtra("location", "${funghi.city.name}, ${funghi.city.state.country.name}")
         intent.putExtra("specificLocation", funghi.location)
         intent.putExtra("date", funghi.date_received)
         intent.putExtra("recolector", "${funghi.user.first_name} ${funghi.user.last_name}")

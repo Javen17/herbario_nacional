@@ -132,52 +132,12 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/phoneNumberTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/cellphoneNumber"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@id/lastnameTextInputLayout"
-                android:layout_marginTop="20dp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/phoneNumberInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:inputType="phone"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/referenceNumberTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/referenceNumber"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@id/phoneNumberTextInputLayout"
-                android:layout_marginTop="20dp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/referenceNumberInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:inputType="text"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/usernameTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/username"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@id/referenceNumberTextInputLayout"
+                app:layout_constraintTop_toBottomOf="@id/lastnameTextInputLayout"
                 android:layout_marginTop="20dp"
                 >
 
