@@ -16,9 +16,11 @@ class DataSheetInformationPlant : AppCompatActivity() {
 
         plant_picture.load("https://source.unsplash.com/random")
         commonName.text = intent.getStringExtra("commonName")
+        scientificName.text = intent.getStringExtra("scientificName")
         family.text = intent.getStringExtra("family")
         genus.text = intent.getStringExtra("genus")
         specie.text = intent.getStringExtra("specie")
+        plantDescription.text = intent.getStringExtra("plantDescription")
         habitat.text = intent.getStringExtra("habitat")
         habitatDescription.text = intent.getStringExtra("habitatDescription")
         biostatus.text = intent.getStringExtra("biostatus")

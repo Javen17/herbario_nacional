@@ -10,11 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
+import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.ui.viewModels.*
 import com.example.herbario_nacional.util.traveseAnyInput
@@ -38,8 +40,6 @@ class NewPlantActivity : AppCompatActivity() {
     private val countryViewModel: CountryViewModel by viewModel()
     private val stateViewModel: StateViewModel by viewModel()
     private val cityViewModel: CityViewModel by viewModel()
-    private val familyViewModel: FamilyViewModel by viewModel()
-    private val genusViewModel: GenusViewModel by viewModel()
     private val specieViewModel: SpecieViewModel by viewModel()
     private val statusViewModel: StatusViewModel by viewModel()
     private val habitatViewModel: HabitatViewModel by viewModel()
@@ -49,35 +49,35 @@ class NewPlantActivity : AppCompatActivity() {
 
     var currentUser: Int = 0
 
-    val species: ArrayList<String> = ArrayList()
+    val species: MutableList<String> = ArrayList()
     val specieMap: MutableMap<Int, String> = mutableMapOf()
     var selectedSpecie: Int = 0
 
-    val status: ArrayList<String> = ArrayList()
+    val status: MutableList<String> = ArrayList()
     val statusMap: MutableMap<Int, String> = mutableMapOf()
     var selectedStatus: Int = 0
 
-    val countries: ArrayList<String> = ArrayList()
+    val countries: MutableList<String> = ArrayList()
     val countryMap: MutableMap<Int, String> = mutableMapOf()
     var selectedCountry: Int = 0
 
-    val states: ArrayList<String> = ArrayList()
+    val states: MutableList<String> = ArrayList()
     val stateMap: MutableMap<Int, String> = mutableMapOf()
     var selectedState: Int = 0
 
-    val cities: ArrayList<String> = ArrayList()
+    val cities: MutableList<String> = ArrayList()
     val cityMap: MutableMap<Int, String> = mutableMapOf()
     var selectedCity: Int = 0
 
-    val habitats: ArrayList<String> = ArrayList()
+    val habitats: MutableList<String> = ArrayList()
     val habitatMap: MutableMap<Int, String> = mutableMapOf()
     var selectedHabitat: Int = 0
 
-    val habitatDescription: ArrayList<String> = ArrayList()
+    val habitatDescription: MutableList<String> = ArrayList()
     val habitatDescriptionMap: MutableMap<Int, String> = mutableMapOf()
     var selectedHabitatDescription: Int = 0
 
-    val biostatus: ArrayList<String> = ArrayList()
+    val biostatus: MutableList<String> = ArrayList()
     val biostatusMap: MutableMap<Int, String> = mutableMapOf()
     var selectedBiostatus: Int = 0
 
@@ -111,6 +111,19 @@ class NewPlantActivity : AppCompatActivity() {
                         species.add(it.common_name)
                     }
                 }
+                val specieSpinner: SmartMaterialSpinner<String> = findViewById(R.id.specieSpinner)
+                specieSpinner.item = species
+
+                specieSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        for ((specieId, value) in specieMap) {
+                            if (value == species[position]) selectedSpecie = specieId
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        TODO("Not yet implemented")
+                    }
+                }
             }
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
@@ -118,16 +131,6 @@ class NewPlantActivity : AppCompatActivity() {
                 }
             }
         })
-
-        val specieSpinner = findViewById<View>(R.id.specieSpinner) as AwesomeSpinner
-        val speciesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, species)
-        specieSpinner.setAdapter(speciesAdapter)
-
-        specieSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in specieMap) {
-                if (value == itemAtPosition) selectedSpecie = id
-            }
-        }
 
         statusViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
@@ -138,6 +141,19 @@ class NewPlantActivity : AppCompatActivity() {
                         status.add(it.name)
                     }
                 }
+                val plantStatusSpinner: SmartMaterialSpinner<String> = findViewById(R.id.plantStatusSpinner)
+                plantStatusSpinner.item = status
+
+                plantStatusSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        for ((statusId, value) in statusMap) {
+                            if (value == status[position]) selectedStatus = statusId
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        TODO("Not yet implemented")
+                    }
+                }
             }
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
@@ -145,16 +161,6 @@ class NewPlantActivity : AppCompatActivity() {
                 }
             }
         })
-
-        val statusSpinner = findViewById<View>(R.id.plantStatusSpinner) as AwesomeSpinner
-        val statusAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, status)
-        statusSpinner.setAdapter(statusAdapter)
-
-        statusSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in statusMap) {
-                if (value == itemAtPosition) selectedStatus = id
-            }
-        }
 
         countryViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
@@ -165,6 +171,19 @@ class NewPlantActivity : AppCompatActivity() {
                         countries.add(it.name)
                     }
                 }
+                val countrySpinner: SmartMaterialSpinner<String> = findViewById(R.id.countrySpinner)
+                countrySpinner.item = countries
+
+                countrySpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        for ((countryId, value) in countryMap) {
+                            if (value == countries[position]) selectedCountry = countryId
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        TODO("Not yet implemented")
+                    }
+                }
             }
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
@@ -172,16 +191,6 @@ class NewPlantActivity : AppCompatActivity() {
                 }
             }
         })
-
-        val countrySpinner = findViewById<View>(R.id.countrySpinner) as AwesomeSpinner
-        val countriesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, countries)
-        countrySpinner.setAdapter(countriesAdapter)
-
-        countrySpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in countryMap) {
-                if (value == itemAtPosition) selectedCountry = id
-            }
-        }
 
         stateViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
@@ -192,6 +201,19 @@ class NewPlantActivity : AppCompatActivity() {
                         states.add(it.name)
                     }
                 }
+                val stateSpinner: SmartMaterialSpinner<String> = findViewById(R.id.stateSpinner)
+                stateSpinner.item = states
+
+                stateSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        for ((stateId, value) in stateMap) {
+                            if (value == states[position]) selectedState = stateId
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        TODO("Not yet implemented")
+                    }
+                }
             }
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
@@ -199,16 +221,6 @@ class NewPlantActivity : AppCompatActivity() {
                 }
             }
         })
-
-        val stateSpinner = findViewById<View>(R.id.stateSpinner) as AwesomeSpinner
-        val statesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, states)
-        stateSpinner.setAdapter(statesAdapter)
-
-        stateSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in stateMap) {
-                if (value == itemAtPosition) selectedState = id
-            }
-        }
 
         cityViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
@@ -219,31 +231,17 @@ class NewPlantActivity : AppCompatActivity() {
                         cities.add(it.name)
                     }
                 }
-            }
-            if (dataState.error != null && !dataState.error.consumed){
-                dataState.error.consume()?.let { error ->
-                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
-                }
-            }
-        })
+                val citySpinner: SmartMaterialSpinner<String> = findViewById(R.id.citySpinner)
+                citySpinner.item = cities
 
-        val citySpinner = findViewById<View>(R.id.citySpinner) as AwesomeSpinner
-        val citiesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cities)
-        citySpinner.setAdapter(citiesAdapter)
-
-        citySpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in cityMap) {
-                if (value == itemAtPosition) selectedCity = id
-            }
-        }
-        
-        habitatViewModel.uiState.observe(this, Observer {
-            val dataState = it ?: return@Observer
-            if (dataState.result != null && !dataState.result.consumed){
-                dataState.result.consume()?.let { result ->
-                    result.forEach{
-                        habitatMap[it.id] = it.name
-                        habitats.add(it.name)
+                citySpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        for ((cityId, value) in cityMap) {
+                            if (value == cities[position]) selectedCity = cityId
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        TODO("Not yet implemented")
                     }
                 }
             }
@@ -254,15 +252,35 @@ class NewPlantActivity : AppCompatActivity() {
             }
         })
 
-        val habitatSpinner = findViewById<View>(R.id.habitatSpinner) as AwesomeSpinner
-        val habitatsAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, habitats)
-        habitatSpinner.setAdapter(habitatsAdapter)
+        habitatViewModel.uiState.observe(this, Observer {
+            val dataState = it ?: return@Observer
+            if (dataState.result != null && !dataState.result.consumed){
+                dataState.result.consume()?.let { result ->
+                    result.forEach{
+                        habitatMap[it.id] = it.name
+                        habitats.add(it.name)
+                    }
+                }
+                val habitatSpinner: SmartMaterialSpinner<String> = findViewById(R.id.habitatSpinner)
+                habitatSpinner.item = habitats
 
-        habitatSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in habitatMap) {
-                if (value == itemAtPosition) selectedHabitat = id
+                habitatSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        for ((habitatId, value) in habitatMap) {
+                            if (value == habitats[position]) selectedHabitat = habitatId
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        TODO("Not yet implemented")
+                    }
+                }
             }
-        }
+            if (dataState.error != null && !dataState.error.consumed){
+                dataState.error.consume()?.let { error ->
+                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
+                }
+            }
+        })
 
         habitatDescriptionViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
@@ -273,31 +291,17 @@ class NewPlantActivity : AppCompatActivity() {
                         habitatDescription.add(it.name)
                     }
                 }
-            }
-            if (dataState.error != null && !dataState.error.consumed){
-                dataState.error.consume()?.let { error ->
-                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
-                }
-            }
-        })
+                val habitatDescriptionSpinner: SmartMaterialSpinner<String> = findViewById(R.id.habitatDescriptionSpinner)
+                habitatDescriptionSpinner.item = habitatDescription
 
-        val habitatDescriptionSpinner = findViewById<View>(R.id.habitatDescriptionSpinner) as AwesomeSpinner
-        val habitatDescriptionAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, habitatDescription)
-        habitatDescriptionSpinner.setAdapter(habitatDescriptionAdapter)
-
-        habitatDescriptionSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in habitatDescriptionMap) {
-                if (value == itemAtPosition) selectedHabitatDescription = id
-            }
-        }
-
-        biostatusViewModel.uiState.observe(this, Observer {
-            val dataState = it ?: return@Observer
-            if (dataState.result != null && !dataState.result.consumed){
-                dataState.result.consume()?.let { result ->
-                    result.forEach{
-                        biostatusMap[it.id] = it.name
-                        biostatus.add(it.name)
+                habitatDescriptionSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        for ((habitatDescriptionId, value) in habitatDescriptionMap) {
+                            if (value == habitatDescription[position]) selectedHabitatDescription = habitatDescriptionId
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        TODO("Not yet implemented")
                     }
                 }
             }
@@ -308,15 +312,35 @@ class NewPlantActivity : AppCompatActivity() {
             }
         })
 
-        val biostatusSpinner = findViewById<View>(R.id.biostatusSpinner) as AwesomeSpinner
-        val biostatusAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, biostatus)
-        biostatusSpinner.setAdapter(biostatusAdapter)
+        biostatusViewModel.uiState.observe(this, Observer {
+            val dataState = it ?: return@Observer
+            if (dataState.result != null && !dataState.result.consumed){
+                dataState.result.consume()?.let { result ->
+                    result.forEach{
+                        biostatusMap[it.id] = it.name
+                        biostatus.add(it.name)
+                    }
+                }
+                val biostatusSpinner: SmartMaterialSpinner<String> = findViewById(R.id.biostatusSpinner)
+                biostatusSpinner.item = biostatus
 
-        biostatusSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in biostatusMap) {
-                if (value == itemAtPosition) selectedBiostatus = id
+                biostatusSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        for ((biostatusId, value) in biostatusMap) {
+                            if (value == biostatus[position]) selectedBiostatus = biostatusId
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        TODO("Not yet implemented")
+                    }
+                }
             }
-        }
+            if (dataState.error != null && !dataState.error.consumed){
+                dataState.error.consume()?.let { error ->
+                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
+                }
+            }
+        })
 
         cancel_btn.setOnClickListener {
             showActivity(MainActivity::class.java)

@@ -7,7 +7,7 @@ import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface PlantInterface {
-    @GET("api/plant_specimen/")
+    @GET("api/plant_specimen/approved/")
     suspend fun requestPlant(): MutableList<PlantSpecimen>
 
     @Multipart

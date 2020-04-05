@@ -1,9 +1,13 @@
 package com.example.herbario_nacional.viewHolder
 
 import android.content.Intent
+import android.icu.text.RelativeDateTimeFormatter
+import android.text.format.DateUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.base.BaseApplication.Companion.context
@@ -12,20 +16,38 @@ import com.example.herbario_nacional.models.PlantSpecimen
 import com.example.herbario_nacional.ui.Activities.DataSheetInformationPlant
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.plant_content.*
+import org.ocpsoft.prettytime.PrettyTime
+import timber.log.Timber
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PlantViewHolder constructor(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
     fun bind(plant: PlantSpecimen, imageLoader: ImageLoader) {
-        plant_content.setOnClickListener{
+        plant_content.setOnClickListener {
             showActivity(DataSheetInformationPlant::class.java, plant)
         }
 
-        plantImage?.let { imageLoader.load(/*"${BuildConfig.HERBARIO_URL}/media/uploads/specimen/${plant.image}"*/ "https://source.unsplash.com/random", it) }
+        val dateReceived: Date? = SimpleDateFormat("yyyy-MM-dd", Locale("es")).parse(plant.date_received)
+        val timeAgo = PrettyTime(Locale("es"))
+
+        Timber.tag("Fecha").v(dateReceived.toString())
+        Timber.tag("Fecha normal").v(plant.date_received)
+
+        plantImage?.let {
+            imageLoader.load("https://source.unsplash.com/random", it)
+        }
+
+        profile_picture?.let {
+            imageLoader.load("https://api.adorable.io/avatars/50/12@adorable.png", it)
+        }
+
         plantName.text = plant.species.common_name
         plantFamily.text = plant.species.genus.family.name
         username.text = "${plant.user.first_name} ${plant.user.last_name}"
         country.text = "${plant.city.name}, ${plant.city.state.country.name}"
-        registration_date.text = plant.date_received
+        registration_date.text = timeAgo.format(dateReceived)
     }
 
     companion object {
@@ -37,9 +59,11 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
     private fun showActivity(activityClass: Class<*>, plant: PlantSpecimen) {
         val intent = Intent(context, activityClass)
         intent.putExtra("commonName", plant.species.common_name)
+        intent.putExtra("scientificName", plant.species.scientific_name)
         intent.putExtra("family", plant.species.genus.family.name)
         intent.putExtra("genus", plant.species.genus.name)
         intent.putExtra("specie", plant.species.scientific_name)
+        intent.putExtra("plantDescription", plant.description)
         intent.putExtra("habitat", plant.ecosystem.name)
         intent.putExtra("habitatDescription", plant.recolection_area_status.name)
         intent.putExtra("biostatus", plant.biostatus.name)

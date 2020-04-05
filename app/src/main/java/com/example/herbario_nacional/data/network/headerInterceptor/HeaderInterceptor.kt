@@ -20,8 +20,9 @@ class HeaderInterceptor : Interceptor {
         const val ECOSYSTEM = "api/ecosystem/"
         const val RECOLECTION_AREA_STATUS = "api/recolection_area_status/"
         const val BIOSTATUS = "api/biostatus/"
-        const val PLANT_SPECIMEN = "api/plant_specimen"
-        const val FUNGHI_SPECIMEN = "api/mushroom_specimen"
+        const val PLANT_SPECIMEN = "api/plant_specimen/"
+        const val APPROVED_PLANT_SPECIMEN = "api/plant_specimen/approved/"
+        const val FUNGHI_SPECIMEN = "api/mushroom_specimen/"
         const val FORM_TYPE = "api/mushroom_form_type/"
         const val CAP_TYPE = "api/mushroom_cap_type/"
         const val PERMANENT_LOGIN = "/api/permanent_login/"
@@ -58,6 +59,10 @@ class HeaderInterceptor : Interceptor {
             PLANT_SPECIMEN -> {
                 requestBuilder
                     .addHeader("Content-Type","multipart/form-data")
+            }
+            APPROVED_PLANT_SPECIMEN -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
             }
             FUNGHI_SPECIMEN -> {
                 requestBuilder

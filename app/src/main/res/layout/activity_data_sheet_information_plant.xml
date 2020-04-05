@@ -29,10 +29,10 @@
                 app:layout_constraintRight_toRightOf="parent"
                 android:id="@+id/picture"
                 >
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/plant_picture"
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
+                    android:layout_height="260dp"
                     android:scaleType="centerCrop"
                     app:layout_constraintTop_toTopOf="parent"
                     android:contentDescription="@string/plant"
@@ -45,7 +45,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
-                    android:layout_margin="15dp"
+                    android:layout_margin="20dp"
                     app:backgroundTint="@color/transparent"
                     app:icon="@drawable/ic_close"
                     app:iconGravity="textStart"
@@ -65,8 +65,8 @@
                 android:layout_margin="20dp"
                 android:background="@color/transparent"
                 android:src="@drawable/ic_leaf"
-                android:scaleX="1.2"
-                android:scaleY="1.2"
+                android:scaleX="1.3"
+                android:scaleY="1.3"
             />
 
             <TextView
@@ -112,6 +112,31 @@
 
             <TextView
                 app:layout_constraintTop_toBottomOf="@id/commonName"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/scientificNameTitle"
+                android:layout_margin="20dp"
+                android:textColor="@color/dark_gray"
+                android:text="Nombre Científico"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/scientificNameTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/scientificName"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/scientificName"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:id="@+id/familyTitle"
                 android:layout_margin="20dp"
@@ -187,6 +212,32 @@
 
             <TextView
                 app:layout_constraintTop_toBottomOf="@id/specie"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/plantDescriptionTitle"
+                android:layout_margin="20dp"
+                android:textColor="@color/dark_gray"
+                android:text="Descripción de especímen"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/plantDescriptionTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/plantDescription"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp"
+                android:maxLines="8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/plantDescription"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:id="@+id/habitatTitle"
                 android:layout_margin="20dp"
