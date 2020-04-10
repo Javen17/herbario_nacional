@@ -377,9 +377,16 @@ class NewPlantActivity : AppCompatActivity() {
         }
 
         newPlantViewModel.uiState.observe(this, Observer {
+            loading.visibility = View.VISIBLE
+            register_btn.visibility = View.GONE
+            cancel_btn.visibility = View.GONE
+
             val dataState = it ?: return@Observer
             if (dataState.status != null && !dataState.status.consumed){
                 dataState.status.consume()?.let { status ->
+                    loading.visibility = View.VISIBLE
+                    register_btn.visibility = View.GONE
+                    cancel_btn.visibility = View.GONE
                     if(status.result == "") {
                         Toast.makeText(applicationContext, getString(R.string.sucess), Toast.LENGTH_LONG).show()
                         showActivity(MainActivity::class.java)
@@ -389,6 +396,9 @@ class NewPlantActivity : AppCompatActivity() {
 
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
+                    loading.visibility = View.GONE
+                    register_btn.visibility = View.VISIBLE
+                    cancel_btn.visibility = View.VISIBLE
                     Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
                 }
             }

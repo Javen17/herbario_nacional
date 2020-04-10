@@ -32,9 +32,6 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
         val dateReceived: Date? = SimpleDateFormat("yyyy-MM-dd", Locale("es")).parse(plant.date_received)
         val timeAgo = PrettyTime(Locale("es"))
 
-        Timber.tag("Fecha").v(dateReceived.toString())
-        Timber.tag("Fecha normal").v(plant.date_received)
-
         plantImage?.let {
             imageLoader.load("https://source.unsplash.com/random", it)
         }
