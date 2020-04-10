@@ -4,16 +4,21 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
 import com.example.herbario_nacional.R
@@ -24,6 +29,7 @@ import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.Multimap
 import kotlinx.android.synthetic.main.activity_new_plant.*
 import kotlinx.android.synthetic.main.new_plant.*
+import kotlinx.android.synthetic.main.plant_content.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -31,6 +37,7 @@ import okhttp3.RequestBody.create
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.io.File
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -124,6 +131,8 @@ class NewPlantActivity : AppCompatActivity() {
     val biostatusMap: MutableMap<Int, String> = mutableMapOf()
     var selectedBiostatus: Int = 0
 
+    private lateinit var currentPhotoPath: String
+    private lateinit var file: File
     private lateinit var fileUri: Uri
     private var filePath: String? = ""
 
@@ -438,10 +447,52 @@ class NewPlantActivity : AppCompatActivity() {
         this.finish()
     }
 
+    companion object {
+        private const val REQUEST_TAKE_PHOTO = 1
+        private const val IMAGE_PICK_CODE = 1000
+        private const val PERMISSION_CODE = 1001
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale("es")).format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_",
+            ".jpg",
+            storageDir
+        ).apply {
+            currentPhotoPath = absolutePath
+        }
+    }
+
+    private fun galleryAddPic() {
+        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also {
+            file = File(currentPhotoPath)
+            it.data = Uri.fromFile(file)
+            sendBroadcast(it)
+        }
+    }
+
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(packageManager)?.also {
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_PICTURE)
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (ex: IOException) {
+                    Toast.makeText(this, "Ha ocurrido un error.", Toast.LENGTH_SHORT).show()
+                    null
+                }
+
+                photoFile?.also {
+                    val photoUri: Uri = FileProvider.getUriForFile(
+                        this,
+                        "com.example.fileprovider",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+                }
             }
         }
     }
@@ -450,12 +501,6 @@ class NewPlantActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, IMAGE_PICK_CODE)
-    }
-
-    companion object {
-        private const val REQUEST_IMAGE_PICTURE = 1
-        private const val IMAGE_PICK_CODE = 1000
-        private const val PERMISSION_CODE = 1001
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -479,6 +524,14 @@ class NewPlantActivity : AppCompatActivity() {
             plant_picture.setImageURI(data?.data)
             fileUri = data?.data!!
             filePath = getRealPathFromURI(fileUri)
+            file = File(filePath!!)
+        }
+
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_TAKE_PHOTO) {
+            galleryAddPic()
+            val photo: Bitmap = BitmapFactory.decodeFile(currentPhotoPath)
+            plant_picture.setImageBitmap(photo)
+            Timber.e("Uri: ${currentPhotoPath.toUri()}")
         }
     }
 
@@ -497,7 +550,6 @@ class NewPlantActivity : AppCompatActivity() {
     }
 
     private fun postPlantSpecimen() {
-        val file = File(filePath!!)
         val requestBody: RequestBody = create(MediaType.parse("image/*"), file)
         val image: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file.name, requestBody)
 
