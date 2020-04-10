@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +20,8 @@ import com.example.herbario_nacional.R
 import com.example.herbario_nacional.ui.viewModels.*
 import com.example.herbario_nacional.util.traveseAnyInput
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.isapanah.awesomespinner.AwesomeSpinner
+import com.google.common.collect.ArrayListMultimap
+import com.google.common.collect.Multimap
 import kotlinx.android.synthetic.main.activity_new_plant.*
 import kotlinx.android.synthetic.main.new_plant.*
 import okhttp3.MediaType
@@ -29,11 +29,12 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.create
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-
+import kotlin.properties.Delegates
 
 class NewPlantActivity : AppCompatActivity() {
     private val meViewModel: MeViewModel by viewModel()
@@ -59,15 +60,57 @@ class NewPlantActivity : AppCompatActivity() {
 
     val countries: MutableList<String> = ArrayList()
     val countryMap: MutableMap<Int, String> = mutableMapOf()
-    var selectedCountry: Int = 0
 
-    val states: MutableList<String> = ArrayList()
-    val stateMap: MutableMap<Int, String> = mutableMapOf()
-    var selectedState: Int = 0
+    private val stateMultiMap: Multimap<Int, String> = ArrayListMultimap.create()
+    private val tempState: MutableList<String> = ArrayList()
 
-    val cities: MutableList<String> = ArrayList()
+    private val cityMultiMap: Multimap<String, String> = ArrayListMultimap.create()
     val cityMap: MutableMap<Int, String> = mutableMapOf()
+    private val tempCity: MutableList<String> = ArrayList()
+    var currentCity: String = ""
     var selectedCity: Int = 0
+
+    var selectedCountry: Int by Delegates.observable(0) { _, _, newValue ->
+        tempState.clear()
+        tempCity.clear()
+
+        stateMultiMap.entries().forEach {
+            if (it.key == newValue) tempState.add(it.value)
+        }
+
+        val stateSpinner: SmartMaterialSpinner<String> = findViewById(R.id.stateSpinner)
+        stateSpinner.item = tempState
+
+        stateSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedState = tempState[position]
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                print("Estado no seleccionado")
+            }
+        }
+        val citySpinner: SmartMaterialSpinner<String> = findViewById(R.id.citySpinner)
+        citySpinner.item = tempCity
+    }
+
+    var selectedState: String by Delegates.observable("") { _, _, newValue ->
+        cityMultiMap.entries().forEach {
+            if (it.key == newValue) tempCity.add(it.value)
+        }
+
+        citySpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                currentCity = tempCity[position]
+
+                for((cityId, value) in cityMap) {
+                    if (currentCity == value) selectedCity = cityId
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                print("Ciudad no seleccionada")
+            }
+        }
+    }
 
     val habitats: MutableList<String> = ArrayList()
     val habitatMap: MutableMap<Int, String> = mutableMapOf()
@@ -171,6 +214,7 @@ class NewPlantActivity : AppCompatActivity() {
                         countries.add(it.name)
                     }
                 }
+
                 val countrySpinner: SmartMaterialSpinner<String> = findViewById(R.id.countrySpinner)
                 countrySpinner.item = countries
 
@@ -181,7 +225,7 @@ class NewPlantActivity : AppCompatActivity() {
                         }
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
-                        TODO("Not yet implemented")
+                        Toast.makeText(applicationContext, "País no seleccionada", Toast.LENGTH_LONG).show()
                     }
                 }
             }
@@ -197,21 +241,7 @@ class NewPlantActivity : AppCompatActivity() {
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
-                        stateMap[it.id] = it.name
-                        states.add(it.name)
-                    }
-                }
-                val stateSpinner: SmartMaterialSpinner<String> = findViewById(R.id.stateSpinner)
-                stateSpinner.item = states
-
-                stateSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        for ((stateId, value) in stateMap) {
-                            if (value == states[position]) selectedState = stateId
-                        }
-                    }
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                        TODO("Not yet implemented")
+                        stateMultiMap.put(it.country.id, it.name)
                     }
                 }
             }
@@ -227,21 +257,8 @@ class NewPlantActivity : AppCompatActivity() {
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
+                        cityMultiMap.put(it.state.name, it.name)
                         cityMap[it.id] = it.name
-                        cities.add(it.name)
-                    }
-                }
-                val citySpinner: SmartMaterialSpinner<String> = findViewById(R.id.citySpinner)
-                citySpinner.item = cities
-
-                citySpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        for ((cityId, value) in cityMap) {
-                            if (value == cities[position]) selectedCity = cityId
-                        }
-                    }
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                        TODO("Not yet implemented")
                     }
                 }
             }
