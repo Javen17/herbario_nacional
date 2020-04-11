@@ -29,10 +29,10 @@
                 app:layout_constraintRight_toRightOf="parent"
                 android:id="@+id/picture"
                 >
-                <ImageView
-                    android:id="@+id/plant_picture"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/fungusPicture"
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
+                    android:layout_height="260dp"
                     android:scaleType="centerCrop"
                     app:layout_constraintTop_toTopOf="parent"
                     android:contentDescription="@string/plant"
@@ -45,13 +45,13 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
-                    android:layout_margin="15dp"
+                    android:layout_margin="20dp"
                     app:backgroundTint="@color/transparent"
                     app:icon="@drawable/ic_close"
                     app:iconGravity="textStart"
                     app:iconTint="@color/white"
                     app:iconPadding="0dp"
-                    app:layout_anchor="@id/plant_picture"
+                    app:layout_anchor="@id/fungusPicture"
                     app:layout_anchorGravity="top|left" />
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -65,8 +65,8 @@
                 android:layout_margin="20dp"
                 android:background="@color/transparent"
                 android:src="@drawable/ic_leaf"
-                android:scaleX="1.2"
-                android:scaleY="1.2"
+                android:scaleX="1.3"
+                android:scaleY="1.3"
                 />
 
             <TextView
@@ -112,6 +112,31 @@
 
             <TextView
                 app:layout_constraintTop_toBottomOf="@id/commonName"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/scientificNameTitle"
+                android:layout_margin="20dp"
+                android:textColor="@color/dark_gray"
+                android:text="Nombre Científico"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/scientificNameTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/scientificName"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/scientificName"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:id="@+id/familyTitle"
                 android:layout_margin="20dp"
@@ -187,6 +212,188 @@
 
             <TextView
                 app:layout_constraintTop_toBottomOf="@id/specie"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/capTitle"
+                android:layout_margin="20dp"
+                android:textColor="@color/dark_gray"
+                android:text="Tipo de Capa"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/capTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/cap"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp"
+                android:maxLines="8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/cap"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/formTitle"
+                android:layout_margin="20dp"
+                android:textColor="@color/dark_gray"
+                android:text="Tipo de Forma"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/formTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/form"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp"
+                android:maxLines="8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/form"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/crustTitle"
+                android:layout_margin="20dp"
+                android:textColor="@color/dark_gray"
+                android:text="Hongo con Costra"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/crustTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/crust"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp"
+                android:maxLines="8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/crust"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/colorTitle"
+                android:layout_margin="20dp"
+                android:textColor="@color/dark_gray"
+                android:text="Color de Hongo"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/colorTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/color"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp"
+                android:maxLines="8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/color"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/changeOfColorTitle"
+                android:layout_margin="20dp"
+                android:textColor="@color/dark_gray"
+                android:text="Cambios de color"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/changeOfColorTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/changeOfColor"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp"
+                android:maxLines="8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/changeOfColor"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/smellTitle"
+                android:layout_margin="20dp"
+                android:textColor="@color/dark_gray"
+                android:text="Olor de Hongo"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/smellTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/smell"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp"
+                android:maxLines="8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/smell"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/fungusDescriptionTitle"
+                android:layout_margin="20dp"
+                android:textColor="@color/dark_gray"
+                android:text="Descripción de especímen"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/fungusDescriptionTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/fungusDescription"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp"
+                android:maxLines="8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/fungusDescription"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:id="@+id/habitatTitle"
                 android:layout_margin="20dp"

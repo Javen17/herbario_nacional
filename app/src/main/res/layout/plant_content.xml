@@ -67,7 +67,7 @@
         />
 
     <LinearLayout
-        android:id="@+id/profile_layout"
+        android:id="@+id/profileLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/plantFamily"
@@ -78,7 +78,7 @@
     >
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/profile_picture"
+            android:id="@+id/profilePicture"
             android:layout_width="32dp"
             android:layout_height="32dp"
             app:civ_border_width="0dp"
@@ -100,7 +100,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/registration_date"
+        android:id="@+id/registrationDate"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:gravity="center_vertical"

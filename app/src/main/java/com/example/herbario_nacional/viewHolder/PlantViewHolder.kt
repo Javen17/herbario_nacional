@@ -1,13 +1,9 @@
 package com.example.herbario_nacional.viewHolder
 
 import android.content.Intent
-import android.icu.text.RelativeDateTimeFormatter
-import android.text.format.DateUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.base.BaseApplication.Companion.context
@@ -17,8 +13,6 @@ import com.example.herbario_nacional.ui.Activities.DataSheetInformationPlant
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.plant_content.*
 import org.ocpsoft.prettytime.PrettyTime
-import timber.log.Timber
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,7 +30,7 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
             imageLoader.load("https://source.unsplash.com/random", it)
         }
 
-        profile_picture?.let {
+        profilePicture?.let {
             imageLoader.load("https://api.adorable.io/avatars/50/12@adorable.png", it)
         }
 
@@ -44,7 +38,7 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
         plantFamily.text = plant.species.genus.family.name
         username.text = "${plant.user.first_name} ${plant.user.last_name}"
         country.text = "${plant.city.name}, ${plant.city.state.country.name}"
-        registration_date.text = timeAgo.format(dateReceived)
+        registrationDate.text = timeAgo.format(dateReceived)
     }
 
     companion object {

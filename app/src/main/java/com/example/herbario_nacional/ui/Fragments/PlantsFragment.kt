@@ -48,7 +48,6 @@ class PlantsFragment : Fragment() {
             }
         })
     }
-
     private fun setupRecycler(){
         rv_plants.apply {
             layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
@@ -56,5 +55,4 @@ class PlantsFragment : Fragment() {
             adapter = plantAdapter
         }
     }
-
 }

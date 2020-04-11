@@ -14,13 +14,11 @@ data class FunghiSpecimen(
     val date_received: String,
     val number_of_samples: Int,
     val description: String,
-    val capType: CapType,
-    val shapes: ShapeType,
+    val cap: CapType,
+    val forms: ShapeType,
     val crust: Boolean,
     val color: String,
-    val changeOfColor: String,
-    // val family: PlantFamily,
-    // val genus: Genus,
+    val change_of_color: String,
     val species: PlantSpecies,
     val smell: String,
     val status: Status,
@@ -34,13 +32,3 @@ data class FunghiSpecimen(
     val additionalInfo: String,
     val location: String
 )
-
-// this class is MushroomSpecimen
-
-//cap
-//forms = shapes
-//crust
-//color
-//change_of_color
-//smell
-//aditional_info
