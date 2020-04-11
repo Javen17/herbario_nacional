@@ -634,33 +634,28 @@ class NewFungusActivity : AppCompatActivity() {
         val longitudeRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), longitudeInputF.text.toString())
         val locationRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), specificCollectionAreaInputF.text.toString())
 
-        if (layoutNewFungus.traveseAnyInput()) {
-            Toast.makeText(applicationContext, getString(R.string.empty_fields_data_sheet), Toast.LENGTH_LONG).show()
-        }
-        else {
-            newFungusViewModel.requestPostFungus(
-                photo = image,
-                user = currentUserRB,
-                date_received = dateReceivedRB,
-                species = specieRB,
-                crust = crustRB,
-                cap = capRB,
-                forms = formRB,
-                color = colorRB,
-                change_of_color = changeOfColorRB,
-                smell = smellRB,
-                aditional_info = additionalInfoRB,
-                status = statusRB,
-                number_of_samples = numberOfSamplesRB,
-                description = descriptionRB,
-                ecosystem = habitatRB,
-                recolection_area_status = habitatDescriptionRB,
-                city = cityRB,
-                latitude = latitudeRB,
-                longitude = longitudeRB,
-                location = locationRB
-            )
-        }
+        newFungusViewModel.requestPostFungus(
+            photo = image,
+            user = currentUserRB,
+            date_received = dateReceivedRB,
+            species = specieRB,
+            crust = crustRB,
+            cap = capRB,
+            forms = formRB,
+            color = colorRB,
+            change_of_color = changeOfColorRB,
+            smell = smellRB,
+            aditional_info = additionalInfoRB,
+            status = statusRB,
+            number_of_samples = numberOfSamplesRB,
+            description = descriptionRB,
+            ecosystem = habitatRB,
+            recolection_area_status = habitatDescriptionRB,
+            city = cityRB,
+            latitude = latitudeRB,
+            longitude = longitudeRB,
+            location = locationRB
+        )
     }
 
     private fun showActivity(activityClass: Class<*>) {

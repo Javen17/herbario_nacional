@@ -30,6 +30,7 @@ class DataSheetInformationFungus : AppCompatActivity() {
         habitatDescription.text = intent.getStringExtra("habitatDescription")
         location.text = intent.getStringExtra("location")
         specificLocation.text = intent.getStringExtra("specificLocation")
+        coordinates.text =  intent.getStringExtra("coordinates")
         date.text = intent.getStringExtra("date")
         recolector.text = intent.getStringExtra("recolector")
 

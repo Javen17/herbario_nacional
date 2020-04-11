@@ -10,6 +10,7 @@ import com.example.herbario_nacional.base.BaseApplication.Companion.context
 import com.example.herbario_nacional.imageloader.ImageLoader
 import com.example.herbario_nacional.models.funghi.FunghiSpecimen
 import com.example.herbario_nacional.ui.Activities.DataSheetInformationFungus
+import com.example.herbario_nacional.util.Location
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.fungus_content.*
 import org.ocpsoft.prettytime.PrettyTime
@@ -61,6 +62,12 @@ class FungusViewHolder constructor(override val containerView: View) : RecyclerV
         intent.putExtra("habitatDescription", funghi.recolection_area_status.name)
         intent.putExtra("location", "${funghi.city.name}, ${funghi.city.state.country.name}")
         intent.putExtra("specificLocation", funghi.location)
+        intent.putExtra("coordinates",
+            if(funghi.latitude != null && funghi.longitude != null) {
+                Location.convert(funghi.latitude, funghi.longitude)
+            } else "Coordenadas no disponibles."
+        )
+
         intent.putExtra("date", funghi.date_received)
         intent.putExtra("recolector", "${funghi.user.first_name} ${funghi.user.last_name}")
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

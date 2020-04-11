@@ -25,6 +25,7 @@ class DataSheetInformationPlant : AppCompatActivity() {
         habitatDescription.text = intent.getStringExtra("habitatDescription")
         biostatus.text = intent.getStringExtra("biostatus")
         location.text = intent.getStringExtra("location")
+        coordinates.text =  intent.getStringExtra("coordinates")
         specificLocation.text = intent.getStringExtra("specificLocation")
         date.text = intent.getStringExtra("date")
         recolector.text = intent.getStringExtra("recolector")

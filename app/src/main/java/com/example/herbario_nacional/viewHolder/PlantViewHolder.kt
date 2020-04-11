@@ -10,6 +10,7 @@ import com.example.herbario_nacional.base.BaseApplication.Companion.context
 import com.example.herbario_nacional.imageloader.ImageLoader
 import com.example.herbario_nacional.models.PlantSpecimen
 import com.example.herbario_nacional.ui.Activities.DataSheetInformationPlant
+import com.example.herbario_nacional.util.Location
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.plant_content.*
 import org.ocpsoft.prettytime.PrettyTime
@@ -60,6 +61,11 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
         intent.putExtra("biostatus", plant.biostatus.name)
         intent.putExtra("location", "${plant.city.name}, ${plant.city.state.country.name}")
         intent.putExtra("specificLocation", plant.location)
+        intent.putExtra("coordinates",
+            if(plant.latitude != null && plant.longitude != null) {
+                Location.convert(plant.latitude, plant.longitude)
+            } else "Coordenadas no disponibles."
+        )
         intent.putExtra("date", plant.date_received)
         intent.putExtra("recolector", "${plant.user.first_name} ${plant.user.last_name}")
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
