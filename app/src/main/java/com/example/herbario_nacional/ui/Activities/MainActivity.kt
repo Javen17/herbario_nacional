@@ -4,12 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.herbario_nacional.R
+import com.example.herbario_nacional.base.BaseApplication.Companion.context
+import com.example.herbario_nacional.ui.viewModels.MeViewModel
+import com.mikepenz.iconics.Iconics
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 
