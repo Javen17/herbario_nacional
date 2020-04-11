@@ -4,10 +4,33 @@ import com.example.herbario_nacional.data.network.`interface`.FungusInterface
 import com.example.herbario_nacional.models.funghi.PostFungusSpecimen
 import com.example.herbario_nacional.models.Status
 import com.example.herbario_nacional.models.funghi.FunghiSpecimen
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 interface FungusRepository {
     suspend fun getFungus(): MutableList<FunghiSpecimen>
-    suspend fun postFungus(data: PostFungusSpecimen): Status
+    suspend fun postFungus(
+        photo: MultipartBody.Part,
+        user: RequestBody,
+        date_received: RequestBody,
+        number_of_samples: RequestBody,
+        description: RequestBody,
+        cap: RequestBody,
+        forms: RequestBody,
+        crust: RequestBody,
+        color: RequestBody,
+        change_of_color: RequestBody,
+        species: RequestBody,
+        smell: RequestBody,
+        status: RequestBody,
+        city: RequestBody,
+        ecosystem: RequestBody,
+        recolection_area_status: RequestBody,
+        latitude: RequestBody,
+        longitude: RequestBody,
+        aditional_info: RequestBody,
+        location: RequestBody
+    ): Status
 }
 
 class FunghusRepositoryImpl(private  val fungusService: FungusInterface): FungusRepository{
@@ -16,8 +39,49 @@ class FunghusRepositoryImpl(private  val fungusService: FungusInterface): Fungus
         return fungusService.requestFungus()
     }
 
-    override suspend fun postFungus(data: PostFungusSpecimen): Status {
-        return fungusService.requestPostFungus(data)
+    override suspend fun postFungus(
+        photo: MultipartBody.Part,
+        user: RequestBody,
+        date_received: RequestBody,
+        number_of_samples: RequestBody,
+        description: RequestBody,
+        cap: RequestBody,
+        forms: RequestBody,
+        crust: RequestBody,
+        color: RequestBody,
+        change_of_color: RequestBody,
+        species: RequestBody,
+        smell: RequestBody,
+        status: RequestBody,
+        city: RequestBody,
+        ecosystem: RequestBody,
+        recolection_area_status: RequestBody,
+        latitude: RequestBody,
+        longitude: RequestBody,
+        aditional_info: RequestBody,
+        location: RequestBody
+    ): Status {
+        return fungusService.requestPostFungus(
+            photo,
+            user,
+            date_received,
+            number_of_samples,
+            description,
+            cap,
+            forms,
+            crust,
+            color,
+            change_of_color,
+            species,
+            smell,
+            status,
+            city,
+            ecosystem,
+            recolection_area_status,
+            latitude,
+            longitude,
+            aditional_info,
+            location
+        )
     }
-
 }

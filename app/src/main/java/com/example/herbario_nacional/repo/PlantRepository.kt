@@ -2,7 +2,6 @@ package com.example.herbario_nacional.repo
 
 import com.example.herbario_nacional.data.network.`interface`.PlantInterface
 import com.example.herbario_nacional.models.PlantSpecimen
-import com.example.herbario_nacional.models.PostPlantSpecimen
 import com.example.herbario_nacional.models.Status
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

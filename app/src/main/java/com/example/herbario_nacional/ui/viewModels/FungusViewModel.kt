@@ -20,7 +20,7 @@ class FungusViewModel(private val fungusRepository: FungusRepository): ViewModel
         requestFunghi()
     }
 
-    fun requestFunghi() {
+    private fun requestFunghi() {
         viewModelScope.launch {
             runCatching {
                 emitUiState(showProgress = true)

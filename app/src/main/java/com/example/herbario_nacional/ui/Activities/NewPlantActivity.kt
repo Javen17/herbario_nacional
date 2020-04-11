@@ -101,6 +101,11 @@ class NewPlantActivity : AppCompatActivity() {
     }
 
     var selectedState: String by Delegates.observable("") { _, _, newValue ->
+        tempCity.clear()
+
+        val citySpinner: SmartMaterialSpinner<String> = findViewById(R.id.citySpinner)
+        citySpinner.item = tempCity
+
         cityMultiMap.entries().forEach {
             if (it.key == newValue) tempCity.add(it.value)
         }
@@ -159,8 +164,10 @@ class NewPlantActivity : AppCompatActivity() {
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
-                        specieMap[it.id] = it.common_name
-                        species.add(it.common_name)
+                        if (it.genus.family.type == "planta") {
+                            specieMap[it.id] = it.scientific_name
+                            species.add(it.scientific_name)
+                        }
                     }
                 }
                 val specieSpinner: SmartMaterialSpinner<String> = findViewById(R.id.specieSpinner)
@@ -173,7 +180,7 @@ class NewPlantActivity : AppCompatActivity() {
                         }
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
-                        TODO("Not yet implemented")
+                        print("Especie no seleccionada")
                     }
                 }
             }
@@ -203,7 +210,7 @@ class NewPlantActivity : AppCompatActivity() {
                         }
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
-                        TODO("Not yet implemented")
+                        print("Estado de planta no seleccionado")
                     }
                 }
             }
@@ -297,7 +304,7 @@ class NewPlantActivity : AppCompatActivity() {
                         }
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
-                        TODO("Not yet implemented")
+                        print("Hábitat no seleccionada")
                     }
                 }
             }
@@ -327,7 +334,7 @@ class NewPlantActivity : AppCompatActivity() {
                         }
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
-                        TODO("Not yet implemented")
+                        print("Descripción de hábitat no seleccionada")
                     }
                 }
             }
@@ -357,7 +364,7 @@ class NewPlantActivity : AppCompatActivity() {
                         }
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
-                        TODO("Not yet implemented")
+                        print("Bioestado no seleccionado")
                     }
                 }
             }
@@ -448,13 +455,6 @@ class NewPlantActivity : AppCompatActivity() {
         val dialog = builder.create()
 
         dialog.show()
-    }
-
-    private fun showActivity(activityClass: Class<*>) {
-        val intent = Intent(this, activityClass)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        this.finish()
     }
 
     companion object {
@@ -564,7 +564,7 @@ class NewPlantActivity : AppCompatActivity() {
         val image: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file.name, requestBody)
 
         val date = Date()
-        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale("es"))
         val currentDate: String = formatter.format(date)
 
         val currentUserRB: RequestBody = create(MediaType.parse("multipart/form-data"), currentUser.toString())
@@ -583,7 +583,7 @@ class NewPlantActivity : AppCompatActivity() {
         val locationRB: RequestBody = create(MediaType.parse("multipart/form-data"), specificCollectionAreaInput.text.toString())
 
         if (layoutNewPlant.traveseAnyInput()) {
-            Toast.makeText(applicationContext, getString(R.string.empty_fields_register), Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, getString(R.string.empty_fields_data_sheet), Toast.LENGTH_LONG).show()
         }
         else {
             newPlantViewModel.requestPostPlant(
@@ -604,5 +604,12 @@ class NewPlantActivity : AppCompatActivity() {
                 location = locationRB
             )
         }
+    }
+
+    private fun showActivity(activityClass: Class<*>) {
+        val intent = Intent(this, activityClass)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        this.finish()
     }
 }

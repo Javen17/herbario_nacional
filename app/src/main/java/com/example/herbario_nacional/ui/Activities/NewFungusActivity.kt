@@ -1,99 +1,153 @@
 package com.example.herbario_nacional.ui.Activities
 
+import android.Manifest
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.lifecycle.Observer
+import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
 import com.example.herbario_nacional.R
-import com.example.herbario_nacional.models.funghi.PostFungusSpecimen
 import com.example.herbario_nacional.ui.viewModels.*
 import com.example.herbario_nacional.util.traveseAnyInput
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.isapanah.awesomespinner.AwesomeSpinner
+import com.google.common.collect.ArrayListMultimap
+import com.google.common.collect.Multimap
+import kotlinx.android.synthetic.main.activity_new_fungus.*
 import kotlinx.android.synthetic.main.activity_new_plant.*
+import kotlinx.android.synthetic.main.activity_new_plant.add_a_photo
+import kotlinx.android.synthetic.main.activity_new_plant.plant_picture
 import kotlinx.android.synthetic.main.new_fungus.*
-import kotlinx.android.synthetic.main.new_plant.*
 import kotlinx.android.synthetic.main.new_plant.cancel_btn
 import kotlinx.android.synthetic.main.new_plant.register_btn
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
+import java.io.File
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.properties.Delegates
 
 class NewFungusActivity : AppCompatActivity() {
     private val meViewModel: MeViewModel by viewModel()
     private val countryViewModel: CountryViewModel by viewModel()
     private val stateViewModel: StateViewModel by viewModel()
     private val cityViewModel: CityViewModel by viewModel()
-    private val familyViewModel: FamilyViewModel by viewModel()
-    private val genusViewModel: GenusViewModel by viewModel()
     private val specieViewModel: SpecieViewModel by viewModel()
     private val capTypeViewModel: CapTypeViewModel by viewModel()
     private val formTypeViewModel: FormTypeViewModel by viewModel()
     private val statusViewModel: StatusViewModel by viewModel()
     private val habitatViewModel: HabitatViewModel by viewModel()
     private val habitatDescriptionViewModel: HabitatDescriptionViewModel by viewModel()
-    private val biostatusViewModel: BiostatusViewModel by viewModel()
     private val newFungusViewModel: NewFungusViewModel by viewModel()
-
 
     var currentUser: Int = 0
 
-    val families: ArrayList<String> = ArrayList()
-    val familyMap: MutableMap<Int, String> = mutableMapOf()
-    var selectedFamily: Int = 0
-
-    val genuses: ArrayList<String> = ArrayList()
-    val genusMap: MutableMap<Int, String> = mutableMapOf()
-    var selectedGenus: Int = 0
-
-    val species: ArrayList<String> = ArrayList()
+    val species: MutableList<String> = ArrayList()
     val specieMap: MutableMap<Int, String> = mutableMapOf()
     var selectedSpecie: Int = 0
 
-    val capType: ArrayList<String> = ArrayList()
-    val capTypeMap: MutableMap<Int, String> = mutableMapOf()
-    var selectedCapType: Int = 0
+    val caps: MutableList<String> = ArrayList()
+    val capMap: MutableMap<Int, String> = mutableMapOf()
+    var selectedCap: Int = 0
 
-    val formType: ArrayList<String> = ArrayList()
-    val formTypeMap: MutableMap<Int, String> = mutableMapOf()
-    var selectedFormType: Int = 0
+    val forms: MutableList<String> = ArrayList()
+    val formMap: MutableMap<Int, String> = mutableMapOf()
+    var selectedForm: Int = 0
 
-    val status: ArrayList<String> = ArrayList()
+    val status: MutableList<String> = ArrayList()
     val statusMap: MutableMap<Int, String> = mutableMapOf()
     var selectedStatus: Int = 0
 
-    val countries: ArrayList<String> = ArrayList()
+    val countries: MutableList<String> = ArrayList()
     val countryMap: MutableMap<Int, String> = mutableMapOf()
-    var selectedCountry: Int = 0
 
-    val states: ArrayList<String> = ArrayList()
-    val stateMap: MutableMap<Int, String> = mutableMapOf()
-    var selectedState: Int = 0
+    private val stateMultiMap: Multimap<Int, String> = ArrayListMultimap.create()
+    private val tempState: MutableList<String> = ArrayList()
 
-    val cities: ArrayList<String> = ArrayList()
+    private val cityMultiMap: Multimap<String, String> = ArrayListMultimap.create()
     val cityMap: MutableMap<Int, String> = mutableMapOf()
+    private val tempCity: MutableList<String> = ArrayList()
+    var currentCity: String = ""
     var selectedCity: Int = 0
 
-    val habitats: ArrayList<String> = ArrayList()
+    var selectedCountry: Int by Delegates.observable(0) { _, _, newValue ->
+        tempState.clear()
+        tempCity.clear()
+
+        stateMultiMap.entries().forEach {
+            if (it.key == newValue) tempState.add(it.value)
+        }
+
+        val stateSpinner: SmartMaterialSpinner<String> = findViewById(R.id.stateSpinnerF)
+        stateSpinner.item = tempState
+
+        stateSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedState = tempState[position]
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                print("Estado no seleccionado")
+            }
+        }
+
+        val citySpinner: SmartMaterialSpinner<String> = findViewById(R.id.citySpinnerF)
+        citySpinner.item = tempCity
+    }
+
+    var selectedState: String by Delegates.observable("") { _, _, newValue ->
+        tempCity.clear()
+
+        val citySpinner: SmartMaterialSpinner<String> = findViewById(R.id.citySpinnerF)
+        citySpinner.item = tempCity
+
+        cityMultiMap.entries().forEach {
+            if (it.key == newValue) tempCity.add(it.value)
+        }
+
+        citySpinnerF.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                currentCity = tempCity[position]
+
+                for((cityId, value) in cityMap) {
+                    if (currentCity == value) selectedCity = cityId
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                print("Ciudad no seleccionada")
+            }
+        }
+    }
+
+    val habitats: MutableList<String> = ArrayList()
     val habitatMap: MutableMap<Int, String> = mutableMapOf()
     var selectedHabitat: Int = 0
 
-    val habitatDescription: ArrayList<String> = ArrayList()
+    val habitatDescription: MutableList<String> = ArrayList()
     val habitatDescriptionMap: MutableMap<Int, String> = mutableMapOf()
     var selectedHabitatDescription: Int = 0
 
-    val biostatus: ArrayList<String> = ArrayList()
-    val biostatusMap: MutableMap<Int, String> = mutableMapOf()
-    var selectedBiostatus: Int = 0
+    private lateinit var currentPhotoPath: String
+    private lateinit var file: File
+    private lateinit var fileUri: Uri
+    private var filePath: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,69 +167,28 @@ class NewFungusActivity : AppCompatActivity() {
             }
         })
 
-        familyViewModel.uiState.observe(this, Observer {
-            val dataState = it ?: return@Observer
-            if (dataState.result != null && !dataState.result.consumed){
-                dataState.result.consume()?.let { result ->
-                    result.forEach{
-                        if (it.type == "hongo") {
-                            familyMap[it.id] = it.name
-                            families.add(it.name)
-                        }
-                    }
-                }
-            }
-            if (dataState.error != null && !dataState.error.consumed){
-                dataState.error.consume()?.let { error ->
-                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
-                }
-            }
-        })
-
-        val familySpinner = findViewById<View>(R.id.familySpinner) as AwesomeSpinner
-        val familiesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, families)
-        familySpinner.setAdapter(familiesAdapter)
-
-        familySpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in familyMap) {
-                if (value == itemAtPosition) selectedFamily = id
-            }
-        }
-
-        genusViewModel.uiState.observe(this, Observer {
-            val dataState = it ?: return@Observer
-            if (dataState.result != null && !dataState.result.consumed){
-                dataState.result.consume()?.let { result ->
-                    result.forEach{
-                        genusMap[it.id] = it.name
-                        genuses.add(it.name)
-                    }
-                }
-            }
-            if (dataState.error != null && !dataState.error.consumed){
-                dataState.error.consume()?.let { error ->
-                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
-                }
-            }
-        })
-
-        val genusSpinner = findViewById<View>(R.id.genusSpinner) as AwesomeSpinner
-        val genusesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, genuses)
-        genusSpinner.setAdapter(genusesAdapter)
-
-        genusSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in genusMap) {
-                if (value == itemAtPosition) selectedGenus = id
-            }
-        }
-
         specieViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
-                        specieMap[it.id] = it.common_name
-                        species.add(it.common_name)
+                        if (it.genus.family.type == "hongo") {
+                            specieMap[it.id] = it.scientific_name
+                            species.add(it.scientific_name)
+                        }
+                    }
+                }
+                val specieSpinner: SmartMaterialSpinner<String> = findViewById(R.id.specieSpinner)
+                specieSpinner.item = species
+
+                specieSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        for ((specieId, value) in specieMap) {
+                            if (value == species[position]) selectedSpecie = specieId
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        print("Especie no seleccionada")
                     }
                 }
             }
@@ -185,24 +198,28 @@ class NewFungusActivity : AppCompatActivity() {
                 }
             }
         })
-
-        val specieSpinner = findViewById<View>(R.id.specieSpinner) as AwesomeSpinner
-        val speciesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, species)
-        specieSpinner.setAdapter(speciesAdapter)
-
-        specieSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in specieMap) {
-                if (value == itemAtPosition) selectedSpecie = id
-            }
-        }
 
         capTypeViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
-                        capTypeMap[it.id] = it.name
-                        capType.add(it.name)
+                        capMap[it.id] = it.name
+                        caps.add(it.name)
+                    }
+                }
+
+                val capSpinner: SmartMaterialSpinner<String> = findViewById(R.id.capSpinner)
+                capSpinner.item = caps
+
+                capSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        for ((capId, value) in capMap) {
+                            if (value == caps[position]) selectedCap = capId
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        print("Tipo de capa no seleccionada")
                     }
                 }
             }
@@ -212,24 +229,28 @@ class NewFungusActivity : AppCompatActivity() {
                 }
             }
         })
-
-        val capTypeSpinner = findViewById<View>(R.id.capTypeSpinner) as AwesomeSpinner
-        val capTypeAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, capType)
-        capTypeSpinner.setAdapter(capTypeAdapter)
-
-        capTypeSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in capTypeMap) {
-                if (value == itemAtPosition) selectedCapType = id
-            }
-        }
 
         formTypeViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
-                        formTypeMap[it.id] = it.name
-                        formType.add(it.name)
+                        formMap[it.id] = it.name
+                        forms.add(it.name)
+                    }
+                }
+
+                val formSpinner: SmartMaterialSpinner<String> = findViewById(R.id.formSpinner)
+                formSpinner.item = forms
+
+                formSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        for ((formId, value) in formMap) {
+                            if (value == forms[position]) selectedForm = formId
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        print("Tipo de forma no seleccionada")
                     }
                 }
             }
@@ -239,16 +260,6 @@ class NewFungusActivity : AppCompatActivity() {
                 }
             }
         })
-
-        val formTypeSpinner = findViewById<View>(R.id.formTypeSpinner) as AwesomeSpinner
-        val formTypeAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, formType)
-        formTypeSpinner.setAdapter(formTypeAdapter)
-
-        formTypeSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in formTypeMap) {
-                if (value == itemAtPosition) selectedFormType = id
-            }
-        }
 
         statusViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
@@ -259,6 +270,19 @@ class NewFungusActivity : AppCompatActivity() {
                         status.add(it.name)
                     }
                 }
+                val fungusStatusSpinner: SmartMaterialSpinner<String> = findViewById(R.id.fungusStatusSpinner)
+                fungusStatusSpinner.item = status
+
+                fungusStatusSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        for ((statusId, value) in statusMap) {
+                            if (value == status[position]) selectedStatus = statusId
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        print("Estado de hongo no seleccionado")
+                    }
+                }
             }
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
@@ -266,16 +290,6 @@ class NewFungusActivity : AppCompatActivity() {
                 }
             }
         })
-
-        val statusSpinner = findViewById<View>(R.id.fungusStatusSpinner) as AwesomeSpinner
-        val statusAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, status)
-        statusSpinner.setAdapter(statusAdapter)
-
-        statusSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in statusMap) {
-                if (value == itemAtPosition) selectedStatus = id
-            }
-        }
 
         countryViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
@@ -286,6 +300,20 @@ class NewFungusActivity : AppCompatActivity() {
                         countries.add(it.name)
                     }
                 }
+
+                val countrySpinner: SmartMaterialSpinner<String> = findViewById(R.id.countrySpinnerF)
+                countrySpinner.item = countries
+
+                countrySpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        for ((countryId, value) in countryMap) {
+                            if (value == countries[position]) selectedCountry = countryId
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        Toast.makeText(applicationContext, "País no seleccionada", Toast.LENGTH_LONG).show()
+                    }
+                }
             }
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
@@ -293,24 +321,13 @@ class NewFungusActivity : AppCompatActivity() {
                 }
             }
         })
-
-        val countrySpinner = findViewById<View>(R.id.countrySpinner) as AwesomeSpinner
-        val countriesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, countries)
-        countrySpinner.setAdapter(countriesAdapter)
-
-        countrySpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in countryMap) {
-                if (value == itemAtPosition) selectedCountry = id
-            }
-        }
 
         stateViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
-                        stateMap[it.id] = it.name
-                        states.add(it.name)
+                        stateMultiMap.put(it.country.id, it.name)
                     }
                 }
             }
@@ -320,24 +337,14 @@ class NewFungusActivity : AppCompatActivity() {
                 }
             }
         })
-
-        val stateSpinner = findViewById<View>(R.id.stateSpinner) as AwesomeSpinner
-        val statesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, states)
-        stateSpinner.setAdapter(statesAdapter)
-
-        stateSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in stateMap) {
-                if (value == itemAtPosition) selectedState = id
-            }
-        }
 
         cityViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     result.forEach{
+                        cityMultiMap.put(it.state.name, it.name)
                         cityMap[it.id] = it.name
-                        cities.add(it.name)
                     }
                 }
             }
@@ -347,16 +354,6 @@ class NewFungusActivity : AppCompatActivity() {
                 }
             }
         })
-
-        val citySpinner = findViewById<View>(R.id.citySpinner) as AwesomeSpinner
-        val citiesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cities)
-        citySpinner.setAdapter(citiesAdapter)
-
-        citySpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in cityMap) {
-                if (value == itemAtPosition) selectedCity = id
-            }
-        }
 
         habitatViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
@@ -367,6 +364,19 @@ class NewFungusActivity : AppCompatActivity() {
                         habitats.add(it.name)
                     }
                 }
+                val habitatSpinner: SmartMaterialSpinner<String> = findViewById(R.id.habitatSpinner)
+                habitatSpinner.item = habitats
+
+                habitatSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        for ((habitatId, value) in habitatMap) {
+                            if (value == habitats[position]) selectedHabitat = habitatId
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        print("Hábitat no seleccionada")
+                    }
+                }
             }
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
@@ -374,16 +384,6 @@ class NewFungusActivity : AppCompatActivity() {
                 }
             }
         })
-
-        val habitatSpinner = findViewById<View>(R.id.habitatSpinner) as AwesomeSpinner
-        val habitatsAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, habitats)
-        habitatSpinner.setAdapter(habitatsAdapter)
-
-        habitatSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in habitatMap) {
-                if (value == itemAtPosition) selectedHabitat = id
-            }
-        }
 
         habitatDescriptionViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
@@ -394,31 +394,17 @@ class NewFungusActivity : AppCompatActivity() {
                         habitatDescription.add(it.name)
                     }
                 }
-            }
-            if (dataState.error != null && !dataState.error.consumed){
-                dataState.error.consume()?.let { error ->
-                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
-                }
-            }
-        })
+                val habitatDescriptionSpinner: SmartMaterialSpinner<String> = findViewById(R.id.habitatDescriptionSpinner)
+                habitatDescriptionSpinner.item = habitatDescription
 
-        val habitatDescriptionSpinner = findViewById<View>(R.id.habitatDescriptionSpinner) as AwesomeSpinner
-        val habitatDescriptionAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, habitatDescription)
-        habitatDescriptionSpinner.setAdapter(habitatDescriptionAdapter)
-
-        habitatDescriptionSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in habitatDescriptionMap) {
-                if (value == itemAtPosition) selectedHabitatDescription = id
-            }
-        }
-
-        biostatusViewModel.uiState.observe(this, Observer {
-            val dataState = it ?: return@Observer
-            if (dataState.result != null && !dataState.result.consumed){
-                dataState.result.consume()?.let { result ->
-                    result.forEach{
-                        biostatusMap[it.id] = it.name
-                        biostatus.add(it.name)
+                habitatDescriptionSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        for ((habitatDescriptionId, value) in habitatDescriptionMap) {
+                            if (value == habitatDescription[position]) selectedHabitatDescription = habitatDescriptionId
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        print("Descripción de hábitat no seleccionada")
                     }
                 }
             }
@@ -429,63 +415,20 @@ class NewFungusActivity : AppCompatActivity() {
             }
         })
 
-        val biostatusSpinner = findViewById<View>(R.id.biostatusSpinner) as AwesomeSpinner
-        val biostatusAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, biostatus)
-        biostatusSpinner.setAdapter(biostatusAdapter)
-
-        biostatusSpinner.setOnSpinnerItemClickListener { _, itemAtPosition ->
-            for ((id, value) in biostatusMap) {
-                if (value == itemAtPosition) selectedBiostatus = id
-            }
-        }
-
         cancel_btn.setOnClickListener {
             showActivity(MainActivity::class.java)
         }
 
         register_btn.setOnClickListener{
-            val date = Date()
-            val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val currentDate: String = formatter.format(date)
-
-            if (layoutNewFungus.traveseAnyInput()) {
-                Toast.makeText(applicationContext, getString(R.string.empty_fields_register), Toast.LENGTH_LONG).show()
-            }
-            else {
-                newFungusViewModel.requestPostFungus(
-                    PostFungusSpecimen(
-                        user = currentUser,
-                        photo = null,
-                        date_received = currentDate,
-                        biostatus = selectedBiostatus,
-                        // family = selectedFamily,
-                        // genus = selectedGenus,
-                        species = selectedSpecie,
-                        crust = getCheckedRatio(),
-                        cap = selectedCapType,
-                        forms = selectedFormType,
-                        color = colorInput.text.toString(),
-                        change_of_color = changeOfColorInput.text.toString(),
-                        smell = smellInput.text.toString(),
-                        additionalInfo = "",
-                        complete = true,
-                        status = selectedStatus,
-                        number_of_samples = numberSpecimensFInput.text.toString().toInt(),
-                        description = fungusDescriptionInput.text.toString(),
-                        ecosystem = selectedHabitat,
-                        recolection_area_status = selectedHabitatDescription,
-                        // country = selectedCountry,
-                        // state = selectedState,
-                        city = selectedCity,
-                        latitude = latitudeFInput.text.toString().toDouble(),
-                        longitude = longitudeFInput.text.toString().toDouble(),
-                        location = specificCollectionAreaFInput.text.toString()
-                    )
-                )
-            }
+            postFungusSpecimen()
         }
 
         newFungusViewModel.uiState.observe(this, Observer {
+            loading.visibility = View.VISIBLE
+            register_btn.visibility = View.GONE
+            cancel_btn.visibility = View.GONE
+            add_a_photo.visibility = View.GONE
+
             val dataState = it ?: return@Observer
             if (dataState.status != null && !dataState.status.consumed){
                 dataState.status.consume()?.let { status ->
@@ -498,6 +441,10 @@ class NewFungusActivity : AppCompatActivity() {
 
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
+                    loading.visibility = View.GONE
+                    add_a_photo.visibility = View.VISIBLE
+                    register_btn.visibility = View.VISIBLE
+                    cancel_btn.visibility = View.VISIBLE
                     Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
                 }
             }
@@ -531,15 +478,22 @@ class NewFungusActivity : AppCompatActivity() {
         builder.setItems(array) { _, which ->
             val selected = array[which]
             if (selected == "Tomar una foto") {
-                val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(takePicture, 0)
+                dispatchTakePictureIntent()
             }
             else {
-                val pickPhoto = Intent(
-                    Intent.ACTION_PICK,
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                )
-                startActivityForResult(pickPhoto, 1)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                        PackageManager.PERMISSION_DENIED){
+                        val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        requestPermissions(permissions, PERMISSION_CODE)
+                    }
+                    else{
+                        pickImageFromGallery()
+                    }
+                }
+                else{
+                    pickImageFromGallery()
+                }
             }
         }
 
@@ -548,6 +502,165 @@ class NewFungusActivity : AppCompatActivity() {
         val dialog = builder.create()
 
         dialog.show()
+    }
+
+    companion object {
+        private const val REQUEST_TAKE_PHOTO = 1
+        private const val IMAGE_PICK_CODE = 1000
+        private const val PERMISSION_CODE = 1001
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale("es")).format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_",
+            ".jpg",
+            storageDir
+        ).apply {
+            currentPhotoPath = absolutePath
+        }
+    }
+
+    private fun galleryAddPic() {
+        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also {
+            file = File(currentPhotoPath)
+            it.data = Uri.fromFile(file)
+            sendBroadcast(it)
+        }
+    }
+
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (ex: IOException) {
+                    Toast.makeText(this, "Ha ocurrido un error.", Toast.LENGTH_SHORT).show()
+                    null
+                }
+
+                photoFile?.also {
+                    val photoUri: Uri = FileProvider.getUriForFile(
+                        this,
+                        "com.example.fileprovider",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+                }
+            }
+        }
+    }
+
+    private fun pickImageFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, IMAGE_PICK_CODE)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when(requestCode){
+            PERMISSION_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED){
+                    pickImageFromGallery()
+                }
+                else{
+                    Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
+            plant_picture.setImageURI(data?.data)
+            fileUri = data?.data!!
+            filePath = getRealPathFromURI(fileUri)
+            file = File(filePath!!)
+        }
+
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_TAKE_PHOTO) {
+            galleryAddPic()
+            val photo: Bitmap = BitmapFactory.decodeFile(currentPhotoPath)
+            plant_picture.setImageBitmap(photo)
+            Timber.e("Uri: ${currentPhotoPath.toUri()}")
+        }
+    }
+
+    private fun getRealPathFromURI(contentURI: Uri): String? {
+        val result: String?
+        val cursor = contentResolver.query(contentURI, null, null, null, null)
+        if (cursor == null) {
+            result = contentURI.path
+        } else {
+            cursor.moveToFirst()
+            val idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+            result = cursor.getString(idx)
+            cursor.close()
+        }
+        return result
+    }
+
+    private fun postFungusSpecimen() {
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+        val image: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file.name, requestBody)
+
+        val date = Date()
+        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale("es"))
+        val currentDate: String = formatter.format(date)
+
+        val currentUserRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), currentUser.toString())
+        val dateReceivedRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), currentDate)
+        val specieRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), selectedSpecie.toString())
+        val crustRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), getCheckedRatio().toString())
+        val capRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), selectedCap.toString())
+        val formRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), selectedForm.toString())
+        val colorRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), colorInput.text.toString())
+        val changeOfColorRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), changeOfColorInput.text.toString())
+        val smellRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), smellInput.text.toString())
+        val additionalInfoRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), "Ninguna.")
+        val statusRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), selectedStatus.toString())
+        val numberOfSamplesRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), numberSpecimensInputF.text.toString())
+        val descriptionRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), fungusDescriptionInput.text.toString())
+        val habitatRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), selectedHabitat.toString())
+        val habitatDescriptionRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), selectedHabitatDescription.toString())
+        val cityRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), selectedCity.toString())
+        val latitudeRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), latitudeInputF.text.toString())
+        val longitudeRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), longitudeInputF.text.toString())
+        val locationRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), specificCollectionAreaInputF.text.toString())
+
+        if (layoutNewFungus.traveseAnyInput()) {
+            Toast.makeText(applicationContext, getString(R.string.empty_fields_data_sheet), Toast.LENGTH_LONG).show()
+        }
+        else {
+            newFungusViewModel.requestPostFungus(
+                photo = image,
+                user = currentUserRB,
+                date_received = dateReceivedRB,
+                species = specieRB,
+                crust = crustRB,
+                cap = capRB,
+                forms = formRB,
+                color = colorRB,
+                change_of_color = changeOfColorRB,
+                smell = smellRB,
+                aditional_info = additionalInfoRB,
+                status = statusRB,
+                number_of_samples = numberOfSamplesRB,
+                description = descriptionRB,
+                ecosystem = habitatRB,
+                recolection_area_status = habitatDescriptionRB,
+                city = cityRB,
+                latitude = latitudeRB,
+                longitude = longitudeRB,
+                location = locationRB
+            )
+        }
     }
 
     private fun showActivity(activityClass: Class<*>) {

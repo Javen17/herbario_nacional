@@ -9,8 +9,9 @@
     <string name="register">Regístrate</string>
     <string name="login">Iniciar sesión</string>
     <string name="attention">Inicia sesión para que puedas registrar y visualizar todas tus fichas técnicas.</string>
-    <string name="empty_fields">Favor digitar nombre de usuario y contraseña.</string>
-    <string name="empty_fields_register">Rellene todos los campos.</string>
+    <string name="empty_fields">Introduzca nombre de usuario y contraseña.</string>
+    <string name="empty_fields_register">Rellene todos los campos solicitados.</string>
+    <string name="empty_fields_data_sheet">Rellene y seleccione todos los campos solicitados</string>
     <string name="login_success">Inicio de sesión exitoso.</string>
     <string name="register_success">Registro exitoso. Inicie sesión.</string>
     <string name="unauthorized">No autorizado</string>

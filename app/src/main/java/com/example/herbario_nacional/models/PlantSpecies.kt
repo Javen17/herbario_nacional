@@ -9,6 +9,5 @@ data class PlantSpecies(
     val scientific_name: String,
     val genus: Genus,
     val description: String,
-    val photoURL: String,
-    val type: String
+    val photo: String
 )

@@ -1,16 +1,37 @@
 package com.example.herbario_nacional.data.network.`interface`
 
-import com.example.herbario_nacional.models.funghi.PostFungusSpecimen
 import com.example.herbario_nacional.models.Status
 import com.example.herbario_nacional.models.funghi.FunghiSpecimen
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.http.*
 
 interface FungusInterface {
     @GET("api/mushroom_specimen/")
     suspend fun requestFungus(): MutableList<FunghiSpecimen>
 
+    @Multipart
     @POST("api/mushroom_specimen/")
-    suspend fun requestPostFungus(@Body data: PostFungusSpecimen): Status
+    suspend fun requestPostFungus(
+        @Part photo: MultipartBody.Part,
+        @Part("user") user: RequestBody,
+        @Part("date_received") date_received: RequestBody,
+        @Part("number_of_samples") number_of_samples: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("cap") cap: RequestBody,
+        @Part("forms") forms: RequestBody,
+        @Part("crust") crust: RequestBody,
+        @Part("color") color: RequestBody,
+        @Part("change_of_color") change_of_color: RequestBody,
+        @Part("species") species: RequestBody,
+        @Part("smell") smell: RequestBody,
+        @Part("status") status: RequestBody,
+        @Part("city") city: RequestBody,
+        @Part("ecosystem") ecosystem: RequestBody,
+        @Part("recolection_area_status") recolection_area_status: RequestBody,
+        @Part("latitude") latitude: RequestBody,
+        @Part("longitude") longitude: RequestBody,
+        @Part("aditional_info") aditional_info: RequestBody,
+        @Part("location") location: RequestBody
+    ): Status
 }

@@ -21,7 +21,7 @@ class PlantViewModel (private val plantRepository: PlantRepository): ViewModel()
         requestPlant()
     }
 
-    fun requestPlant() {
+    private fun requestPlant() {
         viewModelScope.launch {
             runCatching {
                 emitUiState(showProgress = true)

@@ -12,6 +12,8 @@ import com.example.herbario_nacional.repo.FungusRepository
 import com.example.herbario_nacional.ui.Event
 import com.example.herbario_nacional.util.StatusCode
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.HttpException
 
 class NewFungusViewModel (private val fungusRepository: FungusRepository): ViewModel()  {
@@ -19,12 +21,54 @@ class NewFungusViewModel (private val fungusRepository: FungusRepository): ViewM
 
     val uiState: LiveData<FungusDataState> get() = _uiState
 
-    fun requestPostFungus(fungus: PostFungusSpecimen){
+    fun requestPostFungus(
+        photo: MultipartBody.Part,
+        user: RequestBody,
+        date_received: RequestBody,
+        number_of_samples: RequestBody,
+        description: RequestBody,
+        cap: RequestBody,
+        forms: RequestBody,
+        crust: RequestBody,
+        color: RequestBody,
+        change_of_color: RequestBody,
+        species: RequestBody,
+        smell: RequestBody,
+        status: RequestBody,
+        city: RequestBody,
+        ecosystem: RequestBody,
+        recolection_area_status: RequestBody,
+        latitude: RequestBody,
+        longitude: RequestBody,
+        aditional_info: RequestBody,
+        location: RequestBody
+    ){
         viewModelScope.launch {
             Retry().retryIO(times = 3){
                 runCatching {
                     emitUiState(showProgress = true)
-                    fungusRepository.postFungus(fungus)
+                    fungusRepository.postFungus(
+                        photo,
+                        user,
+                        date_received,
+                        number_of_samples,
+                        description,
+                        cap,
+                        forms,
+                        crust,
+                        color,
+                        change_of_color,
+                        species,
+                        smell,
+                        status,
+                        city,
+                        ecosystem,
+                        recolection_area_status,
+                        latitude,
+                        longitude,
+                        aditional_info,
+                        location
+                    )
                 }.onSuccess {
                     emitUiState(status = Event(it))
                 }.onFailure {

@@ -29,6 +29,6 @@ data class FunghiSpecimen(
     val recolection_area_status: RecolectionAreaStatus,
     val latitude: Double?,
     val longitude: Double?,
-    val additionalInfo: String,
+    val additional_info: String,
     val location: String
 )
