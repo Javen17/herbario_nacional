@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background_color"
     tools:context=".ui.Fragments.FungiFragment">
         <ProgressBar
@@ -13,10 +13,17 @@
             android:layout_margin="10dp"
             android:layout_gravity="center_horizontal|center_vertical"
             />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_fungus"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbarStyle="outsideInset"
-            tools:listitem="@layout/fungus_card"/>
+            android:layout_height="match_parent"
+            >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_fungus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbarStyle="outsideInset"
+                    tools:listitem="@layout/fungus_card"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.adapters.PlantAdapter
@@ -23,6 +24,7 @@ class PlantsFragment : Fragment() {
     private val imageLoader: ImageLoader by inject()
     private val plantAdapter: PlantAdapter by lazy { PlantAdapter(imageLoader) }
     private val plantViewModel: PlantViewModel by viewModel()
+    private lateinit var swipeRefresh: SwipeRefreshLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_plants, container, false)
@@ -31,9 +33,19 @@ class PlantsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        swipeRefresh = view.findViewById(R.id.swipeRefreshLayout)
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
+
+        getData()
         setupRecycler()
 
-        plantViewModel.uiState.observe(this, Observer {
+        swipeRefresh.setOnRefreshListener{
+            getData()
+        }
+    }
+
+    private fun getData() {
+        plantViewModel.uiState.observe(viewLifecycleOwner, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
@@ -46,8 +58,10 @@ class PlantsFragment : Fragment() {
                     println("Error: $error")
                 }
             }
+            swipeRefresh.isRefreshing = false
         })
     }
+
     private fun setupRecycler(){
         rv_plants.apply {
             layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)

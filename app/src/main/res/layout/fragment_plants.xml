@@ -13,10 +13,15 @@
             android:layout_margin="10dp"
             android:layout_gravity="center_horizontal|center_vertical"
             />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_plants"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbarStyle="outsideInset"
-            tools:listitem="@layout/plant_card"/>
+            android:layout_height="match_parent">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_plants"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbarStyle="outsideInset"
+                    tools:listitem="@layout/plant_card"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

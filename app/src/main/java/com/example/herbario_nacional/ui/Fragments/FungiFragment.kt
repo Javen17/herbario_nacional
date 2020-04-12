@@ -5,20 +5,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.adapters.FungiAdapter
 import com.example.herbario_nacional.imageloader.ImageLoader
 import com.example.herbario_nacional.ui.viewModels.FungusViewModel
 import com.example.herbario_nacional.util.GridItemDecoration
-import com.faltenreich.skeletonlayout.Skeleton
-import com.faltenreich.skeletonlayout.applySkeleton
+import com.mikepenz.iconics.Iconics.applicationContext
 import kotlinx.android.synthetic.main.fragment_fungi.*
 import kotlinx.android.synthetic.main.fragment_fungi.loading
-import kotlinx.android.synthetic.main.fragment_plants.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,6 +27,7 @@ class FungiFragment : Fragment() {
     private val imageLoader: ImageLoader by inject()
     private val fungiAdapter: FungiAdapter by lazy{ FungiAdapter(imageLoader)}
     private val fungusViewModel: FungusViewModel by viewModel()
+    private lateinit var swipeRefresh: SwipeRefreshLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_fungi, container, false)
@@ -35,9 +36,19 @@ class FungiFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        swipeRefresh = view.findViewById(R.id.swipeRefreshLayout)
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
+
+        getData()
         setupRecycler()
 
-        fungusViewModel.uiState.observe(this, Observer {
+        swipeRefresh.setOnRefreshListener{
+            getData()
+        }
+    }
+
+    private fun getData() {
+        fungusViewModel.uiState.observe(viewLifecycleOwner, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
@@ -47,9 +58,10 @@ class FungiFragment : Fragment() {
             }
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
-                    println("Error: $error")
+                    Toast.makeText(applicationContext, error, Toast.LENGTH_LONG).show()
                 }
             }
+            swipeRefresh.isRefreshing = false
         })
     }
 
