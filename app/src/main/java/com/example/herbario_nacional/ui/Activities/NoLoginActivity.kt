@@ -18,8 +18,7 @@ class NoLoginActivity : AppCompatActivity() {
 
     private fun showActivity(activityClass: Class<*>) {
         val intent = Intent(this, activityClass)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
-        this.finish()
     }
 }

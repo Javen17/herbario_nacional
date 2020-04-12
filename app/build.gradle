@@ -99,11 +99,11 @@ dependencies {
     androidTestImplementation TestLibs.espresso
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha02'
 
-    implementation 'com.github.sadra:AwesomeSpinner:1.5.2'
     implementation 'com.github.chivorns.androidx:smartmaterialspinner:1.2.1'
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
     implementation 'com.mikhaellopez:circularimageview:4.2.0'
     implementation("com.google.guava:guava:28.2-android")
+    implementation 'com.afollestad:vvalidator:0.5.2'
 }
 
 configurations.all {

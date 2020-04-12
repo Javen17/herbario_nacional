@@ -6,10 +6,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.afollestad.vvalidator.form
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.ui.viewModels.CredentialsViewModel
-import com.example.herbario_nacional.util.traveseAnyInput
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.back_btn
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,14 +24,14 @@ class LoginActivity : AppCompatActivity() {
         register_label.setOnClickListener{ showActivity(RegisterActivity::class.java) }
         forgot_password.setOnClickListener{ showActivity(ForgottenPasswordActivity::class.java) }
 
-        btnLogin.setOnClickListener {
-            when(layoutLogin.traveseAnyInput()){
-                true -> Toast.makeText(applicationContext, getString(R.string.empty_fields), Toast.LENGTH_LONG).show()
-                false -> credentialsViewModel.requestLogin(usernameInput.text.toString(), passwordInput.text.toString())
-            }
-        }
+        formValidation()
 
         credentialsViewModel.uiState.observe(this, Observer {
+            login_btn.visibility = View.INVISIBLE
+            back_btn.visibility = View.INVISIBLE
+            register_label.visibility = View.INVISIBLE
+            loading.visibility = View.VISIBLE
+
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
@@ -49,10 +48,32 @@ class LoginActivity : AppCompatActivity() {
 
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
+                    login_btn.visibility = View.VISIBLE
+                    back_btn.visibility = View.VISIBLE
+                    register_label.visibility = View.VISIBLE
+                    loading.visibility = View.GONE
+
                     Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
                 }
             }
         })
+    }
+
+    private fun formValidation() {
+        form {
+            useRealTimeValidation()
+            inputLayout(R.id.usernameTextInputLayout) {
+                isNotEmpty().description("* Requerido")
+            }
+            inputLayout(R.id.passwordTextInputLayout) {
+                isNotEmpty().description("* Requerido")
+            }
+            submitWith(R.id.login_btn) {result ->
+                if (result.success()) {
+                    credentialsViewModel.requestLogin(usernameInput.text.toString(), passwordInput.text.toString())
+                }
+            }
+        }
     }
 
     private fun showActivity(activityClass: Class<*>) {

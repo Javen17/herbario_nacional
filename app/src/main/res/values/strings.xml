@@ -16,6 +16,7 @@
     <string name="register_success">Registro exitoso. Inicie sesión.</string>
     <string name="unauthorized">No autorizado</string>
     <string name="unauthenticated">No autenticado. Inicia sesión o regístrate</string>
+    <string name="required">* Requerido</string>
     <string name="internet_connection_error">Ha ocurrido un error. Inténtelo nuevamente.</string>
 
     <!-- Datos de Colector -->

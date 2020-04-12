@@ -19,15 +19,14 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.lifecycle.Observer
+import com.afollestad.vvalidator.form
+import com.afollestad.vvalidator.form.FormResult
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.ui.viewModels.*
-import com.example.herbario_nacional.util.traveseAnyInput
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.Multimap
-import kotlinx.android.synthetic.main.activity_new_fungus.*
-import kotlinx.android.synthetic.main.activity_new_plant.*
 import kotlinx.android.synthetic.main.activity_new_plant.add_a_photo
 import kotlinx.android.synthetic.main.activity_new_plant.plant_picture
 import kotlinx.android.synthetic.main.new_fungus.*
@@ -145,7 +144,7 @@ class NewFungusActivity : AppCompatActivity() {
     var selectedHabitatDescription: Int = 0
 
     private lateinit var currentPhotoPath: String
-    private lateinit var file: File
+    private var file: File? = null
     private lateinit var fileUri: Uri
     private var filePath: String? = ""
 
@@ -188,7 +187,7 @@ class NewFungusActivity : AppCompatActivity() {
                         }
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
-                        print("Especie no seleccionada")
+                        specieSpinner.errorText = "* Requerido"
                     }
                 }
             }
@@ -420,7 +419,13 @@ class NewFungusActivity : AppCompatActivity() {
         }
 
         register_btn.setOnClickListener{
-            postFungusSpecimen()
+            spinnerValidation()
+            fileValidation()
+            inputValidation()
+
+            if (spinnerValidation() && fileValidation() && inputValidation()) {
+                postFungusSpecimen()
+            }
         }
 
         newFungusViewModel.uiState.observe(this, Observer {
@@ -606,9 +611,76 @@ class NewFungusActivity : AppCompatActivity() {
         return result
     }
 
+    private fun spinnerValidation(): Boolean {
+        var isValid = false
+
+        specieSpinner.isEnableErrorLabel = specieSpinner.selectedItemPosition < 0
+        fungusStatusSpinner.isEnableErrorLabel = fungusStatusSpinner.selectedItemPosition < 0
+        capSpinner.isEnableErrorLabel = capSpinner.selectedItemPosition < 0
+        formSpinner.isEnableErrorLabel = formSpinner.selectedItemPosition < 0
+        countrySpinnerF.isEnableErrorLabel = countrySpinnerF.selectedItemPosition < 0
+        stateSpinnerF.isEnableErrorLabel = stateSpinnerF.selectedItemPosition < 0
+        citySpinnerF.isEnableErrorLabel = citySpinnerF.selectedItemPosition < 0
+        habitatSpinner.isEnableErrorLabel = habitatSpinner.selectedItemPosition < 0
+        habitatDescriptionSpinner.isEnableErrorLabel = habitatDescriptionSpinner.selectedItemPosition < 0
+
+        if (specieSpinner.selectedItemPosition >= 0 && fungusStatusSpinner.selectedItemPosition >= 0 && capSpinner.selectedItemPosition >= 0 && formSpinner.selectedItemPosition >= 0 && countrySpinnerF.selectedItemPosition >= 0 && stateSpinnerF.selectedItemPosition >= 0 && citySpinnerF.selectedItemPosition >= 0 && habitatSpinner.selectedItemPosition >= 0 && habitatDescriptionSpinner.selectedItemPosition >= 0) {
+            isValid = true
+        }
+
+        return isValid
+    }
+
+    private fun fileValidation(): Boolean {
+        var isValid = false
+
+        if (file != null)  {
+            isValid = true
+        } else {
+            Toast.makeText(applicationContext, "Fotografía de especímen requerida", Toast.LENGTH_LONG).show()
+        }
+        return isValid
+    }
+
+    private fun inputValidation(): Boolean {
+        val inputs = form {
+            inputLayout(R.id.fungusDescriptionTextInputLayout, name = "plantDescription") {
+                isNotEmpty().description("* Requerido")
+            }
+            inputLayout(R.id.colorTextInputLayout, name = "color") {
+                isNotEmpty().description("* Requerido")
+            }
+            inputLayout(R.id.changeOfColorTextInputLayout, name = "changeOfColor") {
+                isNotEmpty().description("* Requerido")
+            }
+            inputLayout(R.id.smellTextInputLayout, name = "smell") {
+                isNotEmpty().description("* Requerido")
+            }
+            inputLayout(R.id.numberSpecimensTextInputLayout, name = "numberSpecimensTextInputLayout") {
+                isNotEmpty().description("* Requerido")
+                isNumber().greaterThan(0).description("Ingreses un número valido")
+            }
+            inputLayout(R.id.specificCollectionAreaTextInputLayout, name = "specificCollectionArea") {
+                isNotEmpty().description("* Requerido")
+            }
+            inputLayout(R.id.latitudeTextInputLayout, name = "latitude") {
+                isNotEmpty().description("* Requerido")
+                isDecimal().atMost(90.0).atLeast(-90.0).description("Ingrese una longitud válida")
+            }
+            inputLayout(R.id.longitudeTextInputLayout, name = "longitude") {
+                isNotEmpty().description("* Requerido")
+                isDecimal().atMost(180.0).atLeast(-180.0).description("Ingrese una latitud válida")
+            }
+        }
+
+        val result: FormResult = inputs.validate()
+
+        return result.success()
+    }
+
     private fun postFungusSpecimen() {
-        val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
-        val image: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file.name, requestBody)
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file!!)
+        val image: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file!!.name, requestBody)
 
         val date = Date()
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale("es"))
@@ -634,33 +706,28 @@ class NewFungusActivity : AppCompatActivity() {
         val longitudeRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), longitudeInputF.text.toString())
         val locationRB: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), specificCollectionAreaInputF.text.toString())
 
-        if (layoutNewFungus.traveseAnyInput()) {
-            Toast.makeText(applicationContext, getString(R.string.empty_fields_data_sheet), Toast.LENGTH_LONG).show()
-        }
-        else {
-            newFungusViewModel.requestPostFungus(
-                photo = image,
-                user = currentUserRB,
-                date_received = dateReceivedRB,
-                species = specieRB,
-                crust = crustRB,
-                cap = capRB,
-                forms = formRB,
-                color = colorRB,
-                change_of_color = changeOfColorRB,
-                smell = smellRB,
-                aditional_info = additionalInfoRB,
-                status = statusRB,
-                number_of_samples = numberOfSamplesRB,
-                description = descriptionRB,
-                ecosystem = habitatRB,
-                recolection_area_status = habitatDescriptionRB,
-                city = cityRB,
-                latitude = latitudeRB,
-                longitude = longitudeRB,
-                location = locationRB
-            )
-        }
+        newFungusViewModel.requestPostFungus(
+            photo = image,
+            user = currentUserRB,
+            date_received = dateReceivedRB,
+            species = specieRB,
+            crust = crustRB,
+            cap = capRB,
+            forms = formRB,
+            color = colorRB,
+            change_of_color = changeOfColorRB,
+            smell = smellRB,
+            aditional_info = additionalInfoRB,
+            status = statusRB,
+            number_of_samples = numberOfSamplesRB,
+            description = descriptionRB,
+            ecosystem = habitatRB,
+            recolection_area_status = habitatDescriptionRB,
+            city = cityRB,
+            latitude = latitudeRB,
+            longitude = longitudeRB,
+            location = locationRB
+        )
     }
 
     private fun showActivity(activityClass: Class<*>) {

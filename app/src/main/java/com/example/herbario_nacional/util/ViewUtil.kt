@@ -6,18 +6,18 @@ import androidx.core.view.isEmpty
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
 import com.google.android.material.textfield.TextInputEditText
 
-fun ViewGroup.traveseAnyInput(): Boolean {
+fun ViewGroup.traveseAnySpinner(): Boolean {
     var invalid = false
     loop@ for (i in 0 until this.childCount) {
         when (val child = this.getChildAt(i)) {
-            is EditText -> {
-                if (child.text!!.isEmpty()) return true
-            }
-            is TextInputEditText -> {
-                if (child.text!!.isEmpty()) return true
+            is SmartMaterialSpinner<*> -> {
+                if (child.selectedItemPosition < 0) {
+                    child.errorText = "* Requerido"
+                    return true
+                }
             }
             is ViewGroup -> {
-                invalid = child.traveseAnyInput()
+                invalid = child.traveseAnySpinner()
                 if (invalid) break@loop
             }
         }

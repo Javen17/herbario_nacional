@@ -20,16 +20,22 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.lifecycle.Observer
+import com.afollestad.vvalidator.form
+import com.afollestad.vvalidator.form.FormResult
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.ui.viewModels.*
-import com.example.herbario_nacional.util.traveseAnyInput
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.Multimap
+import kotlinx.android.synthetic.main.activity_new_fungus.*
 import kotlinx.android.synthetic.main.activity_new_plant.*
+import kotlinx.android.synthetic.main.activity_new_plant.add_a_photo
+import kotlinx.android.synthetic.main.activity_new_plant.plant_picture
 import kotlinx.android.synthetic.main.new_plant.*
-import kotlinx.android.synthetic.main.plant_content.*
+import kotlinx.android.synthetic.main.new_plant.cancel_btn
+import kotlinx.android.synthetic.main.new_plant.loading
+import kotlinx.android.synthetic.main.new_plant.register_btn
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -86,6 +92,7 @@ class NewPlantActivity : AppCompatActivity() {
         }
 
         val stateSpinner: SmartMaterialSpinner<String> = findViewById(R.id.stateSpinner)
+        stateSpinner.clearSelection()
         stateSpinner.item = tempState
 
         stateSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
@@ -104,6 +111,7 @@ class NewPlantActivity : AppCompatActivity() {
         tempCity.clear()
 
         val citySpinner: SmartMaterialSpinner<String> = findViewById(R.id.citySpinner)
+        citySpinner.clearSelection()
         citySpinner.item = tempCity
 
         cityMultiMap.entries().forEach {
@@ -136,8 +144,8 @@ class NewPlantActivity : AppCompatActivity() {
     val biostatusMap: MutableMap<Int, String> = mutableMapOf()
     var selectedBiostatus: Int = 0
 
+    private var file: File? = null
     private lateinit var currentPhotoPath: String
-    private lateinit var file: File
     private lateinit var fileUri: Uri
     private var filePath: String? = ""
 
@@ -170,6 +178,7 @@ class NewPlantActivity : AppCompatActivity() {
                         }
                     }
                 }
+
                 val specieSpinner: SmartMaterialSpinner<String> = findViewById(R.id.specieSpinner)
                 specieSpinner.item = species
 
@@ -180,7 +189,7 @@ class NewPlantActivity : AppCompatActivity() {
                         }
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
-                        print("Especie no seleccionada")
+
                     }
                 }
             }
@@ -379,12 +388,21 @@ class NewPlantActivity : AppCompatActivity() {
             showActivity(MainActivity::class.java)
         }
 
+        //formValidation()
+
         register_btn.setOnClickListener {
-            postPlantSpecimen()
+            spinnerValidation()
+            fileValidation()
+            inputValidation()
+
+            if (spinnerValidation() && fileValidation() && inputValidation() ) {
+                postPlantSpecimen()
+            }
         }
 
         newPlantViewModel.uiState.observe(this, Observer {
             loading.visibility = View.VISIBLE
+            add_a_photo.visibility = View.GONE
             register_btn.visibility = View.GONE
             cancel_btn.visibility = View.GONE
 
@@ -392,6 +410,7 @@ class NewPlantActivity : AppCompatActivity() {
             if (dataState.status != null && !dataState.status.consumed){
                 dataState.status.consume()?.let { status ->
                     loading.visibility = View.VISIBLE
+                    add_a_photo.visibility = View.VISIBLE
                     register_btn.visibility = View.GONE
                     cancel_btn.visibility = View.GONE
                     if(status.result == "") {
@@ -559,9 +578,66 @@ class NewPlantActivity : AppCompatActivity() {
         return result
     }
 
+    private fun spinnerValidation(): Boolean {
+        var isValid = false
+
+        specieSpinner.isEnableErrorLabel = specieSpinner.selectedItemPosition < 0
+        plantStatusSpinner.isEnableErrorLabel = plantStatusSpinner.selectedItemPosition < 0
+        countrySpinner.isEnableErrorLabel = countrySpinner.selectedItemPosition < 0
+        stateSpinner.isEnableErrorLabel = stateSpinner.selectedItemPosition < 0
+        citySpinner.isEnableErrorLabel = citySpinner.selectedItemPosition < 0
+        habitatSpinner.isEnableErrorLabel = habitatSpinner.selectedItemPosition < 0
+        habitatDescriptionSpinner.isEnableErrorLabel = habitatDescriptionSpinner.selectedItemPosition < 0
+        biostatusSpinner.isEnableErrorLabel = biostatusSpinner.selectedItemPosition < 0
+
+        if (specieSpinner.selectedItemPosition >= 0 && plantStatusSpinner.selectedItemPosition >= 0 && countrySpinner.selectedItemPosition >= 0 && stateSpinner.selectedItemPosition >= 0 && citySpinner.selectedItemPosition >= 0 && habitatSpinner.selectedItemPosition >= 0 && habitatDescriptionSpinner.selectedItemPosition >= 0 && biostatusSpinner.selectedItemPosition >= 0 ) {
+            isValid = true
+        }
+
+        return isValid
+    }
+
+    private fun fileValidation(): Boolean {
+        var isValid = false
+
+        if (file != null)  {
+            isValid = true
+        } else {
+            Toast.makeText(applicationContext, "Fotografía de especímen requerida", Toast.LENGTH_LONG).show()
+        }
+        return isValid
+    }
+
+    private fun inputValidation(): Boolean {
+        val inputs = form {
+            inputLayout(R.id.plantDescriptionTextInputLayout) {
+                isNotEmpty().description("* Requerido")
+            }
+            inputLayout(R.id.numberSpecimensTextInputLayout) {
+                isNotEmpty().description("* Requerido")
+                isNumber().greaterThan(0).description("Ingreses un número valido")
+            }
+            inputLayout(R.id.specificCollectionAreaTextInputLayout) {
+                isNotEmpty().description("* Requerido")
+            }
+            inputLayout(R.id.latitudeTextInputLayout) {
+                isNotEmpty().description("* Requerido")
+                isDecimal().atMost(90.0).atLeast(-90.0).description("Ingrese una longitud válida")
+            }
+            inputLayout(R.id.longitudeTextInputLayout) {
+                isNotEmpty().description("* Requerido")
+                isDecimal().atMost(180.0).atLeast(-180.0).description("Ingrese una latitud válida")
+            }
+        }
+
+        val result: FormResult = inputs.validate()
+
+        return result.success()
+    }
+
     private fun postPlantSpecimen() {
-        val requestBody: RequestBody = create(MediaType.parse("image/*"), file)
-        val image: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file.name, requestBody)
+        val requestBody: RequestBody = create(MediaType.parse("image/*"), file!!)
+        val image: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file!!.name, requestBody)
 
         val date = Date()
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale("es"))
@@ -582,28 +658,23 @@ class NewPlantActivity : AppCompatActivity() {
         val longitudeRB: RequestBody = create(MediaType.parse("multipart/form-data"), longitudeInput.text.toString())
         val locationRB: RequestBody = create(MediaType.parse("multipart/form-data"), specificCollectionAreaInput.text.toString())
 
-        if (layoutNewPlant.traveseAnyInput()) {
-            Toast.makeText(applicationContext, getString(R.string.empty_fields_data_sheet), Toast.LENGTH_LONG).show()
-        }
-        else {
-            newPlantViewModel.requestPostPlant(
-                photo = image,
-                user = currentUserRB,
-                date_received = dateReceivedRB,
-                biostatus = biostatusRB,
-                species = specieRB,
-                complete = completeRB,
-                status = statusRB,
-                number_of_samples = numberOfSamplesRB,
-                description = descriptionRB,
-                ecosystem = habitatRB,
-                recolection_area_status = habitatDescriptionRB,
-                city = cityRB,
-                latitude = latitudeRB,
-                longitude = longitudeRB,
-                location = locationRB
-            )
-        }
+        newPlantViewModel.requestPostPlant(
+            photo = image,
+            user = currentUserRB,
+            date_received = dateReceivedRB,
+            biostatus = biostatusRB,
+            species = specieRB,
+            complete = completeRB,
+            status = statusRB,
+            number_of_samples = numberOfSamplesRB,
+            description = descriptionRB,
+            ecosystem = habitatRB,
+            recolection_area_status = habitatDescriptionRB,
+            city = cityRB,
+            latitude = latitudeRB,
+            longitude = longitudeRB,
+            location = locationRB
+        )
     }
 
     private fun showActivity(activityClass: Class<*>) {

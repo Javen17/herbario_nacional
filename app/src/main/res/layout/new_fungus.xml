@@ -62,6 +62,9 @@
                 app:smsp_selectedItemListColor="@color/primary"
                 app:smsp_underlineSize="0dp"
                 android:layout_marginTop="20dp"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
                 />
 
             <TextView
@@ -160,6 +163,9 @@
                 app:smsp_selectedItemListColor="@color/primary"
                 app:smsp_underlineSize="0dp"
                 android:layout_marginTop="20dp"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
                 />
 
             <TextView
@@ -188,6 +194,9 @@
                 app:smsp_selectedItemListColor="@color/primary"
                 app:smsp_underlineSize="0dp"
                 android:layout_marginTop="20dp"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
                 />
 
             <TextView
@@ -313,6 +322,9 @@
                 app:smsp_selectedItemListColor="@color/primary"
                 app:smsp_underlineSize="0dp"
                 android:layout_marginTop="20dp"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
                 />
 
             <TextView
@@ -390,6 +402,9 @@
                 app:smsp_searchHeaderTextColor="@color/white"
                 app:smsp_searchHeaderBackgroundColor="@color/primary"
                 app:smsp_searchHint="Buscar país"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
                 />
 
             <TextView
@@ -423,6 +438,9 @@
                 app:smsp_searchHeaderTextColor="@color/white"
                 app:smsp_searchHeaderBackgroundColor="@color/primary"
                 app:smsp_searchHint="Buscar estado"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
                 />
 
             <TextView
@@ -456,6 +474,9 @@
                 app:smsp_searchHeaderTextColor="@color/white"
                 app:smsp_searchHeaderBackgroundColor="@color/primary"
                 app:smsp_searchHint="Buscar ciudad"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
                 />
 
             <TextView
@@ -528,7 +549,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:inputType="numberDecimal"
+                    android:inputType="numberDecimal|numberSigned"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -560,7 +581,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:inputType="numberDecimal"
+                    android:inputType="numberDecimal|numberSigned"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -602,6 +623,9 @@
                 app:smsp_selectedItemListColor="@color/primary"
                 app:smsp_underlineSize="0dp"
                 android:layout_marginTop="20dp"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
                 />
 
             <TextView
@@ -629,6 +653,9 @@
                 app:smsp_selectedItemListColor="@color/primary"
                 app:smsp_underlineSize="0dp"
                 android:layout_marginTop="20dp"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
                 />
 
             <com.google.android.material.button.MaterialButton
