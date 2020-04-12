@@ -8,32 +8,15 @@
     android:background="@color/background_color"
     >
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/close_btn"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="20dp"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-        app:icon="@drawable/ic_close"
-        app:iconGravity="textStart"
-        app:iconTint="@color/inactive_color"
-        app:backgroundTint="@color/transparent"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-    />
-
-
     <TextView
         android:text="@string/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/brand"
         android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/close_btn"
         android:textColor="@color/colorPrimary"
         android:textSize="36sp"
         android:layout_marginTop="50dp"
@@ -54,42 +37,99 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/brand" />
 
-    <com.google.android.material.button.MaterialButton
-        android:text="@string/register"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/register_btn"
-        app:layout_constraintBottom_toTopOf="@id/login_btn"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/white"
-        android:elevation="0dp"
-        android:stateListAnimator="@null"
-        android:textAllCaps="false"
-        android:textSize="16sp"
-        android:letterSpacing="0.05"
-
-    />
-
-    <com.google.android.material.button.MaterialButton
-        android:text="@string/login"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:id="@+id/login_btn"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        app:strokeColor="@color/colorPrimary"
-        android:textColor="@color/colorPrimary"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonsLayout"
         app:layout_constraintBottom_toTopOf="@id/plantsImage"
-        android:textAllCaps="false"
-        android:textSize="16sp"
-        android:letterSpacing="0.05"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        >
+        <com.google.android.material.button.MaterialButton
+            android:text="@string/register"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/register_btn"
+            app:layout_constraintTop_toTopOf="parent"
+            android:backgroundTint="@color/colorPrimary"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:letterSpacing="0.05"
+            />
 
-    />
+        <com.google.android.material.button.MaterialButton
+            android:text="@string/login"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/login_btn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/colorPrimary"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/register_btn"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:letterSpacing="0.05"
+
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:id="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@id/login_btn"
+            android:layout_marginTop="15dp"
+            >
+            <TextView
+                android:id="@+id/tvText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="O también"
+                android:textColor="@color/md_grey_400"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_toStartOf="@id/tvText"
+                android:background="@color/md_grey_400"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:layout_toEndOf="@id/tvText"
+                android:background="@color/md_grey_400"
+                />
+        </RelativeLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:text="@string/continue_as_a_guest"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/guess_btn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/colorPrimary"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/divider"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:letterSpacing="0.05"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/plantsImage"
