@@ -12,4 +12,6 @@
     <color name="white70">#FFFFFFB3</color>
     <color name="black70">#464646</color>
     <color name="black">#000</color>
+    <color name="placeholder_bg">#FFF</color>
+    <color name="placeholder_content">#E9E9E9</color>
 </resources>

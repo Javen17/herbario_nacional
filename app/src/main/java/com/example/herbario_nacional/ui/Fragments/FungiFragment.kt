@@ -16,9 +16,8 @@ import com.example.herbario_nacional.adapters.FungiAdapter
 import com.example.herbario_nacional.imageloader.ImageLoader
 import com.example.herbario_nacional.ui.viewModels.FungusViewModel
 import com.example.herbario_nacional.util.GridItemDecoration
-import com.mikepenz.iconics.Iconics.applicationContext
+import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.android.synthetic.main.fragment_fungi.*
-import kotlinx.android.synthetic.main.fragment_fungi.loading
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,6 +26,7 @@ class FungiFragment : Fragment() {
     private val imageLoader: ImageLoader by inject()
     private val fungiAdapter: FungiAdapter by lazy{ FungiAdapter(imageLoader)}
     private val fungusViewModel: FungusViewModel by viewModel()
+    private lateinit var shimmerLayout: ShimmerFrameLayout
     private lateinit var swipeRefresh: SwipeRefreshLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,6 +35,8 @@ class FungiFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        shimmerLayout = view.findViewById(R.id.shimmer_container)
+        shimmerLayout.startShimmer()
 
         swipeRefresh = view.findViewById(R.id.swipeRefreshLayout)
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
@@ -44,6 +46,7 @@ class FungiFragment : Fragment() {
 
         swipeRefresh.setOnRefreshListener{
             getData()
+            setupRecycler()
         }
     }
 
@@ -53,12 +56,13 @@ class FungiFragment : Fragment() {
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     fungiAdapter.submitList(result)
-                    loading.visibility = View.GONE
+                    shimmerLayout.stopShimmer()
+                    shimmerLayout.visibility = View.GONE
                 }
             }
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
-                    Toast.makeText(applicationContext, error, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, error, Toast.LENGTH_LONG).show()
                 }
             }
             swipeRefresh.isRefreshing = false

@@ -1,9 +1,11 @@
 package com.example.herbario_nacional.ui.Fragments
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -14,6 +16,8 @@ import com.example.herbario_nacional.adapters.PlantAdapter
 import com.example.herbario_nacional.imageloader.ImageLoader
 import com.example.herbario_nacional.ui.viewModels.PlantViewModel
 import com.example.herbario_nacional.util.GridItemDecoration
+import com.facebook.shimmer.Shimmer
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import kotlinx.android.synthetic.main.fragment_plants.*
@@ -25,6 +29,7 @@ class PlantsFragment : Fragment() {
     private val plantAdapter: PlantAdapter by lazy { PlantAdapter(imageLoader) }
     private val plantViewModel: PlantViewModel by viewModel()
     private lateinit var swipeRefresh: SwipeRefreshLayout
+    private lateinit var shimmerLayout: ShimmerFrameLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_plants, container, false)
@@ -32,6 +37,8 @@ class PlantsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        shimmerLayout = view.findViewById(R.id.shimmer_container)
+        shimmerLayout.startShimmer()
 
         swipeRefresh = view.findViewById(R.id.swipeRefreshLayout)
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
@@ -41,6 +48,7 @@ class PlantsFragment : Fragment() {
 
         swipeRefresh.setOnRefreshListener{
             getData()
+            setupRecycler()
         }
     }
 
@@ -50,12 +58,13 @@ class PlantsFragment : Fragment() {
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     plantAdapter.submitList(result)
-                    loading.visibility = View.GONE
+                    shimmerLayout.stopShimmer()
+                    shimmerLayout.visibility = View.GONE
                 }
             }
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
-                    println("Error: $error")
+                    Toast.makeText(context, error, Toast.LENGTH_LONG).show()
                 }
             }
             swipeRefresh.isRefreshing = false
@@ -65,7 +74,7 @@ class PlantsFragment : Fragment() {
     private fun setupRecycler(){
         rv_plants.apply {
             layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-            addItemDecoration(GridItemDecoration(4, 2))
+            addItemDecoration(GridItemDecoration(3, 2))
             adapter = plantAdapter
         }
     }
