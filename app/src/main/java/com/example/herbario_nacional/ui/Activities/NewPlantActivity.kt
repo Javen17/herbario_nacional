@@ -388,8 +388,6 @@ class NewPlantActivity : AppCompatActivity() {
             showActivity(MainActivity::class.java)
         }
 
-        //formValidation()
-
         register_btn.setOnClickListener {
             spinnerValidation()
             fileValidation()
@@ -622,11 +620,11 @@ class NewPlantActivity : AppCompatActivity() {
             }
             inputLayout(R.id.latitudeTextInputLayout) {
                 isNotEmpty().description("* Requerido")
-                isDecimal().atMost(90.0).atLeast(-90.0).description("Ingrese una longitud válida")
+                isDecimal().atMost(90.0).atLeast(-90.0).description("Ingrese una latitud válida")
             }
             inputLayout(R.id.longitudeTextInputLayout) {
                 isNotEmpty().description("* Requerido")
-                isDecimal().atMost(180.0).atLeast(-180.0).description("Ingrese una latitud válida")
+                isDecimal().atMost(180.0).atLeast(-180.0).description("Ingrese una longitud válida")
             }
         }
 
@@ -640,7 +638,7 @@ class NewPlantActivity : AppCompatActivity() {
         val image: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file!!.name, requestBody)
 
         val date = Date()
-        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale("es"))
+        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale("es"))
         val currentDate: String = formatter.format(date)
 
         val currentUserRB: RequestBody = create(MediaType.parse("multipart/form-data"), currentUser.toString())

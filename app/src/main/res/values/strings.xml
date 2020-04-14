@@ -39,6 +39,8 @@
     <string name="plant">Planta</string>
     <string name="fungus">Hongo</string>
 
+    <string name="or">o</string>
+
     <!-- Plant -->
     <string name="number_specimens">Número de ejemplares colectados</string>
     <string name="common_name">Nombre común</string>

@@ -5,13 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.herbario_nacional.R
+import com.example.herbario_nacional.base.BaseApplication
 import com.example.herbario_nacional.data.network.Retry
 import com.example.herbario_nacional.models.Register
 import com.example.herbario_nacional.models.Status
 import com.example.herbario_nacional.repo.RegisterRepository
 import com.example.herbario_nacional.ui.Event
 import com.example.herbario_nacional.util.StatusCode
+import com.google.common.io.Resources
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
+import okhttp3.ResponseBody
 import retrofit2.HttpException
 
 class RegisterViewModel (private val registerRepository: RegisterRepository): ViewModel()  {
@@ -29,21 +35,25 @@ class RegisterViewModel (private val registerRepository: RegisterRepository): Vi
                     when(it){
                         is HttpException -> {
                             when(StatusCode(it.code()).description){
-                                StatusCode.Status.Unauthorized -> emitUiState(error = Event(R.string.unauthorized))
-                                else -> emitUiState(error = Event(R.string.internet_connection_error))
+                                StatusCode.Status.BadRequest -> emitUiState(
+                                    error = Event(withContext(Dispatchers.IO) {
+                                        it.response()?.errorBody()!!.string()
+                                    })
+                                )
+                                else -> BaseApplication.context.getString(R.string.internet_connection_error)
                             }
                         }
-                        else -> emitUiState(error = Event(R.string.internet_connection_error))
+                        else -> BaseApplication.context.getString(R.string.internet_connection_error)
                     }
                 }
             }
         }
     }
 
-    private fun emitUiState(showProgress: Boolean = false, result: Event<Status>? = null, error: Event<Int>? = null){
+    private fun emitUiState(showProgress: Boolean = false, result: Event<Status>? = null, error: Event<String>? = null){
         val dataState = RegisterDataState(showProgress, result, error)
         _uiState.value = dataState
     }
 
-    data class RegisterDataState(val showProgress: Boolean, val result: Event<Status>?, val error: Event<Int>?)
+    data class RegisterDataState(val showProgress: Boolean, val result: Event<Status>?, val error: Event<String>?)
 }

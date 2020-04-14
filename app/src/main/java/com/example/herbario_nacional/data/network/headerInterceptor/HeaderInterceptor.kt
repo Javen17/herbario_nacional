@@ -23,7 +23,7 @@ class HeaderInterceptor : Interceptor {
         const val PLANT_SPECIMEN = "api/plant_specimen/"
         const val APPROVED_PLANT_SPECIMEN = "api/plant_specimen/approved/"
         const val FUNGHI_SPECIMEN = "api/mushroom_specimen/"
-        const val APPROVED_FUNGHI_SPECIMEN = "api/mushroom_specimen/approved"
+        const val APPROVED_FUNGHI_SPECIMEN = "api/mushroom_specimen/approved/"
         const val FORM_TYPE = "api/mushroom_form_type/"
         const val CAP_TYPE = "api/mushroom_cap_type/"
         const val PERMANENT_LOGIN = "/api/permanent_login/"

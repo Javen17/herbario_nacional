@@ -14,7 +14,7 @@ class DataSheetInformationPlant : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data_sheet_information_plant)
 
-        plant_picture.load("https://source.unsplash.com/random")
+        plant_picture.load(intent.getStringExtra("photo"))
         commonName.text = intent.getStringExtra("commonName")
         scientificName.text = intent.getStringExtra("scientificName")
         family.text = intent.getStringExtra("family")

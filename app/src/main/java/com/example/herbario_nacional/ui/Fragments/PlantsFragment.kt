@@ -48,7 +48,6 @@ class PlantsFragment : Fragment() {
 
         swipeRefresh.setOnRefreshListener{
             getData()
-            setupRecycler()
         }
     }
 
@@ -74,7 +73,7 @@ class PlantsFragment : Fragment() {
     private fun setupRecycler(){
         rv_plants.apply {
             layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-            addItemDecoration(GridItemDecoration(3, 2))
+            addItemDecoration(GridItemDecoration(4, 2))
             adapter = plantAdapter
         }
     }

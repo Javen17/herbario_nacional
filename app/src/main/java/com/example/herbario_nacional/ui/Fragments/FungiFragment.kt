@@ -46,7 +46,6 @@ class FungiFragment : Fragment() {
 
         swipeRefresh.setOnRefreshListener{
             getData()
-            setupRecycler()
         }
     }
 

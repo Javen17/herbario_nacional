@@ -10,6 +10,7 @@ import com.example.herbario_nacional.base.BaseApplication.Companion.context
 import com.example.herbario_nacional.imageloader.ImageLoader
 import com.example.herbario_nacional.models.PlantSpecimen
 import com.example.herbario_nacional.ui.Activities.DataSheetInformationPlant
+import com.example.herbario_nacional.util.ImageToUrl
 import com.example.herbario_nacional.util.Location
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.plant_content.*
@@ -28,7 +29,7 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
         val timeAgo = PrettyTime(Locale("es"))
 
         plantImage?.let {
-            imageLoader.load("https://source.unsplash.com/random", it)
+            imageLoader.load(ImageToUrl.exportImageToURL(plant.photo), it)
         }
 
         profilePicture?.let {
@@ -50,6 +51,7 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
 
     private fun showActivity(activityClass: Class<*>, plant: PlantSpecimen) {
         val intent = Intent(context, activityClass)
+        intent.putExtra("photo", ImageToUrl.exportImageToURL(plant.photo))
         intent.putExtra("commonName", plant.species.common_name)
         intent.putExtra("scientificName", plant.species.scientific_name)
         intent.putExtra("family", plant.species.genus.family.name)

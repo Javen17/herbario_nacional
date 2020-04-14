@@ -10,6 +10,7 @@ import com.example.herbario_nacional.base.BaseApplication.Companion.context
 import com.example.herbario_nacional.imageloader.ImageLoader
 import com.example.herbario_nacional.models.funghi.FunghiSpecimen
 import com.example.herbario_nacional.ui.Activities.DataSheetInformationFungus
+import com.example.herbario_nacional.util.ImageToUrl
 import com.example.herbario_nacional.util.Location
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.fungus_content.*
@@ -22,15 +23,17 @@ class FungusViewHolder constructor(override val containerView: View) : RecyclerV
         fungus_content.setOnClickListener {
             showActivity(DataSheetInformationFungus::class.java, funghi)
         }
+
         val dateReceived: Date? = SimpleDateFormat("yyyy-MM-dd", Locale("es")).parse(funghi.date_received)
         val timeAgo = PrettyTime(Locale("es"))
 
         fungusImage?.let {
-            imageLoader.load("https://source.unsplash.com/random", it)
+            imageLoader.load(ImageToUrl.exportImageToURL(funghi.photo), it)
         }
         profilePicture?.let {
             imageLoader.load("https://api.adorable.io/avatars/50/12@adorable.png", it)
         }
+
         fungusName.text =funghi.species.common_name
         fungusFamily.text = funghi.species.genus.family.name
         username.text = "${funghi.user.first_name} ${funghi.user.last_name}"
@@ -46,6 +49,7 @@ class FungusViewHolder constructor(override val containerView: View) : RecyclerV
 
     private fun showActivity(activityClass: Class<*>, funghi: FunghiSpecimen) {
         val intent = Intent(context, activityClass)
+        intent.putExtra("photo", ImageToUrl.exportImageToURL(funghi.photo))
         intent.putExtra("commonName", funghi.species.common_name)
         intent.putExtra("scientificName", funghi.species.scientific_name)
         intent.putExtra("family", funghi.species.genus.family.name)

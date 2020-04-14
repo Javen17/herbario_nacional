@@ -7,6 +7,7 @@
     tools:context=".ui.Activities.RegisterActivity"
     android:background="@color/background_color"
     android:focusableInTouchMode="true"
+    android:id="@+id/register_layout"
     >
 
     <RelativeLayout

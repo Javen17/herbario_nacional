@@ -8,8 +8,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.afollestad.vvalidator.form
 import com.example.herbario_nacional.R
+import com.example.herbario_nacional.models.ErrorBody
 import com.example.herbario_nacional.ui.viewModels.CredentialsViewModel
+import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.loading
+import kotlinx.android.synthetic.main.activity_login.passwordInput
+import kotlinx.android.synthetic.main.activity_login.usernameInput
+import kotlinx.android.synthetic.main.activity_login.usernameTextInputLayout
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_register.back_btn
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -36,11 +45,7 @@ class LoginActivity : AppCompatActivity() {
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     if(result.result == "success") {
-                        Toast.makeText(
-                            applicationContext,
-                            getString(R.string.login_success),
-                            Toast.LENGTH_LONG
-                        ).show()
+                        Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_LONG).show()
                         showActivity(MainActivity::class.java)
                     }
                 }
@@ -53,7 +58,16 @@ class LoginActivity : AppCompatActivity() {
                     register_label.visibility = View.VISIBLE
                     loading.visibility = View.GONE
 
-                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
+                    try {
+                        val gson = Gson()
+                        val errorResult = gson.fromJson(error, ErrorBody::class.java)
+                        when(errorResult.result) {
+                            "Something went wrong" -> showSnackbar("Nombre de usuario o contraseña incorrecta.")
+                        }
+                    } catch (e: JsonSyntaxException) {
+                        e.printStackTrace()
+                        showSnackbar(error)
+                    }
                 }
             }
         })
@@ -75,6 +89,12 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun showSnackbar(message: String) {
+        val snack = Snackbar.make(findViewById(R.id.login_layout), message, Snackbar.LENGTH_LONG)
+        snack.show()
+    }
+
 
     private fun showActivity(activityClass: Class<*>) {
         val intent = Intent(this, activityClass)

@@ -13,7 +13,7 @@ class DataSheetInformationFungus : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data_sheet_information_fungus)
 
-        fungusPicture.load("https://source.unsplash.com/random")
+        fungusPicture.load(intent.getStringExtra("photo"))
         commonName.text = intent.getStringExtra("commonName")
         scientificName.text = intent.getStringExtra("scientificName")
         family.text = intent.getStringExtra("family")
