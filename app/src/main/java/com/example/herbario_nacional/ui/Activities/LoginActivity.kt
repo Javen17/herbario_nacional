@@ -40,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
                             getString(R.string.login_success),
                             Toast.LENGTH_LONG
                         ).show()
+                        MainActivity.isLogedIn = true;
                         showActivity(MainActivity::class.java)
                     }
                 }
