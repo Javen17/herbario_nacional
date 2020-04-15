@@ -24,7 +24,7 @@ class FungusViewHolder constructor(override val containerView: View) : RecyclerV
             showActivity(DataSheetInformationFungus::class.java, funghi)
         }
 
-        val dateReceived: Date? = SimpleDateFormat("yyyy-MM-dd", Locale("es")).parse(funghi.date_received)
+        val dateReceived: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).parse(funghi.date_received)
         val timeAgo = PrettyTime(Locale("es"))
 
         fungusImage?.let {

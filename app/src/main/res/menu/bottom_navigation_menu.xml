@@ -22,7 +22,7 @@
         android:title="@string/notifications"/>
 
     <item
-        android:id="@+id/noLoginActivity"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/ic_user"
         android:title="@string/profile"/>
 

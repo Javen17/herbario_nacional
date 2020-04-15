@@ -4,7 +4,9 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.base.BaseApplication.Companion.context
 import com.example.herbario_nacional.imageloader.ImageLoader
@@ -25,7 +27,7 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
             showActivity(DataSheetInformationPlant::class.java, plant)
         }
 
-        val dateReceived: Date? = SimpleDateFormat("yyyy-MM-dd", Locale("es")).parse(plant.date_received)
+        val dateReceived: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).parse(plant.date_received)
         val timeAgo = PrettyTime(Locale("es"))
 
         plantImage?.let {

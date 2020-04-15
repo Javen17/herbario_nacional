@@ -162,6 +162,7 @@ class NewFungusActivity : AppCompatActivity() {
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
                     Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
+                    showActivity(NoLoginActivity::class.java)
                 }
             }
         })
