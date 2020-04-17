@@ -31,7 +31,7 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
         val timeAgo = PrettyTime(Locale("es"))
 
         plantImage?.let {
-            imageLoader.load(ImageToUrl.exportImageToURL(plant.photo), it)
+            imageLoader.load(ImageToUrl.exportImageToURL(plant.photo_url!!), it)
         }
 
         profilePicture?.let {
@@ -53,7 +53,7 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
 
     private fun showActivity(activityClass: Class<*>, plant: PlantSpecimen) {
         val intent = Intent(context, activityClass)
-        intent.putExtra("photo", ImageToUrl.exportImageToURL(plant.photo))
+        intent.putExtra("photo", ImageToUrl.exportImageToURL(plant.photo_url!!))
         intent.putExtra("commonName", plant.species.common_name)
         intent.putExtra("scientificName", plant.species.scientific_name)
         intent.putExtra("family", plant.species.genus.family.name)

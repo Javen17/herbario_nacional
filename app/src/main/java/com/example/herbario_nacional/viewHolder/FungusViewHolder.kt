@@ -28,7 +28,7 @@ class FungusViewHolder constructor(override val containerView: View) : RecyclerV
         val timeAgo = PrettyTime(Locale("es"))
 
         fungusImage?.let {
-            imageLoader.load(ImageToUrl.exportImageToURL(funghi.photo), it)
+            imageLoader.load(ImageToUrl.exportImageToURL(ImageToUrl.exportImageToURL(funghi.photo_url)), it)
         }
         profilePicture?.let {
             imageLoader.load("https://api.adorable.io/avatars/50/12@adorable.png", it)
@@ -49,7 +49,7 @@ class FungusViewHolder constructor(override val containerView: View) : RecyclerV
 
     private fun showActivity(activityClass: Class<*>, funghi: FunghiSpecimen) {
         val intent = Intent(context, activityClass)
-        intent.putExtra("photo", ImageToUrl.exportImageToURL(funghi.photo))
+        intent.putExtra("photo", ImageToUrl.exportImageToURL(funghi.photo_url))
         intent.putExtra("commonName", funghi.species.common_name)
         intent.putExtra("scientificName", funghi.species.scientific_name)
         intent.putExtra("family", funghi.species.genus.family.name)

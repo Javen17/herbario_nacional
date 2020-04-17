@@ -10,7 +10,8 @@ import com.example.herbario_nacional.models.location.State
 data class FunghiSpecimen(
     val id: Int,
     val user: Register,
-    val photo: String,
+    val photo: String?,
+    val photo_url: String,
     val date_received: String,
     val number_of_samples: Int,
     val description: String,

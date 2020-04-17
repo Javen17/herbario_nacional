@@ -7,6 +7,7 @@ data class Profile(
     val id: Int,
     val number_id: String,
     val phone: String = "",
-    val photo: String? = null,
+    val photo: String?,
+    val photo_url: String,
     val user: Int
 )

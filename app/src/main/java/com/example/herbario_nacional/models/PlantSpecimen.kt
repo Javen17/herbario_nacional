@@ -10,7 +10,8 @@ import com.google.gson.annotations.SerializedName
 data class PlantSpecimen(
     val id: Int,
     val user: Register,
-    val photo: String,
+    val photo: String?,
+    val photo_url: String?,
     val date_received: String,
     // val family: PlantFamily,
     // val genus: Genus,
