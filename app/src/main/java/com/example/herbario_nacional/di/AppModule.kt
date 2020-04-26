@@ -22,7 +22,11 @@ val appModule = module {
     viewModel { HabitatDescriptionViewModel(get()) }
     viewModel { BiostatusViewModel(get()) }
     viewModel { PlantViewModel(get()) }
+    viewModel { FungusViewModel(get()) }
+    viewModel { FormTypeViewModel(get()) }
+    viewModel { CapTypeViewModel(get()) }
     viewModel { NewPlantViewModel(get()) }
+    viewModel { NewFungusViewModel(get()) }
     viewModel { SearchViewModel(get()) }
 
     single<CredentialsRepository> {
@@ -53,6 +57,14 @@ val appModule = module {
         GenusRepositoryImpl(get())
     }
 
+    single<FormTypeRepository> {
+        FormTypeRepositoryImpl(get())
+    }
+
+    single<CapTypeRepository> {
+        CapTypeRepositoryImpl(get())
+    }
+
     single<SpecieRepository> {
         SpecieRepositoryImpl(get())
     }
@@ -75,6 +87,10 @@ val appModule = module {
 
     single<PlantRepository> {
         PlantRepositoryImpl(get())
+    }
+
+    single<FungusRepository> {
+        FunghusRepositoryImpl(get())
     }
 
     single<ProfileRepository> {

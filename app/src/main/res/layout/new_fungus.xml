@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,6 +21,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/layoutNewFungus"
             android:padding="20dp"
             >
 
@@ -32,56 +33,48 @@
                 android:text="@string/specimen_data"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
+                android:textSize="20sp"
+                android:paddingBottom="20dp"
                 />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/commonNameTextInputLayout"
+            <TextView
+                android:id="@+id/specieLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/specimen_data"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="Especie"
+                android:textSize="16sp"
+                />
+
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/common_name"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@+id/specimen_data"
-                android:paddingTop="20dp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/commonNameInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:inputType="text"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Spinner
-                android:id="@+id/family"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/commonNameTextInputLayout"
-                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/specieSpinner"
+                app:layout_constraintTop_toBottomOf="@id/specieLabel"
+                app:smsp_hint="Seleccione una especie"
+                app:smsp_hintSize="16sp"
+                app:smsp_itemSize="16sp"
+                app:smsp_itemListHintBackgroundColor="@color/background_color"
+                app:smsp_itemListHintColor="@color/md_grey_500"
+                app:smsp_enableFloatingLabel="false"
+                app:smsp_selectedItemListColor="@color/primary"
+                app:smsp_underlineSize="0dp"
                 android:layout_marginTop="20dp"
-                android:textSize="16sp"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
                 />
 
-            <Spinner
-                android:id="@+id/genus"
+            <TextView
+                android:id="@+id/plantDescriptionLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/family"
+                app:layout_constraintTop_toBottomOf="@id/specieSpinner"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="20dp"
-                android:textSize="16sp"
-                />
-
-            <Spinner
-                android:id="@+id/specie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/genus"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:text="Descripción de especímen"
                 android:textSize="16sp"
                 />
 
@@ -91,49 +84,129 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/specimen_description"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@+id/specie"
-                android:paddingTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/plantDescriptionLabel"
+                android:layout_marginTop="20dp"
+                android:paddingBottom="20dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/funguDescriptionInput"
+                    android:id="@+id/fungusDescriptionInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:gravity="top"
                     android:inputType="textMultiLine"
                     android:minLines="2"
-                    android:gravity="top"
-                    />
+                    android:textSize="16sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Spinner
-                android:id="@+id/crust"
+            <TextView
+                android:id="@+id/crustLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/fungusDescriptionTextInputLayout"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="20dp"
-                android:textSize="16sp"
-                />
+                android:textStyle="bold"
+                android:text="¿El hongo presenta costras?"
+                android:textSize="16sp" />
 
-            <Spinner
-                android:id="@+id/cap_type"
+            <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/crust"
+                android:checkedButton="@+id/first"
+                android:orientation="horizontal"
+                android:id="@+id/crustRadioGroup"
+                app:layout_constraintTop_toBottomOf="@id/crustLabel"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="20dp"
-                android:textSize="16sp"
-                />
+                >
+                <RadioButton
+                    android:id="@+id/firstOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="No"
+                    android:checked="true"
+                    android:layout_marginEnd="10dp"
+                    />
+                <RadioButton
+                    android:id="@+id/secondOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="Sí"/>
+            </RadioGroup>
 
-            <Spinner
-                android:id="@+id/form_type"
+            <TextView
+                android:id="@+id/capLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/cap_type"
+                app:layout_constraintTop_toBottomOf="@id/crustRadioGroup"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="Tipo de Capa"
+                android:textSize="16sp"
                 android:layout_marginTop="20dp"
+                />
+
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/capSpinner"
+                app:layout_constraintTop_toBottomOf="@id/capLabel"
+                app:smsp_hint="Seleccione el tipo de capa"
+                app:smsp_hintSize="16sp"
+                app:smsp_itemSize="16sp"
+                app:smsp_itemListHintBackgroundColor="@color/background_color"
+                app:smsp_itemListHintColor="@color/md_grey_500"
+                app:smsp_enableFloatingLabel="false"
+                app:smsp_selectedItemListColor="@color/primary"
+                app:smsp_underlineSize="0dp"
+                android:layout_marginTop="20dp"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
+                />
+
+            <TextView
+                android:id="@+id/formLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/capSpinner"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="Tipo de Forma"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                />
+
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/formSpinner"
+                app:layout_constraintTop_toBottomOf="@id/formLabel"
+                app:smsp_hint="Seleccione el tipo de forma"
+                app:smsp_hintSize="16sp"
+                app:smsp_itemSize="16sp"
+                app:smsp_itemListHintBackgroundColor="@color/background_color"
+                app:smsp_itemListHintColor="@color/md_grey_500"
+                app:smsp_enableFloatingLabel="false"
+                app:smsp_selectedItemListColor="@color/primary"
+                app:smsp_underlineSize="0dp"
+                android:layout_marginTop="20dp"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
+                />
+
+            <TextView
+                android:id="@+id/colorLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/formSpinner"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="@string/color"
                 android:textSize="16sp"
                 />
 
@@ -141,10 +214,11 @@
                 android:id="@+id/colorTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/color"
+                android:hint="Ingrese el color del hongo"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@+id/form_type"
-                android:paddingTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/colorLabel"
+                android:layout_marginTop="20dp"
+                android:paddingBottom="20dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -157,14 +231,26 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                android:id="@+id/changeOfColorLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/colorTextInputLayout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="@string/change_of_color"
+                android:textSize="16sp"
+                />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/changeOfColorTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/change_of_color"
+                android:hint="¿El hongo presentó cambios de color?"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@+id/colorTextInputLayout"
-                android:paddingTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/changeOfColorLabel"
+                android:layout_marginTop="20dp"
+                android:paddingBottom="20dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -172,21 +258,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:gravity="top"
                     android:inputType="textMultiLine"
                     android:minLines="2"
-                    android:gravity="top"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/smellLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/changeOfColorTextInputLayout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="@string/smell"
+                android:textSize="16sp"
+                />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/smellTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/smell"
+                android:hint="Ingrese el olor del hongo"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@+id/changeOfColorTextInputLayout"
-                android:paddingTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/smellLabel"
+                android:layout_marginTop="20dp"
+                android:paddingBottom="20dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -194,20 +292,49 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:inputType="textMultiLine"
-                    android:minLines="2"
-                    android:gravity="top"
+                    android:inputType="text"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Spinner
-                android:id="@+id/fungusStatus"
+            <TextView
+                android:id="@+id/fungusStatusLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/smellTextInputLayout"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="Estado de Hongo"
+                android:textSize="16sp"
+                />
+
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fungusStatusSpinner"
+                app:layout_constraintTop_toBottomOf="@id/fungusStatusLabel"
+                app:smsp_hint="Seleccione el estado del hongo"
+                app:smsp_hintSize="16sp"
+                app:smsp_itemSize="16sp"
+                app:smsp_itemListHintBackgroundColor="@color/background_color"
+                app:smsp_itemListHintColor="@color/md_grey_500"
+                app:smsp_enableFloatingLabel="false"
+                app:smsp_selectedItemListColor="@color/primary"
+                app:smsp_underlineSize="0dp"
                 android:layout_marginTop="20dp"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
+                />
+
+            <TextView
+                android:id="@+id/numberOfSpecimensLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/fungusStatusSpinner"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="@string/number_specimens"
                 android:textSize="16sp"
                 />
 
@@ -215,14 +342,15 @@
                 android:id="@+id/numberSpecimensTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/number_specimens"
+                android:hint="Ingrese el número de ejemplares"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@+id/fungusStatus"
-                android:paddingTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/numberOfSpecimensLabel"
+                android:layout_marginTop="20dp"
+                android:paddingBottom="20dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/numberSpecimensInput"
+                    android:id="@+id/numberSpecimensInputF"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
@@ -236,80 +364,149 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/numberSpecimensTextInputLayout"
-                android:paddingTop="20dp"
                 android:text="@string/location_data"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
+                android:textSize="20sp"
+                android:paddingBottom="20dp"
                 />
 
-            <Spinner
-                android:id="@+id/country"
+            <TextView
+                android:id="@+id/countryLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/location_data"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="País"
+                android:textSize="16sp"
+                />
+
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/countrySpinnerF"
+                app:layout_constraintTop_toBottomOf="@id/countryLabel"
+                app:smsp_hint="Seleccione un país"
+                app:smsp_hintSize="16sp"
+                app:smsp_itemSize="16sp"
+                app:smsp_itemListHintBackgroundColor="@color/background_color"
+                app:smsp_itemListHintColor="@color/md_grey_500"
+                app:smsp_enableFloatingLabel="false"
+                app:smsp_selectedItemListColor="@color/primary"
+                app:smsp_underlineSize="0dp"
                 android:layout_marginTop="20dp"
+                android:spinnerMode="dialog"
+                app:smsp_isSearchable="true"
+                app:smsp_searchHeaderText="Busca/Selecciona un país"
+                app:smsp_searchHeaderTextColor="@color/white"
+                app:smsp_searchHeaderBackgroundColor="@color/primary"
+                app:smsp_searchHint="Buscar país"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
+                />
+
+            <TextView
+                android:id="@+id/stateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/countrySpinnerF"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="Estado"
+                android:textSize="16sp"
+                />
+
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/stateSpinnerF"
+                app:layout_constraintTop_toBottomOf="@id/stateLabel"
+                app:smsp_hint="Seleccione un estado"
+                app:smsp_hintSize="16sp"
+                app:smsp_itemSize="16sp"
+                app:smsp_itemListHintBackgroundColor="@color/background_color"
+                app:smsp_itemListHintColor="@color/md_grey_500"
+                app:smsp_enableFloatingLabel="false"
+                app:smsp_selectedItemListColor="@color/primary"
+                app:smsp_underlineSize="0dp"
+                android:layout_marginTop="20dp"
+                android:spinnerMode="dialog"
+                app:smsp_isSearchable="true"
+                app:smsp_searchHeaderText="Busca/Selecciona un estado"
+                app:smsp_searchHeaderTextColor="@color/white"
+                app:smsp_searchHeaderBackgroundColor="@color/primary"
+                app:smsp_searchHint="Buscar estado"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
+                />
+
+            <TextView
+                android:id="@+id/cityLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/stateSpinnerF"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="Ciudad"
+                android:textSize="16sp"
+                />
+
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/citySpinnerF"
+                app:layout_constraintTop_toBottomOf="@id/cityLabel"
+                app:smsp_hint="Seleccione una ciudad"
+                app:smsp_hintSize="16sp"
+                app:smsp_itemSize="16sp"
+                app:smsp_itemListHintBackgroundColor="@color/background_color"
+                app:smsp_itemListHintColor="@color/md_grey_500"
+                app:smsp_enableFloatingLabel="false"
+                app:smsp_selectedItemListColor="@color/primary"
+                app:smsp_underlineSize="0dp"
+                android:layout_marginTop="20dp"
+                android:spinnerMode="dialog"
+                app:smsp_isSearchable="true"
+                app:smsp_searchHeaderText="Busca/Selecciona una ciudad"
+                app:smsp_searchHeaderTextColor="@color/white"
+                app:smsp_searchHeaderBackgroundColor="@color/primary"
+                app:smsp_searchHint="Buscar ciudad"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
+                />
+
+            <TextView
+                android:id="@+id/specificCollectionAreaLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/citySpinnerF"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="@string/specific_collection_area"
                 android:textSize="16sp"
                 />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/stateTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/state"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@+id/country"
-                android:paddingTop="20dp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/stateInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:inputType="text"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/cityTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/city"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@+id/stateTextInputLayout"
-                android:paddingTop="20dp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/cityInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:inputType="text"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/specificCollectionAreaTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/specific_collection_area"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@+id/cityTextInputLayout"
-                android:paddingTop="20dp"
+                android:hint="Ingrese un área de recolección"
+                android:layout_marginTop="20dp"
+                android:paddingBottom="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/specificCollectionAreaLabel"
+                tools:layout_editor_absoluteX="24dp"
                 >
-
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/specificCollectionAreaInput"
+                    android:id="@+id/specificCollectionAreaInputF"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
                     android:inputType="text"
-                    />
+                    android:textSize="16sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -318,10 +515,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/specificCollectionAreaTextInputLayout"
-                android:paddingTop="20dp"
                 android:text="@string/coordinates"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                android:paddingBottom="20dp"
+                />
+
+            <TextView
+                android:id="@+id/latitudeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/coordinates"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="@string/latitude"
                 android:textSize="16sp"
                 />
 
@@ -329,38 +537,51 @@
                 android:id="@+id/latitudeTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/latitude"
+                android:hint="Ingrese una latitud"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@+id/coordinates"
-                android:paddingTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/latitudeLabel"
+                android:layout_marginTop="20dp"
+                android:paddingBottom="20dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/latitudeInput"
+                    android:id="@+id/latitudeInputF"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:inputType="text"
+                    android:inputType="numberDecimal|numberSigned"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/longitudeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/latitudeTextInputLayout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:text="@string/longitude"
+                android:textSize="16sp"
+                />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/longitudeTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/longitude"
+                android:hint="Ingrese una longitud"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@+id/latitudeTextInputLayout"
-                android:paddingTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/longitudeLabel"
+                android:layout_marginTop="20dp"
+                android:paddingBottom="20dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/longitudeInput"
+                    android:id="@+id/longitudeInputF"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:inputType="text"
+                    android:inputType="numberDecimal|numberSigned"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -370,62 +591,92 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/longitudeTextInputLayout"
-                android:paddingTop="20dp"
                 android:text="@string/habitat_data"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
+                android:textSize="20sp"
+                android:paddingBottom="20dp"
                 />
 
-            <Spinner
-                android:id="@+id/habitat"
+            <TextView
+                android:id="@+id/habitatLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/habitat_data"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:text="Habitat"
                 android:textSize="16sp"
                 />
 
-            <Spinner
-                android:id="@+id/habitatDescription"
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/habitatSpinner"
+                app:layout_constraintTop_toBottomOf="@id/habitatLabel"
+                app:smsp_hint="Seleccione un hábitat"
+                app:smsp_hintSize="16sp"
+                app:smsp_itemSize="16sp"
+                app:smsp_itemListHintBackgroundColor="@color/background_color"
+                app:smsp_itemListHintColor="@color/md_grey_500"
+                app:smsp_enableFloatingLabel="false"
+                app:smsp_selectedItemListColor="@color/primary"
+                app:smsp_underlineSize="0dp"
+                android:layout_marginTop="20dp"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
+                />
+
+            <TextView
+                android:id="@+id/habitatDescriptionLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/habitat"
+                app:layout_constraintTop_toBottomOf="@id/habitatSpinner"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:text="Descripción de Habitat"
                 android:textSize="16sp"
                 />
 
-            <Spinner
-                android:id="@+id/biostatus"
-                android:layout_width="wrap_content"
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/habitatDescription"
-                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/habitatDescriptionSpinner"
+                app:layout_constraintTop_toBottomOf="@id/habitatDescriptionLabel"
+                app:smsp_hint="Seleccione una descripción del hábitat"
+                app:smsp_hintSize="16sp"
+                app:smsp_itemSize="16sp"
+                app:smsp_itemListHintBackgroundColor="@color/background_color"
+                app:smsp_itemListHintColor="@color/md_grey_500"
+                app:smsp_enableFloatingLabel="false"
+                app:smsp_selectedItemListColor="@color/primary"
+                app:smsp_underlineSize="0dp"
                 android:layout_marginTop="20dp"
-                android:textSize="16sp"
+                app:smsp_errorTextColor="#af0021"
+                app:smsp_errorText="@string/required"
+                app:smsp_enableErrorLabel="false"
                 />
 
             <com.google.android.material.button.MaterialButton
                 android:text="@string/cancel"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="64dp"
                 android:id="@+id/cancel_btn"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 app:strokeColor="@color/colorPrimary"
                 android:textColor="@color/colorPrimary"
-                app:layout_constraintTop_toBottomOf="@id/biostatus"
+                app:layout_constraintTop_toBottomOf="@id/habitatDescriptionSpinner"
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:letterSpacing="0.05"
+                android:layout_marginTop="20dp"
                 />
 
             <com.google.android.material.button.MaterialButton
                 android:text="@string/registerSpecimen"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="64dp"
                 android:id="@+id/register_btn"
                 app:layout_constraintTop_toBottomOf="@id/cancel_btn"
                 android:backgroundTint="@color/colorPrimary"
@@ -436,7 +687,18 @@
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:letterSpacing="0.05"
-                android:textAlignment="center"
+                android:layout_marginTop="5dp"
+                />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/loading"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/habitatDescriptionSpinner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_margin="10dp"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

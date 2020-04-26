@@ -31,7 +31,7 @@ class MeViewModel (private val meRepository: MeRepository): ViewModel() {
             }.onSuccess {
                 emitUiState(result = Event(it))
             }.onFailure {
-                emitUiState(error = Event(R.string.internet_connection_error))
+                emitUiState(error = Event(R.string.unauthenticated))
             }
         }
     }

@@ -9,8 +9,8 @@ class CoilImageLoader : ImageLoader {
     override fun load(imageUrl: String, imageView: ImageView) {
         imageView.load(imageUrl){
             crossfade(true)
-            error(R.drawable.ic_launcher_background)
-            placeholder(R.drawable.ic_launcher_background)
+            error(R.drawable.error)
+            placeholder(R.drawable.placeholder)
             memoryCachePolicy(CachePolicy.ENABLED)
         }
     }

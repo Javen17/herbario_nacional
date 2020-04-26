@@ -7,6 +7,7 @@
     tools:context=".ui.Activities.RegisterActivity"
     android:background="@color/background_color"
     android:focusableInTouchMode="true"
+    android:id="@+id/register_layout"
     >
 
     <RelativeLayout
@@ -132,52 +133,12 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/phoneNumberTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/cellphoneNumber"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@id/lastnameTextInputLayout"
-                android:layout_marginTop="20dp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/phoneNumberInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:inputType="phone"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/referenceNumberTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/referenceNumber"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@id/phoneNumberTextInputLayout"
-                android:layout_marginTop="20dp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/referenceNumberInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:inputType="text"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/usernameTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/username"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@id/referenceNumberTextInputLayout"
+                app:layout_constraintTop_toBottomOf="@id/lastnameTextInputLayout"
                 android:layout_marginTop="20dp"
                 >
 
@@ -233,7 +194,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnRegister"
+                android:id="@+id/register_user_btn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:stateListAnimator="@null"
@@ -248,6 +209,17 @@
                 android:letterSpacing="0.05"
             />
 
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/passwordTextInputLayout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+            />
+
             <TextView
                 android:text="@string/terms"
                 android:layout_width="match_parent"
@@ -255,7 +227,7 @@
                 android:id="@+id/terminos"
                 android:textAlignment="center"
                 android:layout_marginTop="25dp"
-                app:layout_constraintTop_toBottomOf="@id/btnRegister"
+                app:layout_constraintTop_toBottomOf="@id/register_user_btn"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

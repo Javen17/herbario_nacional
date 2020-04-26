@@ -4,6 +4,6 @@ import com.example.herbario_nacional.models.Me
 import retrofit2.http.GET
 
 interface MeInterface {
-    @GET("api/menu/")
+    @GET("api/me/")
     suspend fun requestMe(): Me
 }

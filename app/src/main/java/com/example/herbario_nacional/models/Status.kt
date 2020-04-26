@@ -4,5 +4,5 @@ import androidx.annotation.Keep
 
 @Keep
 data class Status(
-    val result: String = "" // success
+    val result: String = ""
 )

@@ -21,12 +21,12 @@ class ProfileViewModel (private val profileRepository: ProfileRepository): ViewM
     val uiState: LiveData<ProfileDataState>
         get() = _uiState
 
-    fun requestProfile(number_id: String, phone: String, photo: String?, user: Int){
+    fun requestProfile(profile: Profile){
         viewModelScope.launch {
             Retry().retryIO(times = 3){
                 runCatching {
                     emitUiState(showProgress = true)
-                    profileRepository.registerProfile(Profile(number_id, phone, photo, user))
+                    profileRepository.registerProfile(profile)
                 }.onSuccess {
                     emitUiState(result = Event(it))
                 }.onFailure {

@@ -32,5 +32,4 @@ class DataSheetFragment : Fragment() {
 
         return view
     }
-
 }

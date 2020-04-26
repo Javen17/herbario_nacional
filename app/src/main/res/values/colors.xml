@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#008b47</color>
     <color name="colorAccent">#1ac381</color>
     <color name="white">#FFFFFF</color>
-    <color name="background_color">#FBFFF8</color>
+    <color name="background_color">#FFF</color>
     <color name="inactive_color">#C5C8C7</color>
     <color name="gray">#a8a8a8</color>
     <color name="dark_gray">#454545</color>
@@ -12,4 +12,6 @@
     <color name="white70">#FFFFFFB3</color>
     <color name="black70">#464646</color>
     <color name="black">#000</color>
+    <color name="placeholder_bg">#FFF</color>
+    <color name="placeholder_content">#E1E1E1</color>
 </resources>

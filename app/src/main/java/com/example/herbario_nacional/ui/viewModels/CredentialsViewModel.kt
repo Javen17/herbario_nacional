@@ -1,19 +1,20 @@
 package com.example.herbario_nacional.ui.viewModels
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.herbario_nacional.R
+import com.example.herbario_nacional.base.BaseApplication
 import com.example.herbario_nacional.data.network.Retry
 import com.example.herbario_nacional.models.Credentials
 import com.example.herbario_nacional.models.Status
-import com.example.herbario_nacional.preferences.AppPreferences
 import com.example.herbario_nacional.repo.CredentialsRepository
 import com.example.herbario_nacional.ui.Event
 import com.example.herbario_nacional.util.StatusCode
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
 class CredentialsViewModel (private val credentialsRepository: CredentialsRepository): ViewModel() {
@@ -33,22 +34,24 @@ class CredentialsViewModel (private val credentialsRepository: CredentialsReposi
                     when(it){
                         is HttpException -> {
                             when(StatusCode(it.code()).description){
-                            StatusCode.Status.Unauthorized -> emitUiState(error = Event(R.string.unauthorized))
-                            else -> emitUiState(error = Event(R.string.internet_connection_error))
+                            StatusCode.Status.Unauthorized -> emitUiState(
+                                error = Event( withContext(Dispatchers.IO) {
+                                    it.response()?.errorBody()!!.string()
+                                }))
+                            else -> emitUiState(error = Event(BaseApplication.context.getString(R.string.internet_connection_error)))
                             }
                         }
-                        else -> emitUiState(error = Event(R.string.internet_connection_error))
+                        else -> emitUiState(error = Event(BaseApplication.context.getString(R.string.internet_connection_error)))
                     }
                 }
             }
         }
     }
 
-    private fun emitUiState(showProgress: Boolean = false, result: Event<Status>? = null, error: Event<Int>? = null){
+    private fun emitUiState(showProgress: Boolean = false, result: Event<Status>? = null, error: Event<String>? = null){
         val dataState = CredentialsDataState(showProgress, result, error)
         _uiState.value = dataState
     }
 
-    data class CredentialsDataState(val showProgress: Boolean, val result: Event<Status>?, val error: Event<Int>?)
-
+    data class CredentialsDataState(val showProgress: Boolean, val result: Event<Status>?, val error: Event<String>?)
 }
