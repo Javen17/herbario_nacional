@@ -4,18 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.herbario_nacional.BuildConfig
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.imageloader.ImageLoader
 import com.example.herbario_nacional.models.Plant
-import com.example.herbario_nacional.models.PlantSpecimen
-import com.example.herbario_nacional.util.ImageSizer
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.plant_content.*
 
 class PlantViewHolder constructor(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-    fun bind(plant: PlantSpecimen, imageLoader: ImageLoader) {
+    fun bind(plant: Plant, imageLoader: ImageLoader) {
         plantImage?.let { imageLoader.load(/*"${BuildConfig.HERBARIO_URL}/gallery/${plant.image}"*/ "https://source.unsplash.com/random", it) }
         plantName.text = plant.species.common_name
         plantFamily.text = plant.family.name
