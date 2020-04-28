@@ -57,7 +57,7 @@ class NewFungusActivity : AppCompatActivity() {
     private val habitatDescriptionViewModel: HabitatDescriptionViewModel by viewModel()
     private val newFungusViewModel: NewFungusViewModel by viewModel()
 
-    var currentUser: Int = 0
+    var currentUser: Int? = 0
 
     val species: MutableList<String> = ArrayList()
     val specieMap: MutableMap<Int, String> = mutableMapOf()

@@ -61,7 +61,7 @@ class NewPlantActivity : AppCompatActivity() {
     private val biostatusViewModel: BiostatusViewModel by viewModel()
     private val newPlantViewModel: NewPlantViewModel by viewModel()
 
-    var currentUser: Int = 0
+    var currentUser: Int? = 0
 
     val species: MutableList<String> = ArrayList()
     val specieMap: MutableMap<Int, String> = mutableMapOf()
