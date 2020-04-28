@@ -86,10 +86,21 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     last_name_update.setText(result.data.last_name)
                     username_update.setText(result.data.username)
                     email_update.setText(result.data.email)
-                    phone_update.setText(result.data.profile!!.phone)
-                    numb_ref_update.setText(result.data.profile.number_id)
-                    profile = result.data.profile;
-                    account = result.data;
+                    var placeholder_phone = ""
+
+                    if(result.data.profile?.phone != null){
+                        placeholder_phone = result.data.profile?.phone;
+                    }
+
+                    phone_update.setText(placeholder_phone);
+
+                    var placeholder_number_id = ""
+
+                    if(result.data.profile?.number_id != null){
+                        placeholder_number_id = result.data.profile?.number_id;
+                    }
+                    numb_ref_update.setText(placeholder_number_id)
+
                 }
             }
             if (dataState.error != null && !dataState.error.consumed){
