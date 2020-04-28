@@ -10,9 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import coil.api.load
 import com.example.herbario_nacional.R
+import com.example.herbario_nacional.base.BaseApplication
+import com.example.herbario_nacional.preferences.AppPreferences
 import com.example.herbario_nacional.ui.Activities.NoLoginActivity
+import com.example.herbario_nacional.ui.viewModels.CredentialsViewModel
 import com.example.herbario_nacional.ui.viewModels.MeViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,7 +32,6 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
@@ -42,7 +48,6 @@ class ProfileFragment : Fragment() {
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     currentUser = result.data.id
-                    Toast.makeText(context, "Usuario actual: $currentUser", Toast.LENGTH_LONG).show()
                     fullname.text = "${result.data.first_name} ${result.data.last_name}"
                     username.text = result.data.username
                     email.text = result.data.email
@@ -51,10 +56,15 @@ class ProfileFragment : Fragment() {
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
                     Toast.makeText(context, resources.getString(error), Toast.LENGTH_LONG).show()
-                    showActivity(NoLoginActivity::class.java)
                 }
             }
         })
+
+        logout_btn.setOnClickListener {
+            AppPreferences().remove(AppPreferences.Key.cookies)
+            showActivity(NoLoginActivity::class.java)
+            Toast.makeText(context, getString(R.string.logoutNotification), Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun showActivity(activityClass: Class<*>) {

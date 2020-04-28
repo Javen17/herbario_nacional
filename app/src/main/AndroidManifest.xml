@@ -4,9 +4,12 @@
     package="com.example.herbario_nacional">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:name=".base.BaseApplication"
@@ -16,24 +19,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.Activities.DataSheetInformationFungus"></activity>
-        <activity android:name=".ui.Activities.NewFungusActivity" />
-        <activity android:name=".ui.Activities.ForgottenPasswordActivity" />
-        <activity android:name=".ui.Activities.LoginActivity" />
-        <activity android:name=".ui.Activities.RegisterActivity" />
-        <activity android:name=".ui.Activities.DataSheetInformationPlant" />
-        <activity
-            android:name=".ui.Activities.NoLoginActivity"
+        <activity android:name=".ui.Activities.SplashActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity">
+            tools:ignore="LockedOrientationActivity"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.Activities.DataSheetInformationFungus" />
+        <activity android:name=".ui.Activities.NewFungusActivity" />
+        <activity android:name=".ui.Activities.ForgottenPasswordActivity" />
+        <activity android:name=".ui.Activities.LoginActivity" />
+        <activity android:name=".ui.Activities.RegisterActivity" />
+        <activity android:name=".ui.Activities.DataSheetInformationPlant" />
+        <activity android:name=".ui.Activities.NoLoginActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity android:name=".ui.Activities.NewPlantActivity" />
-        <activity android:name=".ui.Activities.MainActivity"/>
+        <activity android:name=".ui.Activities.MainActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -42,8 +49,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"
-                />
+                android:resource="@xml/file_paths" />
         </provider>
     </application>
 
