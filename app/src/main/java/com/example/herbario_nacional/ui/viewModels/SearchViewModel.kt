@@ -16,6 +16,30 @@ class SearchViewModel (private val plantRepository: PlantRepository): ViewModel(
 
     private val _uiState = MutableLiveData<PlantDataState>()
 
+    val categoryList: ArrayList<String> = ArrayList()
+    val optionIdItemPosition = MutableLiveData<Int>()
+    var optionIdValue
+        get() = optionIdItemPosition.value?.let {
+            categoryList?.get(it)
+        }
+        set(value) {
+            val position = categoryList?.indexOfFirst {
+                it.equals(value)
+            } ?: -1
+            if (position != -1) {
+                optionIdItemPosition.value = position + 1
+            }
+        }
+    val categoryIdItem
+        get() =
+            optionIdItemPosition.value?.let {
+                categoryList?.get(it)
+            }
+
+    init {
+        if (categoryList.isEmpty()) categoryList.addAll(arrayListOf("Hongos", "Plantas"))
+    }
+
     val uiState: LiveData<PlantDataState>
         get() = _uiState
 
