@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -37,6 +38,8 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        spinner.adapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, searchViewModel.categoryList)
+
         setupRecycler()
 
         searchViewModel.uiState.observe(viewLifecycleOwner, Observer {
@@ -58,10 +61,7 @@ class SearchFragment : Fragment() {
             override fun onQueryTextSubmit(s:String):Boolean {
 
                 searchViewModel.searchPlantByName(s)
-
-                Toast.makeText(context, "Keep a gold chain in my neck", Toast.LENGTH_SHORT).show()
-
-
+                Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
 
                 return false
             }
