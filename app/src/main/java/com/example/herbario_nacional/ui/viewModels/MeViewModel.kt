@@ -1,5 +1,6 @@
 package com.example.herbario_nacional.ui.viewModels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,10 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.models.Genus
 import com.example.herbario_nacional.models.Me
+import com.example.herbario_nacional.models.MeData
 import com.example.herbario_nacional.repo.GenusRepository
 import com.example.herbario_nacional.repo.MeRepository
 import com.example.herbario_nacional.ui.Event
 import kotlinx.coroutines.launch
+import okhttp3.RequestBody
 
 class MeViewModel (private val meRepository: MeRepository): ViewModel() {
 
@@ -32,6 +35,23 @@ class MeViewModel (private val meRepository: MeRepository): ViewModel() {
                 emitUiState(result = Event(it))
             }.onFailure {
                 emitUiState(error = Event(R.string.unauthenticated))
+            }
+        }
+    }
+
+    fun updateAccount(data: RequestBody) {
+        viewModelScope.launch {
+            runCatching {
+                //emitUiState(showProgress = true)
+                Log.i("ACCOUNT UPDATE ROUTE ", "ACCOUNT: "+data.toString())
+                meRepository.updateMe(data)
+
+            }.onSuccess {
+                //emitUiState(result = Event(it))
+                Log.i("ACCOUNT UPDATE ROUTE ", "ACCOUNT SEEMS TO BE SUCCESSFUL ")
+            }.onFailure {
+                //emitUiState(error = Event(R.string.unauthenticated))
+                Log.i("ACCOUNT UPDATE ROUTE ", "ACCOUNT SEEMS TO HAVE FAILED ")
             }
         }
     }

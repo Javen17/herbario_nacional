@@ -4,9 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.base.BaseApplication.Companion.context
 import com.example.herbario_nacional.imageloader.ImageLoader

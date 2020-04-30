@@ -78,4 +78,7 @@
     <string name="logout">Cerrar sesión</string>
     <string name="my_specimens">Mis fichas técnicas</string>
     <string name="close_button">Close Button</string>
+
+    <string name="logoutNotification">Has cerrado sesión</string>
+
 </resources>

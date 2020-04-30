@@ -29,7 +29,7 @@ class NotificationsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var currentUser: Int
+        var currentUser: Int? = 0;
 
         meViewModel.uiState.observe(viewLifecycleOwner, Observer {
             val dataState = it ?: return@Observer
