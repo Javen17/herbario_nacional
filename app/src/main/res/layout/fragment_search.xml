@@ -20,28 +20,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <SearchView
-        android:id="@+id/mi_search_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_recyclerView"
-        android:layout_width="414dp"
-        android:layout_height="450dp"
-        android:layout_below="@+id/mi_search_view"
-        android:scrollbarStyle="outsideInset"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mi_search_view"
-        tools:listitem="@layout/plant_card" />
-
     <Spinner
         android:id="@+id/searchBy"
         android:layout_width="180dp"
@@ -53,40 +31,76 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.695" />
 
-    <Button
-        android:id="@+id/btn_common_name"
-        android:layout_width="130dp"
-        android:layout_height="80dp"
-        android:text="@string/common_name"
-        app:layout_constraintBottom_toTopOf="@+id/search_recyclerView"
+    <SearchView
+        android:id="@+id/mi_search_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mi_search_view"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <Button
-        android:id="@+id/btn_location"
-        android:layout_width="116dp"
-        android:layout_height="80dp"
-        android:text="@string/location_data"
-        app:layout_constraintBottom_toTopOf="@+id/search_recyclerView"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/btnFilters"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.073"
-        app:layout_constraintStart_toEndOf="@+id/btn_common_name"
-        app:layout_constraintTop_toBottomOf="@+id/mi_search_view"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/mi_search_view">
 
-    <Button
-        android:id="@+id/btn_recollection"
-        android:layout_width="130dp"
-        android:layout_height="80dp"
-        android:text="@string/specific_collection_area"
-        app:layout_constraintBottom_toTopOf="@+id/search_recyclerView"
+        <Button
+            android:id="@+id/btn_common_name"
+            android:layout_width="140dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:text="@string/common_name"
+            android:layout_weight="1"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="10sp"
+            app:autoSizeMaxTextSize="13sp"
+            app:autoSizeStepGranularity="2sp"/>
+
+        <Button
+            android:id="@+id/btn_location"
+            android:layout_width="140dp"
+            android:layout_height="110dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="10sp"
+            app:autoSizeMaxTextSize="13sp"
+            app:autoSizeStepGranularity="2sp"
+            android:text="@string/location_data"/>
+
+        <Button
+            android:id="@+id/btn_recollection"
+            android:layout_width="140dp"
+            android:layout_height="110dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="10sp"
+            app:autoSizeMaxTextSize="13sp"
+            app:autoSizeStepGranularity="2sp"
+            android:text="@string/specific_collection_area"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_below="@+id/btnFilters"
+        android:scrollbarStyle="outsideInset"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toEndOf="@+id/btn_location"
-        app:layout_constraintTop_toBottomOf="@+id/mi_search_view"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFilters"
+        tools:listitem="@layout/plant_card" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -60,10 +60,8 @@ class SearchFragment : Fragment() {
         mi_search_view.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(s:String):Boolean {
-
                 searchViewModel.searchPlantByName(s)
                 Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
-
                 return false
             }
 

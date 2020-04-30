@@ -25,7 +25,7 @@ class SearchViewModel (private val plantRepository: PlantRepository): ViewModel(
 
     var optionIdValue
         get() = optionIdItemPosition.value?.let {
-            categoryList.get(it)
+            categoryList[it]
         }
         set(value) {
             val position = categoryList.indexOfFirst {
@@ -39,12 +39,14 @@ class SearchViewModel (private val plantRepository: PlantRepository): ViewModel(
     val categoryIdItem
         get() =
             optionIdItemPosition.value?.let {
-                categoryList.get(it)
+                categoryList[it]
             }
 
     init {
         if (categoryList.isEmpty()) categoryList.addAll(arrayListOf("Hongos", "Plantas"))
     }
+
+
 
     fun searchPlantByName(value: String) {
         viewModelScope.launch {
@@ -162,6 +164,11 @@ class SearchViewModel (private val plantRepository: PlantRepository): ViewModel(
     }
 
     data class PlantDataState(
+        val showProgress: Boolean,
+        val result: Event<MutableList<PlantSpecimen>>?,
+        val error: Event<Int>?)
+
+    data class MushroomDataState(
         val showProgress: Boolean,
         val result: Event<MutableList<PlantSpecimen>>?,
         val error: Event<Int>?)
