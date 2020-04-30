@@ -9,5 +9,5 @@ data class Profile(
     val phone: String = "",
     val photo: String?,
     val photo_url: String?,
-    val user: Int?
+    val user: Int
 )

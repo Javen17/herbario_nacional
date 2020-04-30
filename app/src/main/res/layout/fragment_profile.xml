@@ -217,6 +217,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/phone_update" />
 
+        <Button
+            android:id="@+id/change_pp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="Cambiar Foto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_information" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
