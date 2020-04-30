@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.models.PlantSpecimen
+//import com.example.herbario_nacional.repo.FungusRepository
 import com.example.herbario_nacional.repo.PlantRepository
 import com.example.herbario_nacional.ui.Event
 import kotlinx.coroutines.launch
@@ -24,12 +25,12 @@ class SearchViewModel (private val plantRepository: PlantRepository): ViewModel(
 
     var optionIdValue
         get() = optionIdItemPosition.value?.let {
-            categoryList?.get(it)
+            categoryList.get(it)
         }
         set(value) {
-            val position = categoryList?.indexOfFirst {
+            val position = categoryList.indexOfFirst {
                 it.equals(value)
-            } ?: -1
+            } -1
             if (position != -1) {
                 optionIdItemPosition.value = position + 1
             }
@@ -38,7 +39,7 @@ class SearchViewModel (private val plantRepository: PlantRepository): ViewModel(
     val categoryIdItem
         get() =
             optionIdItemPosition.value?.let {
-                categoryList?.get(it)
+                categoryList.get(it)
             }
 
     init {
@@ -61,6 +62,92 @@ class SearchViewModel (private val plantRepository: PlantRepository): ViewModel(
             }
         }
     }
+
+    fun searchPlantByLocation(value: String) {
+        viewModelScope.launch {
+            runCatching {
+                emitUiState(showProgress = true)
+                plantRepository.searchByLocation(value)
+            }.onSuccess {
+                emitUiState(result = Event(it))
+            }.onFailure {
+                val sw = StringWriter()
+                it.printStackTrace(PrintWriter(sw))
+                val exceptionAsString = sw.toString()
+                println(exceptionAsString)
+                emitUiState(error = Event(R.string.internet_connection_error))
+            }
+        }
+    }
+
+    fun searchPlantByRecollectionArea(value: String) {
+        viewModelScope.launch {
+            runCatching {
+                emitUiState(showProgress = true)
+                plantRepository.searchByRecollectionArea(value)
+            }.onSuccess {
+                emitUiState(result = Event(it))
+            }.onFailure {
+                val sw = StringWriter()
+                it.printStackTrace(PrintWriter(sw))
+                val exceptionAsString = sw.toString()
+                println(exceptionAsString)
+                emitUiState(error = Event(R.string.internet_connection_error))
+            }
+        }
+    }
+
+//    fun searchFungusByName(value: String) {
+//        viewModelScope.launch {
+//            runCatching {
+//                emitUiState(showProgress = true)
+//                fungusRepository.searchByName(value)
+//            }.onSuccess {
+//                emitUiState(result = Event(it))
+//            }.onFailure {
+//                val sw = StringWriter()
+//                it.printStackTrace(PrintWriter(sw))
+//                val exceptionAsString = sw.toString()
+//                println(exceptionAsString)
+//                emitUiState(error = Event(R.string.internet_connection_error))
+//            }
+//        }
+//    }
+
+//    fun searchFungusByRecollectionArea(value: String) {
+//        viewModelScope.launch {
+//            runCatching {
+//                emitUiState(showProgress = true)
+//                fungusRepository.searchByLocation(value)
+//            }.onSuccess {
+//                emitUiState(result = Event(it))
+//            }.onFailure {
+//                val sw = StringWriter()
+//                it.printStackTrace(PrintWriter(sw))
+//                val exceptionAsString = sw.toString()
+//                println(exceptionAsString)
+//                emitUiState(error = Event(R.string.internet_connection_error))
+//            }
+//        }
+//    }
+
+//    fun searchFungusByLocation(value: String) {
+//        viewModelScope.launch {
+//            runCatching {
+//                emitUiState(showProgress = true)
+//                fungusRepository.searchByRecollectionArea(value)
+//            }.onSuccess {
+//                emitUiState(result = Event(it))
+//            }.onFailure {
+//                val sw = StringWriter()
+//                it.printStackTrace(PrintWriter(sw))
+//                val exceptionAsString = sw.toString()
+//                println(exceptionAsString)
+//                emitUiState(error = Event(R.string.internet_connection_error))
+//            }
+//        }
+//    }
+
 
     fun emitUiState(
         showProgress: Boolean = false,

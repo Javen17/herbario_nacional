@@ -34,4 +34,13 @@ interface FungusInterface {
         @Part("aditional_info") aditional_info: RequestBody,
         @Part("location") location: RequestBody
     ): Status
+
+    @GET("api/mushroom_specimen/filter/")
+    suspend fun searchFungusByName(@Query("species__common_name") value: String): MutableList<FunghiSpecimen>
+
+    @GET("api/mushroom_specimen/filter/")
+    suspend fun searchFungusByRecollectionArea(@Query("recolection_area_status__name") value: String): MutableList<FunghiSpecimen>
+
+    @GET("api/mushroom_specimen/filter/")
+    suspend fun searchFungusByLocation(@Query("location") value: String): MutableList<FunghiSpecimen>
 }

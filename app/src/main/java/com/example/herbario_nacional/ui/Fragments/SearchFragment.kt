@@ -31,6 +31,8 @@ class SearchFragment : Fragment() {
 
     private val searchViewModel: SearchViewModel by viewModel()
 
+    private var query: String = String()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
@@ -66,9 +68,24 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(s:String):Boolean {
-                return false
+                query = s
+                return true
             }
         })
+
+        // button listeners
+        btn_common_name.setOnClickListener {
+            searchViewModel.searchPlantByName(query)
+        }
+
+        btn_location.setOnClickListener {
+            searchViewModel.searchPlantByLocation(query)
+        }
+
+        btn_recollection.setOnClickListener {
+            searchViewModel.searchPlantByRecollectionArea(query)
+        }
+
     }
 
     private fun setupRecycler(){
