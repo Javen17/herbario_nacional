@@ -6,14 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.models.PlantSpecimen
-//import com.example.herbario_nacional.repo.FungusRepository
+import com.example.herbario_nacional.models.funghi.FunghiSpecimen
+import com.example.herbario_nacional.repo.FungusRepository
 import com.example.herbario_nacional.repo.PlantRepository
 import com.example.herbario_nacional.ui.Event
 import kotlinx.coroutines.launch
 import java.io.PrintWriter
 import java.io.StringWriter
 
-class SearchViewModel (private val plantRepository: PlantRepository): ViewModel() {
+class SearchViewModel (private val plantRepository: PlantRepository, private val fungusRepository: FungusRepository): ViewModel() {
 
     private val _uiState = MutableLiveData<PlantDataState>()
 
@@ -98,7 +99,7 @@ class SearchViewModel (private val plantRepository: PlantRepository): ViewModel(
             }
         }
     }
-
+//
 //    fun searchFungusByName(value: String) {
 //        viewModelScope.launch {
 //            runCatching {
@@ -115,7 +116,7 @@ class SearchViewModel (private val plantRepository: PlantRepository): ViewModel(
 //            }
 //        }
 //    }
-
+//
 //    fun searchFungusByRecollectionArea(value: String) {
 //        viewModelScope.launch {
 //            runCatching {
@@ -132,7 +133,7 @@ class SearchViewModel (private val plantRepository: PlantRepository): ViewModel(
 //            }
 //        }
 //    }
-
+//
 //    fun searchFungusByLocation(value: String) {
 //        viewModelScope.launch {
 //            runCatching {
@@ -170,6 +171,6 @@ class SearchViewModel (private val plantRepository: PlantRepository): ViewModel(
 
     data class MushroomDataState(
         val showProgress: Boolean,
-        val result: Event<MutableList<PlantSpecimen>>?,
+        val result: Event<MutableList<FunghiSpecimen>>?,
         val error: Event<Int>?)
 }
