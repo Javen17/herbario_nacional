@@ -38,9 +38,8 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        spinner.adapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, searchViewModel.categoryList)
-
         setupRecycler()
+        searchBy.adapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, searchViewModel.categoryList)
 
         searchViewModel.uiState.observe(viewLifecycleOwner, Observer {
             val dataState = it ?: return@Observer

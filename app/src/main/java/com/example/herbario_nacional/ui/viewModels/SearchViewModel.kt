@@ -19,7 +19,7 @@ class SearchViewModel (private val plantRepository: PlantRepository): ViewModel(
     val uiState: LiveData<PlantDataState>
         get() = _uiState
 
-    val categoryList: ArrayList<String> = ArrayList()
+    val categoryList: MutableList<String> = ArrayList()
     val optionIdItemPosition = MutableLiveData<Int>()
 
     var optionIdValue
