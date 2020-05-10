@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.herbario_nacional.R
+import com.example.herbario_nacional.models.Plant
 import com.example.herbario_nacional.models.PlantSpecimen
 import com.example.herbario_nacional.models.funghi.FunghiSpecimen
 import com.example.herbario_nacional.repo.FungusRepository
@@ -16,9 +17,9 @@ import java.io.StringWriter
 
 class SearchViewModel (private val plantRepository: PlantRepository, private val fungusRepository: FungusRepository): ViewModel() {
 
-    private val _uiState = MutableLiveData<PlantDataState>()
+    private val _uiState = MutableLiveData<Any>()
 
-    val uiState: LiveData<PlantDataState>
+    val uiState: LiveData<Any>
         get() = _uiState
 
     val categoryList: MutableList<String> = ArrayList()
@@ -44,7 +45,7 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
             }
 
     init {
-        if (categoryList.isEmpty()) categoryList.addAll(arrayListOf("Hongos", "Plantas"))
+        if (categoryList.isEmpty()) categoryList.addAll(arrayListOf("Plantas", "Hongos"))
     }
 
 
@@ -99,78 +100,90 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
             }
         }
     }
-//
-//    fun searchFungusByName(value: String) {
-//        viewModelScope.launch {
-//            runCatching {
-//                emitUiState(showProgress = true)
-//                fungusRepository.searchByName(value)
-//            }.onSuccess {
-//                emitUiState(result = Event(it))
-//            }.onFailure {
-//                val sw = StringWriter()
-//                it.printStackTrace(PrintWriter(sw))
-//                val exceptionAsString = sw.toString()
-//                println(exceptionAsString)
-//                emitUiState(error = Event(R.string.internet_connection_error))
-//            }
-//        }
-//    }
-//
-//    fun searchFungusByRecollectionArea(value: String) {
-//        viewModelScope.launch {
-//            runCatching {
-//                emitUiState(showProgress = true)
-//                fungusRepository.searchByLocation(value)
-//            }.onSuccess {
-//                emitUiState(result = Event(it))
-//            }.onFailure {
-//                val sw = StringWriter()
-//                it.printStackTrace(PrintWriter(sw))
-//                val exceptionAsString = sw.toString()
-//                println(exceptionAsString)
-//                emitUiState(error = Event(R.string.internet_connection_error))
-//            }
-//        }
-//    }
-//
-//    fun searchFungusByLocation(value: String) {
-//        viewModelScope.launch {
-//            runCatching {
-//                emitUiState(showProgress = true)
-//                fungusRepository.searchByRecollectionArea(value)
-//            }.onSuccess {
-//                emitUiState(result = Event(it))
-//            }.onFailure {
-//                val sw = StringWriter()
-//                it.printStackTrace(PrintWriter(sw))
-//                val exceptionAsString = sw.toString()
-//                println(exceptionAsString)
-//                emitUiState(error = Event(R.string.internet_connection_error))
-//            }
-//        }
-//    }
+
+    fun searchFungusByName(value: String) {
+        viewModelScope.launch {
+            runCatching {
+                emitUiState(showProgress = true)
+                fungusRepository.searchByName(value)
+            }.onSuccess {
+                emitUiState(result = Event(it))
+            }.onFailure {
+                val sw = StringWriter()
+                it.printStackTrace(PrintWriter(sw))
+                val exceptionAsString = sw.toString()
+                println(exceptionAsString)
+                emitUiState(error = Event(R.string.internet_connection_error))
+            }
+        }
+    }
+
+    fun searchFungusByRecollectionArea(value: String) {
+        viewModelScope.launch {
+            runCatching {
+                emitUiState(showProgress = true)
+                fungusRepository.searchByLocation(value)
+            }.onSuccess {
+                emitUiState(result = Event(it))
+            }.onFailure {
+                val sw = StringWriter()
+                it.printStackTrace(PrintWriter(sw))
+                val exceptionAsString = sw.toString()
+                println(exceptionAsString)
+                emitUiState(error = Event(R.string.internet_connection_error))
+            }
+        }
+    }
+
+    fun searchFungusByLocation(value: String) {
+        viewModelScope.launch {
+            runCatching {
+                emitUiState(showProgress = true)
+                fungusRepository.searchByRecollectionArea(value)
+            }.onSuccess {
+                emitUiState(result = Event(it))
+            }.onFailure {
+                val sw = StringWriter()
+                it.printStackTrace(PrintWriter(sw))
+                val exceptionAsString = sw.toString()
+                println(exceptionAsString)
+                emitUiState(error = Event(R.string.internet_connection_error))
+            }
+        }
+    }
 
 
     fun emitUiState(
         showProgress: Boolean = false,
-        result: Event<MutableList<PlantSpecimen>>? = null,
-        error: Event<Int>? = null){
-        val dataState = PlantDataState(
-            showProgress,
-            result,
-            error
-        )
+        result: Event<MutableList<Any>>? = null,
+        error: Event<Int>? = null) {
+
+
+        val dataState = if (optionIdValue.toInt() == 0) {
+            PlantDataState(
+                showProgress,
+                result,
+                error
+            )
+        } else {
+            FunghiDataState(
+                showProgress,
+                result,
+                error
+            )
+        }
         _uiState.value = dataState
     }
 
     data class PlantDataState(
         val showProgress: Boolean,
         val result: Event<MutableList<PlantSpecimen>>?,
-        val error: Event<Int>?)
+        val error: Event<Int>?
+    )
 
-    data class MushroomDataState(
+    data class FunghiDataState(
         val showProgress: Boolean,
         val result: Event<MutableList<FunghiSpecimen>>?,
-        val error: Event<Int>?)
+        val error: Event<Int>?
+    )
 }

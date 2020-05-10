@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 import com.example.herbario_nacional.R
+import com.example.herbario_nacional.adapters.FungiAdapter
 import com.example.herbario_nacional.adapters.PlantAdapter
 import com.example.herbario_nacional.imageloader.ImageLoader
 import com.example.herbario_nacional.ui.viewModels.SearchViewModel
@@ -28,6 +29,8 @@ class SearchFragment : Fragment() {
     private val imageLoader: ImageLoader by inject()
 
     private val plantAdapter: PlantAdapter by lazy { PlantAdapter(imageLoader) }
+
+    private val fungiAdapter: FungiAdapter by lazy{ FungiAdapter(imageLoader) }
 
     private val searchViewModel: SearchViewModel by viewModel()
 
@@ -47,7 +50,11 @@ class SearchFragment : Fragment() {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
-                    plantAdapter.submitList(result)
+                    if(searchViewModel.optionIdValue.toInt() == 0) {
+                        plantAdapter.submitList(result)
+                    } else {
+                        fungiAdapter.submitList(result)
+                    }
                 }
             }
             if (dataState.error != null && !dataState.error.consumed){
@@ -73,15 +80,27 @@ class SearchFragment : Fragment() {
 
         // button listeners
         btn_common_name.setOnClickListener {
-            searchViewModel.searchPlantByName(query)
+            if(searchViewModel.optionIdValue.toInt() == 0) {
+                searchViewModel.searchPlantByName(query)
+            } else {
+                searchViewModel.searchFungusByName(query)
+            }
         }
 
         btn_location.setOnClickListener {
-            searchViewModel.searchPlantByLocation(query)
+            if(searchViewModel.optionIdValue.toInt() == 0) {
+                searchViewModel.searchPlantByLocation(query)
+            } else {
+                searchViewModel.searchFungusByLocation(query)
+            }
         }
 
         btn_recollection.setOnClickListener {
-            searchViewModel.searchPlantByRecollectionArea(query)
+            if(searchViewModel.optionIdValue.toInt() == 0) {
+                searchViewModel.searchPlantByRecollectionArea(query)
+            } else {
+                searchViewModel.searchFungusByRecollectionArea(query)
+            }
         }
 
     }
