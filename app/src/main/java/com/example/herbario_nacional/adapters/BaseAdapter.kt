@@ -45,8 +45,5 @@ class DataAdapter(private val context: Context?, var imageLoader: ImageLoader) :
         }
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
-    }
-
+    override fun getItemCount(): Int = adapterDataList.size
 }

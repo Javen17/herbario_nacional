@@ -26,11 +26,11 @@ class SearchFragment : Fragment() {
 
     private val imageLoader: ImageLoader by inject()
 
-    private val adapter: DataAdapter by lazy { DataAdapter(context, imageLoader) }
-
     private val searchViewModel: SearchViewModel by viewModel()
 
     private var query: String = String()
+
+    private lateinit var adapter: DataAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
@@ -39,7 +39,10 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adapter = DataAdapter(context, imageLoader)
+        search_recyclerView.adapter = adapter
         setupRecycler()
+
         searchBy.adapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, searchViewModel.categoryList)
 
         searchViewModel.uiState.observe(viewLifecycleOwner, Observer {
@@ -47,6 +50,7 @@ class SearchFragment : Fragment() {
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     adapter.adapterDataList += result
+                    adapter.notifyDataSetChanged()
                 }
             }
             if (dataState.error != null && !dataState.error.consumed){
@@ -100,7 +104,6 @@ class SearchFragment : Fragment() {
     private fun setupRecycler() {
         search_recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = adapter
         }
     }
 }
