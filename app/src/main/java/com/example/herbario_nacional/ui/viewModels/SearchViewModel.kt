@@ -17,13 +17,13 @@ import java.io.StringWriter
 
 class SearchViewModel (private val plantRepository: PlantRepository, private val fungusRepository: FungusRepository): ViewModel() {
 
-    private val _uiState = MutableLiveData<Any>()
+    private val _uiState = MutableLiveData<Resource<MutableList<Any?>>>()
 
-    val uiState: LiveData<Any>
+    val uiState: LiveData<Resource<MutableList<Any?>>>
         get() = _uiState
 
     val categoryList: MutableList<String> = ArrayList()
-    val optionIdItemPosition = MutableLiveData<Int>()
+    private val optionIdItemPosition = MutableLiveData<Int>()
 
     var optionIdValue
         get() = optionIdItemPosition.value?.let {
@@ -155,35 +155,39 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
 
     fun emitUiState(
         showProgress: Boolean = false,
-        result: Event<MutableList<Any>>? = null,
+        result: Event<MutableList<Any?>>? = null,
         error: Event<Int>? = null) {
 
+        val dataState = Resource<MutableList<Any?>>(
+            showProgress,
+            result,
+            error
+        )
 
-        val dataState = if (optionIdValue.toInt() == 0) {
-            PlantDataState(
-                showProgress,
-                result,
-                error
-            )
-        } else {
-            FunghiDataState(
-                showProgress,
-                result,
-                error
-            )
-        }
         _uiState.value = dataState
     }
 
-    data class PlantDataState(
+    data class Resource<T>(
         val showProgress: Boolean,
-        val result: Event<MutableList<PlantSpecimen>>?,
+        val result: Event<Any?>?,
         val error: Event<Int>?
     )
 
-    data class FunghiDataState(
-        val showProgress: Boolean,
-        val result: Event<MutableList<FunghiSpecimen>>?,
-        val error: Event<Int>?
-    )
+//    Resource(
+//    status = ResourceStatus.SUCCESS,
+//    data = it,
+//    message = null
+//    )
+
+    //    data class PlantDataState<T>(
+//        val showProgress: Boolean,
+//        val result: Event<MutableList<PlantSpecimen>>?,
+//        val error: Event<Int>?
+//    )
+//
+//    data class FunghiDataState(
+//        val showProgress: Boolean,
+//        val result: Event<MutableList<FunghiSpecimen>>?,
+//        val error: Event<Int>?
+//    )
 }

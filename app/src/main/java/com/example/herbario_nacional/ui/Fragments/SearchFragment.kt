@@ -12,8 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 import com.example.herbario_nacional.R
-import com.example.herbario_nacional.adapters.FungiAdapter
-import com.example.herbario_nacional.adapters.PlantAdapter
+import com.example.herbario_nacional.adapters.DataAdapter
 import com.example.herbario_nacional.imageloader.ImageLoader
 import com.example.herbario_nacional.ui.viewModels.SearchViewModel
 import com.example.herbario_nacional.util.GridItemDecoration
@@ -28,9 +27,7 @@ class SearchFragment : Fragment() {
 
     private val imageLoader: ImageLoader by inject()
 
-    private val plantAdapter: PlantAdapter by lazy { PlantAdapter(imageLoader) }
-
-    private val fungiAdapter: FungiAdapter by lazy{ FungiAdapter(imageLoader) }
+    private val adapter: DataAdapter by lazy { DataAdapter(context, imageLoader) }
 
     private val searchViewModel: SearchViewModel by viewModel()
 
@@ -50,11 +47,7 @@ class SearchFragment : Fragment() {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
-                    if(searchViewModel.optionIdValue.toInt() == 0) {
-                        plantAdapter.submitList(result)
-                    } else {
-                        fungiAdapter.submitList(result)
-                    }
+                    adapter.adapterDataList += result
                 }
             }
             if (dataState.error != null && !dataState.error.consumed){
@@ -80,7 +73,7 @@ class SearchFragment : Fragment() {
 
         // button listeners
         btn_common_name.setOnClickListener {
-            if(searchViewModel.optionIdValue.toInt() == 0) {
+            if(searchViewModel.optionIdValue?.toInt() == 0) {
                 searchViewModel.searchPlantByName(query)
             } else {
                 searchViewModel.searchFungusByName(query)
@@ -88,7 +81,7 @@ class SearchFragment : Fragment() {
         }
 
         btn_location.setOnClickListener {
-            if(searchViewModel.optionIdValue.toInt() == 0) {
+            if(searchViewModel.optionIdValue?.toInt() == 0) {
                 searchViewModel.searchPlantByLocation(query)
             } else {
                 searchViewModel.searchFungusByLocation(query)
@@ -96,7 +89,7 @@ class SearchFragment : Fragment() {
         }
 
         btn_recollection.setOnClickListener {
-            if(searchViewModel.optionIdValue.toInt() == 0) {
+            if(searchViewModel.optionIdValue?.toInt() == 0) {
                 searchViewModel.searchPlantByRecollectionArea(query)
             } else {
                 searchViewModel.searchFungusByRecollectionArea(query)
@@ -105,11 +98,11 @@ class SearchFragment : Fragment() {
 
     }
 
-    private fun setupRecycler(){
+    private fun setupRecycler() {
         search_recyclerView.apply {
             layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
             addItemDecoration(GridItemDecoration(4, 2))
-            adapter = plantAdapter
+            adapter = adapter
         }
     }
 }

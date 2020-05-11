@@ -4,7 +4,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.base.BaseApplication.Companion.context
 import com.example.herbario_nacional.imageloader.ImageLoader
@@ -18,27 +17,31 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.text.SimpleDateFormat
 import java.util.*
 
-class FungusViewHolder constructor(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-    fun bind(funghi: FunghiSpecimen, imageLoader: ImageLoader) {
+
+class FungusViewHolder constructor(override val containerView: View) : BaseViewHolder<FunghiSpecimen>(containerView), LayoutContainer {
+
+    override fun bind(item: FunghiSpecimen, imageLoader: ImageLoader) {
+
         fungus_content.setOnClickListener {
-            showActivity(DataSheetInformationFungus::class.java, funghi)
+            showActivity(DataSheetInformationFungus::class.java, item)
         }
 
-        val dateReceived: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).parse(funghi.date_received)
+        val dateReceived: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).parse(item.date_received)
         val timeAgo = PrettyTime(Locale("es"))
 
         fungusImage?.let {
-            imageLoader.load(ImageToUrl.exportImageToURL(ImageToUrl.exportImageToURL(funghi.photo_url)), it)
+            imageLoader.load(ImageToUrl.exportImageToURL(ImageToUrl.exportImageToURL(item.photo_url)), it)
         }
         profilePicture?.let {
             imageLoader.load("https://api.adorable.io/avatars/50/12@adorable.png", it)
         }
 
-        fungusName.text =funghi.species.common_name
-        fungusFamily.text = funghi.species.genus.family.name
-        username.text = "${funghi.user.first_name} ${funghi.user.last_name}"
-        country.text = "${funghi.city.name}, ${funghi.city.state.country.name}"
+        fungusName.text = item.species.common_name
+        fungusFamily.text = item.species.genus.family.name
+        username.text = "${item.user.first_name} ${item.user.last_name}"
+        country.text = "${item.city.name}, ${item.city.state.country.name}"
         registrationDate.text = timeAgo.format(dateReceived)
+
     }
 
     companion object {
@@ -77,4 +80,5 @@ class FungusViewHolder constructor(override val containerView: View) : RecyclerV
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(intent)
     }
+
 }

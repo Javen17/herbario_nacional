@@ -79,4 +79,5 @@
     <string name="my_specimens">Mis fichas técnicas</string>
     <string name="close_button">Close Button</string>
     <string name="searching">Buscando...</string>
+    <string name="invalid_new_type">Nuevo tipo inválido</string>
 </resources>
