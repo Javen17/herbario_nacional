@@ -5,10 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.SearchView
-import android.widget.Toast
+import android.widget.*
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 import com.example.herbario_nacional.R
@@ -100,8 +99,7 @@ class SearchFragment : Fragment() {
 
     private fun setupRecycler() {
         search_recyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-            addItemDecoration(GridItemDecoration(4, 2))
+            layoutManager = LinearLayoutManager(context)
             adapter = adapter
         }
     }
