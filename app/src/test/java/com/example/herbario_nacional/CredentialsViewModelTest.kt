@@ -20,31 +20,21 @@ import org.koin.core.context.stopKoin
 
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
 @RunWith(RobolectricTestRunner::class)
-class CredentialsTest: KoinTest {
+class CredentialsViewModelTest: KoinTest {
 
-    private val credentialService: CredentialsInterface by inject()
     private val credentialsRepository: CredentialsRepository by inject()
 
     @Test
     fun loginViewmodelImpl_isCorrect(){
-        //Con RoboElectric podes acceder al contexto de la aplicacion y a los servicios porque la emula, por lo tanto tambien podes acceder a actividades/viewmodels
-
         val credentialsViewModel = CredentialsViewModel(credentialsRepository)
         val expected = Credentials("admin2", "admin2")
-        val anotherUser = Credentials("admin2", "admin2")
+        val anotherUser = Credentials("admin", "admin")
 
         val dataReceived = runBlocking { credentialsViewModel.requestLogin(expected.username, expected.password) }
         val dataReceived2 = runBlocking { credentialsViewModel.requestLogin(anotherUser.username, anotherUser.password) }
 
         assertNotNull(dataReceived)
         assertEquals(dataReceived, dataReceived2)
-    }
-
-    @Test
-     fun credentialsRepositoryImpl_isCorrect(){
-        val dataReceived = runBlocking {credentialService.requestLogin(Credentials( password = "admin2" , username = "admin2"))}
-        assertNotNull(dataReceived)
-        //assertEquals(dataReceived, anotherUser)
     }
 
     @After fun stopKoinAfterTest() = stopKoin()
