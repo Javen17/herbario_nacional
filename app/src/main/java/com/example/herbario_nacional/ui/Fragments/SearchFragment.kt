@@ -6,17 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
 
 import com.example.herbario_nacional.R
-import com.example.herbario_nacional.adapters.DataAdapter
 import com.example.herbario_nacional.adapters.PagerAdapter
-import com.example.herbario_nacional.imageloader.ImageLoader
 import com.example.herbario_nacional.ui.viewModels.SearchViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_search.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -24,16 +20,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class SearchFragment : Fragment() {
 
-    private val imageLoader: ImageLoader by inject()
-
-    private val searchViewModel: SearchViewModel by viewModel()
-
-    private var query: String = String()
-
-    private lateinit var adapter: DataAdapter
-
     private lateinit var viewPager: ViewPager
     private lateinit var tabs: TabLayout
+
+    private val searchViewModel: SearchViewModel by viewModel()
+    private var query: String = String()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -54,7 +45,6 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
 //        searchViewModel.uiState.observe(viewLifecycleOwner, Observer {
 //            val dataState = it ?: return@Observer
@@ -86,29 +76,29 @@ class SearchFragment : Fragment() {
         })
 
         // button listeners
-        btn_common_name.setOnClickListener {
-            if(searchViewModel.optionIdValue?.toInt() == 0) {
-                searchViewModel.searchPlantByName(query)
-            } else {
-                searchViewModel.searchFungusByName(query)
-            }
-        }
-
-        btn_location.setOnClickListener {
-            if(searchViewModel.optionIdValue?.toInt() == 0) {
-                searchViewModel.searchPlantByLocation(query)
-            } else {
-                searchViewModel.searchFungusByLocation(query)
-            }
-        }
-
-        btn_recollection.setOnClickListener {
-            if(searchViewModel.optionIdValue?.toInt() == 0) {
-                searchViewModel.searchPlantByRecollectionArea(query)
-            } else {
-                searchViewModel.searchFungusByRecollectionArea(query)
-            }
-        }
+//        btn_common_name.setOnClickListener {
+//            if() {
+//                searchViewModel.searchPlantByName(query)
+//            } else {
+//                searchViewModel.searchFungusByName(query)
+//            }
+//        }
+//
+//        btn_location.setOnClickListener {
+//            if() {
+//                searchViewModel.searchPlantByLocation(query)
+//            } else {
+//                searchViewModel.searchFungusByLocation(query)
+//            }
+//        }
+//
+//        btn_recollection.setOnClickListener {
+//            if() {
+//                searchViewModel.searchPlantByRecollectionArea(query)
+//            } else {
+//                searchViewModel.searchFungusByRecollectionArea(query)
+//            }
+//        }
 
     }
 
