@@ -31,12 +31,12 @@ interface PlantInterface {
     ): Status
 
     @GET("api/plant_specimen/filter/")
-    suspend fun searchPlantByName(@Query("species__common_name") value: String): MutableList<Any?>
+    suspend fun searchPlantByName(@Query("species__common_name") value: String): MutableList<PlantSpecimen>
 
     @GET("api/plant_specimen/filter/")
-    suspend fun searchPlantByLocation(@Query("location") value: String): MutableList<Any?>
+    suspend fun searchPlantByLocation(@Query("location") value: String): MutableList<PlantSpecimen>
 
     @GET("api/plant_specimen/filter/")
-    suspend fun searchPlantByRecollectionArea(@Query("recolection_area_status__name") value: String): MutableList<Any?>
+    suspend fun searchPlantByRecollectionArea(@Query("recolection_area_status__name") value: String): MutableList<PlantSpecimen>
 
 }

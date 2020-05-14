@@ -31,9 +31,9 @@ interface FungusRepository {
         aditional_info: RequestBody,
         location: RequestBody
     ): Status
-    suspend fun searchByName(value: String): MutableList<Any?>
-    suspend fun searchByLocation(value: String): MutableList<Any?>
-    suspend fun searchByRecollectionArea(value: String): MutableList<Any?>
+    suspend fun searchByName(value: String): MutableList<FunghiSpecimen>
+    suspend fun searchByLocation(value: String): MutableList<FunghiSpecimen>
+    suspend fun searchByRecollectionArea(value: String): MutableList<FunghiSpecimen>
 }
 
 class FunghusRepositoryImpl(private  val fungusService: FungusInterface): FungusRepository{
@@ -88,15 +88,15 @@ class FunghusRepositoryImpl(private  val fungusService: FungusInterface): Fungus
         )
     }
 
-    override suspend fun searchByName(value: String): MutableList<Any?> {
+    override suspend fun searchByName(value: String): MutableList<FunghiSpecimen> {
         return fungusService.searchFungusByName(value)
     }
 
-    override suspend fun searchByLocation(value: String): MutableList<Any?> {
+    override suspend fun searchByLocation(value: String): MutableList<FunghiSpecimen> {
         return fungusService.searchFungusByLocation(value)
     }
 
-    override suspend fun searchByRecollectionArea(value: String): MutableList<Any?> {
+    override suspend fun searchByRecollectionArea(value: String): MutableList<FunghiSpecimen> {
         return fungusService.searchFungusByRecollectionArea(value)
     }
 }

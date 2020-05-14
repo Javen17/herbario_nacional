@@ -11,12 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.herbario_nacional.R
-import com.example.herbario_nacional.base.BaseApplication.Companion.context
-import com.example.herbario_nacional.ui.viewModels.MeViewModel
-import com.mikepenz.iconics.Iconics
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 

@@ -38,6 +38,9 @@ class DataAdapter(private val context: Context?, var imageLoader: ImageLoader) :
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
         val element = adapterDataList[position]
+
+
+
         when (holder) {
             is PlantViewHolder -> holder.bind(element as PlantSpecimen, imageLoader)
             is FungusViewHolder -> holder.bind(element as FunghiSpecimen, imageLoader)
