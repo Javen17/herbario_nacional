@@ -1,30 +1,35 @@
 package com.example.herbario_nacional.ui.Fragments
 
-
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.herbario_nacional.adapters.PlantAdapter
-import com.example.herbario_nacional.models.Plant
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 import com.example.herbario_nacional.R
+import com.example.herbario_nacional.adapters.PlantAdapter
 import com.example.herbario_nacional.imageloader.ImageLoader
+import com.example.herbario_nacional.ui.viewModels.PlantViewModel
 import com.example.herbario_nacional.util.GridItemDecoration
+import com.facebook.shimmer.Shimmer
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import kotlinx.android.synthetic.main.fragment_plants.*
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlantsFragment : Fragment() {
     private val imageLoader: ImageLoader by inject()
-    private lateinit var skeleton: Skeleton
     private val plantAdapter: PlantAdapter by lazy { PlantAdapter(imageLoader) }
+    private val plantViewModel: PlantViewModel by viewModel()
+    private lateinit var swipeRefresh: SwipeRefreshLayout
+    private lateinit var shimmerLayout: ShimmerFrameLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_plants, container, false)
@@ -32,32 +37,44 @@ class PlantsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val plants = ArrayList<Plant>()
-        plants.add(Plant("Girasol", R.drawable.plant1))
-        plants.add(Plant("Trompeta China Trepadora", R.drawable.plant2))
-        plants.add(Plant("Galio Blanco", R.drawable.plant3))
-        plants.add(Plant("Galio Rojo", R.drawable.plant3))
-        plants.add(Plant("Galio Blanco", R.drawable.plant3))
-        plants.add(Plant("Galio Azul", R.drawable.plant3))
-        plants.add(Plant("Galio Blanco", R.drawable.plant3))
-        plants.add(Plant("Galio Azul", R.drawable.plant3))
+        shimmerLayout = view.findViewById(R.id.shimmer_container)
+        shimmerLayout.startShimmer()
+
+        swipeRefresh = view.findViewById(R.id.swipeRefreshLayout)
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
+
+        getData()
         setupRecycler()
-        plantAdapter.submitList(plants)
-        //setupSkeleton()
+
+        swipeRefresh.setOnRefreshListener{
+            getData()
+        }
+    }
+
+    private fun getData() {
+        plantViewModel.uiState.observe(viewLifecycleOwner, Observer {
+            val dataState = it ?: return@Observer
+            if (dataState.result != null && !dataState.result.consumed){
+                dataState.result.consume()?.let { result ->
+                    plantAdapter.submitList(result)
+                    shimmerLayout.stopShimmer()
+                    shimmerLayout.visibility = View.GONE
+                }
+            }
+            if (dataState.error != null && !dataState.error.consumed){
+                dataState.error.consume()?.let { error ->
+                    Toast.makeText(context, error, Toast.LENGTH_LONG).show()
+                }
+            }
+            swipeRefresh.isRefreshing = false
+        })
     }
 
     private fun setupRecycler(){
         rv_plants.apply {
-            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
             addItemDecoration(GridItemDecoration(4, 2))
             adapter = plantAdapter
         }
-    }
-
-    private fun setupSkeleton(){
-        skeleton = rv_plants.applySkeleton(R.layout.plant_card, 6)
-        skeleton.showShimmer = true
-        skeleton.shimmerDurationInMillis = 900
-        skeleton.maskCornerRadius = 0f
     }
 }

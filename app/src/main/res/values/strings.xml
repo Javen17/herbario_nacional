@@ -8,13 +8,17 @@
     <string name="profile">Perfil</string>
     <string name="register">Regístrate</string>
     <string name="login">Iniciar sesión</string>
+    <string name="continue_as_a_guest">Continuar como invitado</string>
     <string name="attention">Inicia sesión para que puedas registrar y visualizar todas tus fichas técnicas.</string>
-    <string name="empty_fields">Favor digitar usuario/contraseña</string>
-    <string name="empty_fields_register">Rellene todos los campos</string>
-    <string name="login_success">Logueado</string>
-    <string name="register_success">Registro exitoso. Inicie sesión</string>
-    <string name="unauthorized">Unauthorized</string>
-    <string name="internet_connection_error">Problemas en conexión al Internet</string>
+    <string name="empty_fields">Introduzca nombre de usuario y contraseña.</string>
+    <string name="empty_fields_register">Rellene todos los campos solicitados.</string>
+    <string name="empty_fields_data_sheet">Rellene y seleccione todos los campos solicitados</string>
+    <string name="login_success">Inicio de sesión exitoso.</string>
+    <string name="register_success">Registro exitoso. Inicie sesión.</string>
+    <string name="unauthorized">No autorizado</string>
+    <string name="unauthenticated">No autenticado. Inicia sesión o regístrate</string>
+    <string name="required">* Requerido</string>
+    <string name="internet_connection_error">Ha ocurrido un error. Fallo de conexión al servidor.</string>
 
     <!-- Datos de Colector -->
     <!-- hints -->
@@ -35,15 +39,18 @@
     <string name="plant">Planta</string>
     <string name="fungus">Hongo</string>
 
+    <string name="or">o</string>
+
     <!-- Plant -->
     <string name="number_specimens">Número de ejemplares colectados</string>
     <string name="common_name">Nombre común</string>
     <string name="family">Familia</string>
     <string name="genus">Género</string>
-    <string name="specimen_description">Descripción del espécimen</string>
+    <string name="specimen_description">Ingrese una descripción de especímen</string>
     <string name="location_data">Datos de Ubicación</string>
     <string name="specimen_data">Datos de Espécimen</string>
     <string name="habitat_data">Datos de Hábitat</string>
+    <string name="sucess">Ficha técnica registrada exitosamente.</string>
 
     <!-- Fungi -->
     <string name="color">Color</string>
@@ -70,4 +77,8 @@
     <!-- Profile -->
     <string name="logout">Cerrar sesión</string>
     <string name="my_specimens">Mis fichas técnicas</string>
+    <string name="close_button">Close Button</string>
+
+    <string name="logoutNotification">Has cerrado sesión</string>
+
 </resources>

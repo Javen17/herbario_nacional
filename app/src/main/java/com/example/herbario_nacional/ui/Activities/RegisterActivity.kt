@@ -3,16 +3,30 @@ package com.example.herbario_nacional.ui.Activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.afollestad.vvalidator.form
 import com.example.herbario_nacional.R
+import com.example.herbario_nacional.models.ErrorBody
+import com.example.herbario_nacional.models.Register
 import com.example.herbario_nacional.ui.viewModels.RegisterViewModel
-import com.example.herbario_nacional.util.traveseAnyInput
+import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonSyntaxException
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_register.back_btn
+import kotlinx.android.synthetic.main.activity_register.passwordInput
+import kotlinx.android.synthetic.main.activity_register.usernameInput
+import org.json.JSONException
+import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.IOException
+import java.lang.Error
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
+import kotlin.reflect.typeOf
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -22,51 +36,106 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        back_btn.setOnClickListener {showActivity(NoLoginActivity::class.java)}
-        login_label.setOnClickListener{showActivity(LoginActivity::class.java)}
+        back_btn.setOnClickListener { showActivity(NoLoginActivity::class.java) }
+        login_label.setOnClickListener { showActivity(LoginActivity::class.java) }
 
-        btnRegister.setOnClickListener{
-            val date = Date()
-            val formatter = SimpleDateFormat("yyyy/mm/dd hh:mm:ss")
-            val currentDate: String = formatter.format(date)
-
-            when(layoutRegister.traveseAnyInput()){
-                true -> Toast.makeText(applicationContext, getString(R.string.empty_fields_register), Toast.LENGTH_LONG).show()
-                false -> registerViewModel.requestRegister(
-                    first_name = nameInput.text.toString(),
-                    last_name = lastnameInput.text.toString(),
-                    username = usernameInput.text.toString(),
-                    email = emailInput.text.toString(),
-                    password = passwordInput.text.toString(),
-                    is_staff = false,
-                    is_active = true,
-                    is_superuser = false,
-                    date_joined = currentDate,
-                    name = nameInput.text.toString(),
-                    groups = arrayOf(),
-                    user_permissions = arrayOf(),
-                    last_login = null
-                )
-            }
-        }
+        formValidation()
 
         registerViewModel.uiState.observe(this, Observer {
+            loading.visibility = View.VISIBLE
+            back_btn.visibility = View.INVISIBLE
+            login_label.visibility = View.INVISIBLE
+            register_user_btn.visibility = View.INVISIBLE
+
             val dataState = it ?: return@Observer
-            if (dataState.status != null && !dataState.status.consumed){
-                dataState.status.consume()?.let { status ->
-                    if(status.status == "Success") {
+            if (dataState.result != null && !dataState.result.consumed) {
+                dataState.result.consume()?.let { result ->
+                    if (result.result == "user added") {
                         Toast.makeText(applicationContext, getString(R.string.register_success), Toast.LENGTH_LONG).show()
-                        showActivity(LoginActivity::class.java)
+                        showActivity(MainActivity::class.java)
                     }
                 }
             }
 
-            if (dataState.error != null && !dataState.error.consumed){
+            if (dataState.error != null && !dataState.error.consumed) {
                 dataState.error.consume()?.let { error ->
-                    Toast.makeText(applicationContext, resources.getString(error), Toast.LENGTH_LONG).show()
+                    loading.visibility = View.GONE
+                    back_btn.visibility = View.VISIBLE
+                    login_label.visibility = View.VISIBLE
+                    register_user_btn.visibility = View.VISIBLE
+
+                    try {
+                        val gson = Gson()
+                        val errorResult = gson.fromJson(error, ErrorBody::class.java)
+                        when(errorResult.result) {
+                            "email is invalid" -> emailTextInputLayout.error = "Correo electrónico existente"
+                            "username is invalid" -> usernameTextInputLayout.error = "Nombre de usuario existente"
+                            "username and email are invalid" -> {
+                                emailTextInputLayout.error = "Correo electrónico existente"
+                                usernameTextInputLayout.error = "Nombre de usuario existente"
+                            }
+                        }
+                    } catch (e: JsonSyntaxException) {
+                        e.printStackTrace()
+                        showSnackbar(error)
+                    }
                 }
             }
         })
+    }
+
+    private fun formValidation() {
+        val date = Date()
+        val formatter = SimpleDateFormat("yyyy/MM/dd hh:mm:ss", Locale("es"))
+        val currentDate: String = formatter.format(date)
+
+        form {
+            useRealTimeValidation()
+            inputLayout(R.id.nameTextInputLayout) {
+                isNotEmpty().description("* Requerido")
+            }
+            inputLayout(R.id.lastnameTextInputLayout) {
+                isNotEmpty().description("* Requerido")
+            }
+            inputLayout(R.id.usernameTextInputLayout) {
+                isNotEmpty().description("* Requerido")
+            }
+            inputLayout(R.id.emailTextInputLayout) {
+                isNotEmpty().description("* Requerido")
+                isEmail().description("Ingresa un correo electrónico válido")
+            }
+            inputLayout(R.id.passwordTextInputLayout) {
+                isNotEmpty().description("* Requerido")
+                length().atLeast(8).description("La contraseña debe contener al menos 8 caracteres")
+                matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}\$").description("La contraseña debe contener mayúsculas, minúsculas, números y caracteres especiales")
+            }
+
+            submitWith(R.id.register_user_btn) {result ->
+                if (result.success()) {
+                    registerViewModel.requestRegister(
+                        Register(
+                            first_name = nameInput.text.toString(),
+                            last_name = lastnameInput.text.toString(),
+                            username = usernameInput.text.toString().toLowerCase(Locale.ROOT).trim(),
+                            email = emailInput.text.toString().toLowerCase(Locale.ROOT),
+                            password = passwordInput.text.toString(),
+                            is_staff = false,
+                            is_active = true,
+                            is_superuser = false,
+                            date_joined = currentDate,
+                            name = nameInput.text.toString(),
+                            groups = intArrayOf(15),
+                            last_login = null
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    private fun showSnackbar(message: String) {
+        val snack = Snackbar.make(findViewById(R.id.register_layout), message, Snackbar.LENGTH_LONG)
+        snack.show()
     }
 
     private fun showActivity(activityClass: Class<*>) {

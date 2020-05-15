@@ -22,8 +22,10 @@
         android:title="@string/notifications"/>
 
     <item
-        android:id="@+id/noLoginActivity"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/ic_user"
         android:title="@string/profile"/>
+
+    <!-- Agregar este id cuando el perfil esté disponible: android:id="@+id/profileFragment"-->
 
 </menu>

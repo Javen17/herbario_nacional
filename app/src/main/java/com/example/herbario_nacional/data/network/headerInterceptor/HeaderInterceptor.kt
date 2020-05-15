@@ -10,18 +10,33 @@ class HeaderInterceptor : Interceptor {
         const val LOGIN = "/api/login/"
         const val SIGN_UP = "/api/sign_up/"
         const val PROFILE = "api/profile/"
+        const val COUNTRY = "api/country/"
+        const val STATE = "api/state/"
+        const val CITY = "api/city/"
+        const val FAMILY = "api/family/"
+        const val GENUS = "api/genus/"
+        const val SPECIES = "api/species/"
+        const val STATUS = "api/status/"
+        const val ECOSYSTEM = "api/ecosystem/"
+        const val RECOLECTION_AREA_STATUS = "api/recolection_area_status/"
+        const val BIOSTATUS = "api/biostatus/"
+        const val PLANT_SPECIMEN = "api/plant_specimen/"
+        const val APPROVED_PLANT_SPECIMEN = "api/plant_specimen/approved/"
+        const val FUNGHI_SPECIMEN = "api/mushroom_specimen/"
+        const val APPROVED_FUNGHI_SPECIMEN = "api/mushroom_specimen/approved/"
+        const val FORM_TYPE = "api/mushroom_form_type/"
+        const val CAP_TYPE = "api/mushroom_cap_type/"
         const val PERMANENT_LOGIN = "/api/permanent_login/"
-        const val GET_DEPARTMENTS = "/secured/obtainAllDepartments"
-        const val GET_BUSINESS = "/secured/obtainAllBusiness"
-        const val SEARCH_BUSINESS = "/secured/searchBusiness"
+        const val ME = "api/me/"
     }
-
 
     private fun setupCookies(){
         val cookies = AppPreferences().get(AppPreferences.Key.cookies, HashSet<String>()) as HashSet<*>
+        var content = ""
         cookies.forEach {
-            requestBuilder.addHeader("Cookie", it as String)
+            content += it as String
         }
+        requestBuilder.addHeader("Cookie", content)
     }
 
     private lateinit var requestBuilder: Request.Builder
@@ -42,15 +57,75 @@ class HeaderInterceptor : Interceptor {
                 requestBuilder
                     .addHeader("Content-Type", "application/json")
             }
+            PLANT_SPECIMEN -> {
+                requestBuilder
+                    .addHeader("Content-Type","multipart/form-data")
+            }
+            APPROVED_PLANT_SPECIMEN -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            FUNGHI_SPECIMEN -> {
+                requestBuilder
+                    .addHeader("Content-Type","multipart/form-data")
+            }
+            APPROVED_FUNGHI_SPECIMEN -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            FORM_TYPE -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            CAP_TYPE -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            COUNTRY -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            STATE -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            CITY -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            FAMILY -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            GENUS -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            SPECIES -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            STATUS -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            ECOSYSTEM -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            RECOLECTION_AREA_STATUS -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            BIOSTATUS -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
             PERMANENT_LOGIN -> {
                 requestBuilder
                     .addHeader("Content-Type", "application/json")
             }
-            GET_BUSINESS -> {
-                requestBuilder
-                    .addHeader("Content-Type", "application/json")
-            }
-            SEARCH_BUSINESS -> {
+            ME -> {
                 requestBuilder
                     .addHeader("Content-Type", "application/json")
             }

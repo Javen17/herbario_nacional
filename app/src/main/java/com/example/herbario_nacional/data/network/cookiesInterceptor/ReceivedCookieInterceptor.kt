@@ -10,11 +10,9 @@ class ReceivedCookieInterceptor : Interceptor {
         if (originalResponse.headers("Set-Cookie").isNotEmpty())
         {
             val cookies: HashSet<String> = hashSetOf()
-            for ((i, header) in originalResponse.headers("Set-Cookie").withIndex())
-            {
-                println(header)
-                println("Iterando: $i")
-                cookies.add(header)
+            for (header in originalResponse.headers("Set-Cookie")) {
+                val Newheader = "$header; domain:https://django-acacia.herokuapp.com;"
+                cookies.add(Newheader)
             }
             AppPreferences().put(AppPreferences.Key.cookies, cookies)
         }

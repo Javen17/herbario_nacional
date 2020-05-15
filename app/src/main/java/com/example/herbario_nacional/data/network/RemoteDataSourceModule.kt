@@ -1,11 +1,11 @@
 package com.example.herbario_nacional.data.network
 
 import com.example.herbario_nacional.BuildConfig
-import com.example.herbario_nacional.data.network.`interface`.CredentialsInterface
-import com.example.herbario_nacional.data.network.`interface`.RegisterInterface
+import com.example.herbario_nacional.data.network.`interface`.*
 import com.example.herbario_nacional.data.network.adapters.CoroutineCallAdapterFactory
 import com.example.herbario_nacional.data.network.cookiesInterceptor.ReceivedCookieInterceptor
 import com.example.herbario_nacional.data.network.headerInterceptor.HeaderInterceptor
+import com.example.herbario_nacional.models.Ecosystem
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -17,6 +17,22 @@ val remoteDataSourceModule = module {
     single { createOkHttpClient() }
     single { createWebService<CredentialsInterface>(get(), BuildConfig.HERBARIO_URL) }
     single { createWebService<RegisterInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<ProfileInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<MeInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<CountryInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<StateInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<CityInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<FamilyInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<GenusInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<SpecieInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<FormTypeInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<CapTypeInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<StatusInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<HabitatInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<HabitatDescriptionInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<BiostatusInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<PlantInterface>(get(), BuildConfig.HERBARIO_URL) }
+    single { createWebService<FungusInterface>(get(), BuildConfig.HERBARIO_URL) }
 }
 
 fun createOkHttpClient(): OkHttpClient {
