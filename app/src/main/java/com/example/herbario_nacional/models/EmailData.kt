@@ -1,4 +1,8 @@
 package com.example.herbario_nacional.models;
 
-public class EmailData {
-}
+import androidx.annotation.Keep
+
+@Keep
+data class EmailData(
+        val email: String = ""
+)
