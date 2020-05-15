@@ -217,7 +217,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         profileParams["username"] = username_update.text.toString();
 
         if(file != null){
-            Toast.makeText(activity, "NO FILE", Toast.LENGTH_LONG).show();
             val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file!!)
             val image: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file!!.name, requestBody)
 
