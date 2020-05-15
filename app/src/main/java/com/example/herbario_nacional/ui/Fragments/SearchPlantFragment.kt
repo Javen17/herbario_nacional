@@ -21,6 +21,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchPlantFragment : Fragment() {
+
     private val imageLoader: ImageLoader by inject()
     private val plantAdapter: PlantAdapter by lazy { PlantAdapter(imageLoader) }
     private val searchViewModel: SearchViewModel by viewModel()
@@ -38,6 +39,7 @@ class SearchPlantFragment : Fragment() {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
+                    println(result)
                     plantAdapter.submitList(result)
                 }
             }
@@ -47,7 +49,6 @@ class SearchPlantFragment : Fragment() {
                 }
             }
         })
-
     }
 
     private fun setupRecycler(){

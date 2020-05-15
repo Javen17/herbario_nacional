@@ -133,8 +133,9 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
         }
     }
 
+//  state emitters
 
-    fun emitPlantState(
+    private fun emitPlantState(
         showProgress: Boolean = false,
         result: Event<MutableList<PlantSpecimen>>? = null,
         error: Event<Int>? = null) {
@@ -148,7 +149,7 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
         _plantState.value = dataState
     }
 
-    fun emitFunghiState(
+    private fun emitFunghiState(
         showProgress: Boolean = false,
         result: Event<MutableList<FunghiSpecimen>>? = null,
         error: Event<Int>? = null) {
@@ -161,6 +162,8 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
 
         _funghiState.value = dataState
     }
+
+//    state classes
 
     data class PlantDataState(
         val showProgress: Boolean,

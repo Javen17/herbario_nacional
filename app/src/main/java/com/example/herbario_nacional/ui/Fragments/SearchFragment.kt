@@ -88,6 +88,7 @@ class SearchFragment : Fragment() {
             } else {
                 searchViewModel.searchFungusByName(query)
             }
+            Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
         }
 
         btn_location.setOnClickListener {
@@ -96,6 +97,7 @@ class SearchFragment : Fragment() {
             } else {
                 searchViewModel.searchFungusByLocation(query)
             }
+            Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
         }
 
         btn_recollection.setOnClickListener {
@@ -104,6 +106,7 @@ class SearchFragment : Fragment() {
             } else {
                 searchViewModel.searchFungusByRecollectionArea(query)
             }
+            Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
         }
 
     }

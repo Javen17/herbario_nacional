@@ -13,6 +13,7 @@ import com.example.herbario_nacional.adapters.FungiAdapter
 import com.example.herbario_nacional.imageloader.ImageLoader
 import com.example.herbario_nacional.ui.viewModels.SearchViewModel
 import com.example.herbario_nacional.util.GridItemDecoration
+import kotlinx.android.synthetic.main.fragment_fungi.*
 import kotlinx.android.synthetic.main.fragment_search_funghi.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel

@@ -3,8 +3,6 @@ package com.example.herbario_nacional.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.herbario_nacional.ui.Fragments.SearchFunghiFragment
 import com.example.herbario_nacional.ui.Fragments.SearchPlantFragment
 
@@ -16,7 +14,7 @@ class SearchAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
                 SearchPlantFragment()
             }
             else -> {
-                SearchFunghiFragment()
+                return SearchFunghiFragment()
             }
         }
     }
