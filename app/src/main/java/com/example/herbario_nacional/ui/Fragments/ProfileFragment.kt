@@ -217,6 +217,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         profileParams["username"] = username_update.text.toString();
 
         if(file != null){
+            Toast.makeText(activity, "NO FILE", Toast.LENGTH_LONG).show();
             val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file!!)
             val image: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file!!.name, requestBody)
 
@@ -270,6 +271,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     private fun galleryAddPic() {
         Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also {
+
             file = File(currentPhotoPath)
             it.data = Uri.fromFile(file)
             activity?.sendBroadcast(it)
@@ -306,7 +308,9 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private fun pickImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
+
         startActivityForResult(intent, IMAGE_PICK_CODE)
+
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -327,16 +331,46 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK && requestCode == ProfileFragment.IMAGE_PICK_CODE){
-            plant_picture.setImageURI(data?.data)
+            //plant_picture.setImageURI(data?.data)
+
+
+            val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale("es")).format(Date())
+            val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            File.createTempFile(
+                "JPEG_${timeStamp}_",
+                ".jpg",
+                storageDir
+            ).apply {
+                currentPhotoPath = absolutePath
+            }
+
             fileUri = data?.data!!
             filePath = getRealPathFromURI(fileUri)
-            file = File(filePath!!)
+            Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also {
+
+                file = File(filePath)
+                it.data = Uri.fromFile(file)
+                activity?.sendBroadcast(it)
+            }
+
+            //file = File(filePath)
+
+            Toast.makeText(activity, "PATH WAS: "+ filePath!!.toUri(), Toast.LENGTH_LONG).show();
+
+            val photo: Bitmap = BitmapFactory.decodeFile(filePath)
+            profile_picture.setImageBitmap(photo)
+            Timber.e("Uri: ${filePath!!.toUri()}")
+
+
         }
 
         if (resultCode == Activity.RESULT_OK && requestCode == ProfileFragment.REQUEST_TAKE_PHOTO) {
             galleryAddPic()
             val photo: Bitmap = BitmapFactory.decodeFile(currentPhotoPath)
             profile_picture.setImageBitmap(photo)
+            Toast.makeText(activity, "PATH WAS: "+ currentPhotoPath.toString(), Toast.LENGTH_LONG).show();
+
+            Log.i("PATH WAS: ", currentPhotoPath.toString());
             Timber.e("Uri: ${currentPhotoPath.toUri()}")
         }
     }
