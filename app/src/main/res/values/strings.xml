@@ -80,5 +80,6 @@
     <string name="close_button">Close Button</string>
 
     <string name="logoutNotification">Has cerrado sesión</string>
+    <string name="msg_token_fmt">Token Message</string>
 
 </resources>

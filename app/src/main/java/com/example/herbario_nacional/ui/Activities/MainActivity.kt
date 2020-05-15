@@ -2,21 +2,19 @@ package com.example.herbario_nacional.ui.Activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.herbario_nacional.R
-import com.example.herbario_nacional.base.BaseApplication.Companion.context
-import com.example.herbario_nacional.ui.viewModels.MeViewModel
-import com.mikepenz.iconics.Iconics
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
+import timber.log.Timber
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +23,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main);
         val navController : NavController = findNavController(R.id.navigationHost)
         bottom_navigation.setupWithNavController(navController)
+
+        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("Instance failed", "getInstanceId failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new Instance ID token
+            val token = task.result?.token
+
+            // Log and toast
+            val msg = "${getString(R.string.msg_token_fmt)}: $token"
+            Log.d("Token FCM", msg)
+            Toast.makeText(baseContext, "$msg $token", Toast.LENGTH_SHORT).show()
+        })
     }
 
     fun showDataSheetOption(view: View) {
