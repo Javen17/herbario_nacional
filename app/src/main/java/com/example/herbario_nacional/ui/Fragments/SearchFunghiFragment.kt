@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -23,6 +24,8 @@ class SearchFunghiFragment : Fragment() {
     private val imageLoader: ImageLoader by inject()
     private val fungiAdapter: FungiAdapter by lazy{ FungiAdapter(imageLoader)}
     private val searchViewModel: SearchViewModel by viewModel()
+
+    private var query: String = String()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_search_funghi, container, false)
@@ -46,6 +49,35 @@ class SearchFunghiFragment : Fragment() {
                 }
             }
         })
+
+        funghi_search_view.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(s:String):Boolean {
+                searchViewModel.searchFungusByName(s)
+                Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+                return false
+            }
+
+            override fun onQueryTextChange(s:String):Boolean {
+                query = s
+                return true
+            }
+        })
+
+        btn_common_name.setOnClickListener {
+            searchViewModel.searchFungusByName(query)
+            Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+        }
+
+        btn_location.setOnClickListener {
+            searchViewModel.searchFungusByLocation(query)
+            Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+        }
+
+        btn_recollection.setOnClickListener {
+            searchViewModel.searchFungusByRecollectionArea(query)
+            Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupRecycler(){

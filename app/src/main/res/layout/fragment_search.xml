@@ -48,80 +48,18 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <SearchView
-        android:id="@+id/mi_search_view"
-        android:layout_width="411dp"
-        android:layout_height="61dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/btnFilters"
-        android:layout_width="410dp"
-        android:layout_height="75dp"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mi_search_view">
-
-        <Button
-            android:id="@+id/btn_common_name"
-            android:layout_width="140dp"
-            android:layout_height="110dp"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:text="@string/common_name"
-            app:autoSizeMaxTextSize="13sp"
-            app:autoSizeMinTextSize="10sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform" />
-
-        <Button
-            android:id="@+id/btn_location"
-            android:layout_width="140dp"
-            android:layout_height="110dp"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:text="@string/specific_collection_area"
-            app:autoSizeMaxTextSize="13sp"
-            app:autoSizeMinTextSize="10sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform" />
-
-        <Button
-            android:id="@+id/btn_recollection"
-            android:layout_width="140dp"
-            android:layout_height="110dp"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:text="@string/location_data"
-            app:autoSizeMaxTextSize="13sp"
-            app:autoSizeMinTextSize="10sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/searchPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnFilters"
+        android:layout_below="@+id/appBarLayout"
         android:scrollbarStyle="outsideInset"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnFilters"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
