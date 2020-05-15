@@ -1,5 +1,6 @@
 package com.example.herbario_nacional.ui.viewModels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import com.example.herbario_nacional.R
 import com.example.herbario_nacional.base.BaseApplication
 import com.example.herbario_nacional.data.network.Retry
 import com.example.herbario_nacional.models.Credentials
+import com.example.herbario_nacional.models.EmailData
 import com.example.herbario_nacional.models.Status
 import com.example.herbario_nacional.repo.CredentialsRepository
 import com.example.herbario_nacional.ui.Event
@@ -43,6 +45,23 @@ class CredentialsViewModel (private val credentialsRepository: CredentialsReposi
                         }
                         else -> emitUiState(error = Event(BaseApplication.context.getString(R.string.internet_connection_error)))
                     }
+                }
+            }
+        }
+    }
+
+    fun resetPassword(email: EmailData){
+        viewModelScope.launch {
+            Retry().retryIO(times = 3){
+                runCatching {
+                    //emitUiState(showProgress = true)
+                    Log.i("RESET PASSWORD", "VIEW MODEL");
+                    credentialsRepository.resetPassword(email)
+                }.onSuccess {
+                    //emitUiState(result = Event(it))
+                    Log.i("RESET PASSWORD", "SUCCESS");
+                }.onFailure {
+                    Log.i("RESET PASSWORD", "FAILED");
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.example.herbario_nacional.data.network.`interface`
 
 import com.example.herbario_nacional.models.Credentials
+import com.example.herbario_nacional.models.EmailData
 import com.example.herbario_nacional.models.Message
 import com.example.herbario_nacional.models.Status
 import retrofit2.http.Body
@@ -13,4 +14,9 @@ interface CredentialsInterface {
 
     @POST("api/login/")
     suspend fun requestLogin(@Body credentials: Credentials): Status
+
+
+    @POST("api/me/restore_password/")
+    suspend fun resetPassword(@Body email: EmailData): Status
+
 }
