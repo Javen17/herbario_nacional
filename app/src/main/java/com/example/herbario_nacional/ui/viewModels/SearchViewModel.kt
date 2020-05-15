@@ -27,6 +27,7 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
     val funghiState: LiveData<FunghiDataState>
         get() = _funghiState
 
+//    plant methods
 
     fun searchPlantByName(value: String) {
         viewModelScope.launch {
@@ -78,6 +79,8 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
             }
         }
     }
+
+//    funghi methods
 
     fun searchFungusByName(value: String) {
         viewModelScope.launch {

@@ -4,9 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.base.BaseApplication.Companion.context
 import com.example.herbario_nacional.imageloader.ImageLoader
@@ -20,28 +18,28 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.text.SimpleDateFormat
 import java.util.*
 
-class PlantViewHolder constructor(override val containerView: View) : BaseViewHolder<PlantSpecimen>(containerView), LayoutContainer {
+class PlantViewHolder constructor(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-    override fun bind(item: PlantSpecimen, imageLoader: ImageLoader) {
+    fun bind(plant: PlantSpecimen, imageLoader: ImageLoader) {
         plant_content.setOnClickListener {
-            showActivity(DataSheetInformationPlant::class.java, item)
+            showActivity(DataSheetInformationPlant::class.java, plant)
         }
 
-        val dateReceived: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).parse(item.date_received)
+        val dateReceived: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).parse(plant.date_received)
         val timeAgo = PrettyTime(Locale("es"))
 
         plantImage?.let {
-            imageLoader.load(ImageToUrl.exportImageToURL(item.photo_url!!), it)
+            imageLoader.load(ImageToUrl.exportImageToURL(plant.photo_url!!), it)
         }
 
         profilePicture?.let {
             imageLoader.load("https://api.adorable.io/avatars/50/12@adorable.png", it)
         }
 
-        plantName.text = item.species.common_name
-        plantFamily.text = item.species.genus.family.name
-        username.text = "${item.user.first_name} ${item.user.last_name}"
-        country.text = "${item.city.name}, ${item.city.state.country.name}"
+        plantName.text = plant.species.common_name
+        plantFamily.text = plant.species.genus.family.name
+        username.text = "${plant.user.first_name} ${plant.user.last_name}"
+        country.text = "${plant.city.name}, ${plant.city.state.country.name}"
         registrationDate.text = timeAgo.format(dateReceived)
     }
 
