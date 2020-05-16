@@ -27,6 +27,7 @@ val appModule = module {
     viewModel { CapTypeViewModel(get()) }
     viewModel { NewPlantViewModel(get()) }
     viewModel { NewFungusViewModel(get()) }
+    viewModel { AndroidDeviceViewModel(get()) }
 
     single<CredentialsRepository> {
         CredentialsRepositoryImpl(get())
@@ -98,6 +99,10 @@ val appModule = module {
 
     single<MeRepository> {
         MeRepositoryImpl(get())
+    }
+
+    single<AndroidDeviceRepository> {
+        AndroidDeviceRepositoryImpl(get())
     }
 }
 

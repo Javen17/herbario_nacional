@@ -49,5 +49,6 @@ class FamilyViewModel (private val familyRepository: FamilyRepository): ViewMode
     data class FamilyDataState(
         val showProgress: Boolean,
         val result: Event<List<PlantFamily>>?,
-        val error: Event<Int>?)
+        val error: Event<Int>?
+    )
 }

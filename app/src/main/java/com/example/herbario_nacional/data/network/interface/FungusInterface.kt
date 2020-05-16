@@ -7,7 +7,7 @@ import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface FungusInterface {
-    @GET("api/mushroom_specimen/approved/")
+    @GET("api/mushroom_specimen/")
     suspend fun requestFungus(): MutableList<FunghiSpecimen>
 
     @Multipart

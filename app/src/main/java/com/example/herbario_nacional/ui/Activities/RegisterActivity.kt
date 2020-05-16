@@ -13,20 +13,14 @@ import com.example.herbario_nacional.models.Register
 import com.example.herbario_nacional.ui.viewModels.RegisterViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_register.back_btn
 import kotlinx.android.synthetic.main.activity_register.passwordInput
 import kotlinx.android.synthetic.main.activity_register.usernameInput
-import org.json.JSONException
-import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.IOException
-import java.lang.Error
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.reflect.typeOf
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -119,13 +113,8 @@ class RegisterActivity : AppCompatActivity() {
                             username = usernameInput.text.toString().toLowerCase(Locale.ROOT).trim(),
                             email = emailInput.text.toString().toLowerCase(Locale.ROOT),
                             password = passwordInput.text.toString(),
-                            is_staff = false,
-                            is_active = true,
-                            is_superuser = false,
                             date_joined = currentDate,
-                            name = nameInput.text.toString(),
-                            groups = intArrayOf(15),
-                            last_login = null
+                            name = nameInput.text.toString()
                         )
                     )
                 }

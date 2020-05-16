@@ -28,6 +28,7 @@ class HeaderInterceptor : Interceptor {
         const val CAP_TYPE = "api/mushroom_cap_type/"
         const val PERMANENT_LOGIN = "/api/permanent_login/"
         const val ME = "api/me/"
+        const val REGISTER_ANDROID_DEVICE = "api/register_android_device/"
     }
 
     private fun setupCookies(){
@@ -126,6 +127,10 @@ class HeaderInterceptor : Interceptor {
                     .addHeader("Content-Type", "application/json")
             }
             ME -> {
+                requestBuilder
+                    .addHeader("Content-Type", "application/json")
+            }
+            REGISTER_ANDROID_DEVICE -> {
                 requestBuilder
                     .addHeader("Content-Type", "application/json")
             }

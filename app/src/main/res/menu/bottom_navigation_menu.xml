@@ -12,20 +12,7 @@
         android:title="@string/search"/>
 
     <item
-        android:id="@+id/empty"
-        android:enabled="false"
-        android:title=""/>
-
-    <item
-        android:id="@+id/notificationsFragment"
-        android:icon="@drawable/ic_notifications"
-        android:title="@string/notifications"/>
-
-    <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_user"
         android:title="@string/profile"/>
-
-    <!-- Agregar este id cuando el perfil esté disponible: android:id="@+id/profileFragment"-->
-
 </menu>
