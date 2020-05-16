@@ -6,10 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.herbario_nacional.R
-import com.example.herbario_nacional.models.Genus
 import com.example.herbario_nacional.models.Me
-import com.example.herbario_nacional.models.MeData
-import com.example.herbario_nacional.repo.GenusRepository
 import com.example.herbario_nacional.repo.MeRepository
 import com.example.herbario_nacional.ui.Event
 import kotlinx.coroutines.launch
