@@ -29,4 +29,14 @@ interface PlantInterface {
         @Part("longitude") longitude: RequestBody,
         @Part("location") location: RequestBody
     ): Status
+
+    @GET("api/plant_specimen/filter/")
+    suspend fun searchPlantByName(@Query("species__common_name") value: String): MutableList<PlantSpecimen>
+
+    @GET("api/plant_specimen/filter/")
+    suspend fun searchPlantByLocation(@Query("location") value: String): MutableList<PlantSpecimen>
+
+    @GET("api/plant_specimen/filter/")
+    suspend fun searchPlantByRecollectionArea(@Query("recolection_area_status__name") value: String): MutableList<PlantSpecimen>
+
 }

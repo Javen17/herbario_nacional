@@ -27,6 +27,7 @@ val appModule = module {
     viewModel { CapTypeViewModel(get()) }
     viewModel { NewPlantViewModel(get()) }
     viewModel { NewFungusViewModel(get()) }
+    viewModel { SearchViewModel(get(), get()) }
 
     single<CredentialsRepository> {
         CredentialsRepositoryImpl(get())

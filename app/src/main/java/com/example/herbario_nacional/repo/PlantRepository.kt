@@ -25,6 +25,9 @@ interface PlantRepository {
         longitude: RequestBody,
         location: RequestBody
     ): Status
+    suspend fun searchByName(value: String): MutableList<PlantSpecimen>
+    suspend fun searchByLocation(value: String): MutableList<PlantSpecimen>
+    suspend fun searchByRecollectionArea(value: String): MutableList<PlantSpecimen>
 }
 
 class PlantRepositoryImpl(private val plantService: PlantInterface): PlantRepository{
@@ -67,4 +70,17 @@ class PlantRepositoryImpl(private val plantService: PlantInterface): PlantReposi
             location
         )
     }
+
+    override suspend fun searchByName(value: String): MutableList<PlantSpecimen> {
+        return plantService.searchPlantByName(value)
+    }
+
+    override suspend fun searchByLocation(value: String): MutableList<PlantSpecimen> {
+        return plantService.searchPlantByLocation(value)
+    }
+
+    override suspend fun searchByRecollectionArea(value: String): MutableList<PlantSpecimen> {
+        return plantService.searchPlantByRecollectionArea(value)
+    }
+
 }
