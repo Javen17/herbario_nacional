@@ -9,7 +9,6 @@
     <string name="profile">Perfil</string>
     <string name="register">Regístrate</string>
     <string name="login">Iniciar sesión</string>
-    <string name="logoutNotification">Has cerrado sesión</string>
     <string name="continue_as_a_guest">Continuar como invitado</string>
     <string name="attention">Inicia sesión para que puedas registrar y visualizar todas tus fichas técnicas.</string>
     <string name="empty_fields">Introduzca nombre de usuario y contraseña.</string>

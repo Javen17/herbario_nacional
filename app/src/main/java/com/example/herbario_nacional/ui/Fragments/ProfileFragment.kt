@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -29,11 +30,13 @@ import androidx.lifecycle.Observer
 import coil.api.load
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.preferences.AppPreferences
+import com.example.herbario_nacional.ui.Activities.NewPlantActivity
 import com.example.herbario_nacional.ui.Activities.NoLoginActivity
 import com.example.herbario_nacional.ui.viewModels.MeViewModel
 import com.example.herbario_nacional.ui.viewModels.ProfileViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_new_plant.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -43,6 +46,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
+import java.io.InputStream
+import java.net.MalformedURLException
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -71,6 +77,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view: View = inflater!!.inflate(R.layout.fragment_profile, container, false)
 
         var profile_button: FloatingActionButton = view.findViewById(R.id.save_account_profile_btn);
@@ -90,6 +97,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
         // Inflate the layout for this fragment
         return view
+
+
     }
 
     private fun showDialog(){
@@ -182,15 +191,10 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { error ->
                     Toast.makeText(context, resources.getString(error), Toast.LENGTH_LONG).show()
+                    showActivity(NoLoginActivity::class.java)
                 }
             }
         })
-
-        logout_btn.setOnClickListener {
-            AppPreferences().remove(AppPreferences.Key.cookies)
-            showActivity(NoLoginActivity::class.java)
-            Toast.makeText(context, getString(R.string.logoutNotification), Toast.LENGTH_LONG).show()
-        }
     }
 
     private fun showActivity(activityClass: Class<*>) {
@@ -331,33 +335,16 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             //plant_picture.setImageURI(data?.data)
 
 
-            val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale("es")).format(Date())
-            val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            File.createTempFile(
-                "JPEG_${timeStamp}_",
-                ".jpg",
-                storageDir
-            ).apply {
-                currentPhotoPath = absolutePath
-            }
-
+            profile_picture.setImageURI(data?.data)
             fileUri = data?.data!!
             filePath = getRealPathFromURI(fileUri)
-            Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also {
+            file = File(filePath!!)
 
-                file = File(filePath)
-                it.data = Uri.fromFile(file)
-                activity?.sendBroadcast(it)
-            }
-
-            //file = File(filePath)
-
-            Toast.makeText(activity, "PATH WAS: "+ filePath!!.toUri(), Toast.LENGTH_LONG).show();
-
+/*
             val photo: Bitmap = BitmapFactory.decodeFile(filePath)
             profile_picture.setImageBitmap(photo)
             Timber.e("Uri: ${filePath!!.toUri()}")
-
+*/
 
         }
 
