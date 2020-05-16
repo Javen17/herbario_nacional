@@ -8,6 +8,6 @@ data class Profile(
     val number_id: String,
     val phone: String = "",
     val photo: String?,
-    val photo_url: String,
+    val photo_url: String?,
     val user: Int
 )
