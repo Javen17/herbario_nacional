@@ -46,11 +46,11 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
         }
     }
 
-    fun searchPlantByLocation(value: String) {
+    fun searchPlantByFamily(value: String) {
         viewModelScope.launch {
             runCatching {
                 emitPlantState(showProgress = true)
-                plantRepository.searchByLocation(value)
+                plantRepository.searchByFamily(value)
             }.onSuccess {
                 emitPlantState(result = Event(it))
             }.onFailure {
@@ -63,11 +63,11 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
         }
     }
 
-    fun searchPlantByRecollectionArea(value: String) {
+    fun searchPlantByGenus(value: String) {
         viewModelScope.launch {
             runCatching {
                 emitPlantState(showProgress = true)
-                plantRepository.searchByRecollectionArea(value)
+                plantRepository.searchByGenus(value)
             }.onSuccess {
                 emitPlantState(result = Event(it))
             }.onFailure {
@@ -99,11 +99,11 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
         }
     }
 
-    fun searchFungusByRecollectionArea(value: String) {
+    fun searchFungusByFamily(value: String) {
         viewModelScope.launch {
             runCatching {
                 emitFunghiState(showProgress = true)
-                fungusRepository.searchByLocation(value)
+                fungusRepository.searchByFamily(value)
             }.onSuccess {
                 emitFunghiState(result = Event(it))
             }.onFailure {
@@ -116,11 +116,11 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
         }
     }
 
-    fun searchFungusByLocation(value: String) {
+    fun searchFungusByGenus(value: String) {
         viewModelScope.launch {
             runCatching {
                 emitFunghiState(showProgress = true)
-                fungusRepository.searchByRecollectionArea(value)
+                fungusRepository.searchByGenus(value)
             }.onSuccess {
                 emitFunghiState(result = Event(it))
             }.onFailure {

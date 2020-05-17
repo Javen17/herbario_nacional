@@ -68,13 +68,13 @@ class SearchPlantFragment : Fragment() {
             Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
         }
 
-        btn_location.setOnClickListener {
-            searchViewModel.searchPlantByLocation(query)
+        btn_family.setOnClickListener {
+            searchViewModel.searchPlantByFamily(query)
             Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
         }
 
-        btn_recollection.setOnClickListener {
-            searchViewModel.searchPlantByRecollectionArea(query)
+        btn_genus.setOnClickListener {
+            searchViewModel.searchPlantByGenus(query)
             Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
         }
     }

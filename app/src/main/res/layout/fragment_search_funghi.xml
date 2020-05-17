@@ -17,8 +17,8 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/btnFiltersFunghi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
             android:orientation="horizontal"
             android:weightSum="3"
             app:layout_constraintEnd_toEndOf="parent"
@@ -40,26 +40,26 @@
                     app:autoSizeTextType="uniform" />
 
                 <Button
-                    android:id="@+id/btn_location"
+                    android:id="@+id/btn_family"
                     android:layout_width="140dp"
                     android:layout_height="110dp"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:text="@string/specific_collection_area"
+                    android:text="@string/family"
                     app:autoSizeMaxTextSize="13sp"
                     app:autoSizeMinTextSize="10sp"
                     app:autoSizeStepGranularity="2sp"
                     app:autoSizeTextType="uniform" />
 
                 <Button
-                    android:id="@+id/btn_recollection"
+                    android:id="@+id/btn_genus"
                     android:layout_width="140dp"
                     android:layout_height="110dp"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:text="@string/location_data"
+                    android:text="@string/genus"
                     app:autoSizeMaxTextSize="13sp"
                     app:autoSizeMinTextSize="10sp"
                     app:autoSizeStepGranularity="2sp"

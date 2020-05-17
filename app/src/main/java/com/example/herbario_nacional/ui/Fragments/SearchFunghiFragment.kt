@@ -69,13 +69,13 @@ class SearchFunghiFragment : Fragment() {
             Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
         }
 
-        btn_location.setOnClickListener {
-            searchViewModel.searchFungusByLocation(query)
+        btn_family.setOnClickListener {
+            searchViewModel.searchFungusByFamily(query)
             Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
         }
 
-        btn_recollection.setOnClickListener {
-            searchViewModel.searchFungusByRecollectionArea(query)
+        btn_genus.setOnClickListener {
+            searchViewModel.searchFungusByGenus(query)
             Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
         }
     }
