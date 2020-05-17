@@ -52,7 +52,6 @@ class ProfileViewModel (private val profileRepository: ProfileRepository): ViewM
         }
     }
 
-
     fun updateProfile(photo: MultipartBody.Part, number_id: RequestBody, phone: RequestBody){
         viewModelScope.launch {
             Retry().retryIO(times = 3){

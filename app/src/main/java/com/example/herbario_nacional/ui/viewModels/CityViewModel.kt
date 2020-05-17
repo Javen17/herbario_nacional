@@ -51,5 +51,6 @@ class CityViewModel (private val cityRepository: CityRepository): ViewModel() {
     data class CityDataState(
         val showProgress: Boolean,
         val result: Event<List<City>>?,
-        val error: Event<Int>?)
+        val error: Event<Int>?
+    )
 }

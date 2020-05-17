@@ -1,15 +1,15 @@
 package com.example.herbario_nacional.ui.Activities
 
-import android.content.BroadcastReceiver
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -26,17 +26,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import androidx.lifecycle.Observer
+import com.example.herbario_nacional.BuildConfig
+import com.example.herbario_nacional.models.AndroidDeviceUpdate
+import timber.log.Timber
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
     private val meViewModel: MeViewModel by viewModel()
     private val androidDeviceViewModel: AndroidDeviceViewModel by viewModel()
-
-    var currentUser: Int = 0
-
-    override fun onStart() {
-        super.onStart()
-        LocalBroadcastManager.getInstance(this).registerReceiver((getToken), IntentFilter("TokenFCM"))
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,16 +41,27 @@ class MainActivity : AppCompatActivity() {
         val navController : NavController = findNavController(R.id.navigationHost)
         bottom_navigation.setupWithNavController(navController)
 
-        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                return@OnCompleteListener
-            }
-            val token = task.result?.token
+        val date = Date()
+        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale("es"))
+        val currentDate: String = formatter.format(date)
+        val androidId: String = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
 
-            if (token != null) {
-                AppPreferences().put(AppPreferences.Key.TokenFCM, token)
-            }
-        })
+        var currentUser: Int by Delegates.observable(0) { _, _, newValue ->
+            androidDeviceViewModel.searchUiState.observe(this, Observer {
+                val dataState = it ?: return@Observer
+                if (dataState.result != null && !dataState.result.consumed){
+                    dataState.result.consume()?.let { result ->
+                        result.forEach { androidDevice ->
+                            androidDeviceViewModel.requestPutAndroiDevice(androidDevice.id,  AndroidDeviceUpdate(newValue))
+                        }
+                    }
+                }
+                if (dataState.error != null && !dataState.error.consumed){
+                    dataState.error.consume()?.let { }
+                }
+            })
+        }
+        print(currentUser)
 
         androidDeviceViewModel.uiState.observe(this, Observer {
             val dataState = it ?: return@Observer
@@ -70,40 +78,38 @@ class MainActivity : AppCompatActivity() {
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     currentUser = result.data.id
+                    FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener(OnCompleteListener { task ->
+                        if (!task.isSuccessful) {
+                            return@OnCompleteListener
+                        }
+                        val token = task.result?.token
+
+                        if (token != null && token != AppPreferences().get(AppPreferences.Key.TokenFCM, "")) {
+                            AppPreferences().remove(AppPreferences.Key.TokenFCM)
+                            AppPreferences().put(AppPreferences.Key.TokenFCM, token)
+                            androidDeviceViewModel.requestPostAndroiDevice(
+                                AndroidDevice(
+                                    application_id = BuildConfig.APPLICATION_ID,
+                                    user = result.data.id,
+                                    registration_id = token,
+                                    device_id = null,
+                                    name = androidId,
+                                    date_create = currentDate,
+                                    cloud_message_type = "FCM",
+                                    active = true
+                                )
+                            )
+                        }
+                        else {
+                            androidDeviceViewModel.searchByAndroidDeviceId(androidId)
+                        }
+                    })
                 }
             }
             if (dataState.error != null && !dataState.error.consumed){
                 dataState.error.consume()?.let { }
             }
         })
-    }
-
-    private val getToken: BroadcastReceiver = object : BroadcastReceiver() {
-        val date = Date()
-        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale("es"))
-        val currentDate: String = formatter.format(date)
-
-        override fun onReceive(context: Context, intent: Intent) {
-            val token = intent.extras?.getString("NewTokenFCM")
-            if (AppPreferences().get(AppPreferences.Key.TokenFCM, "") !=  token) {
-                androidDeviceViewModel.requestPostAndroiDevice(
-                    AndroidDevice(
-                        user = currentUser,
-                        registration_id = token!!,
-                        name = getMac(),
-                        date_create = currentDate,
-                        cloud_message_type = "FCM",
-                        active = true
-                    )
-                )
-            }
-        }
-    }
-
-    private fun getMac(): String {
-        val manager = BaseApplication.context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        val information = manager.connectionInfo
-        return information.macAddress.toUpperCase(Locale.ROOT)
     }
 
     fun showDataSheetOption(view: View) {
