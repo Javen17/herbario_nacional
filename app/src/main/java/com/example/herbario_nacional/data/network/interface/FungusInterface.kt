@@ -39,8 +39,8 @@ interface FungusInterface {
     suspend fun searchFungusByName(@Query("species__common_name") value: String): MutableList<FunghiSpecimen>
 
     @GET("api/mushroom_specimen/filter/")
-    suspend fun searchFungusByRecollectionArea(@Query("recolection_area_status__name") value: String): MutableList<FunghiSpecimen>
+    suspend fun searchFungusByFamily(@Query("species__genus__family__name") value: String): MutableList<FunghiSpecimen>
 
     @GET("api/mushroom_specimen/filter/")
-    suspend fun searchFungusByLocation(@Query("location") value: String): MutableList<FunghiSpecimen>
+    suspend fun searchFungusByGenus(@Query("species__genus__name") value: String): MutableList<FunghiSpecimen>
 }

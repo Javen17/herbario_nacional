@@ -34,9 +34,9 @@ interface PlantInterface {
     suspend fun searchPlantByName(@Query("species__common_name") value: String): MutableList<PlantSpecimen>
 
     @GET("api/plant_specimen/filter/")
-    suspend fun searchPlantByLocation(@Query("location") value: String): MutableList<PlantSpecimen>
+    suspend fun searchPlantByFamily(@Query("species__genus__family__name") value: String): MutableList<PlantSpecimen>
 
     @GET("api/plant_specimen/filter/")
-    suspend fun searchPlantByRecollectionArea(@Query("recolection_area_status__name") value: String): MutableList<PlantSpecimen>
+    suspend fun searchPlantByGenus(@Query("species__genus__name") value: String): MutableList<PlantSpecimen>
 
 }
