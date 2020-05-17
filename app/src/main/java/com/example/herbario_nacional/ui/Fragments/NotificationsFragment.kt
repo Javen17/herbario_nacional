@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
-
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.ui.Activities.NoLoginActivity
 import com.example.herbario_nacional.ui.viewModels.MeViewModel
@@ -29,7 +28,7 @@ class NotificationsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var currentUser: Int? = 0;
+        var currentUser: Int?
 
         meViewModel.uiState.observe(viewLifecycleOwner, Observer {
             val dataState = it ?: return@Observer

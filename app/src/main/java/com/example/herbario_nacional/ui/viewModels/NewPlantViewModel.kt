@@ -6,15 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.data.network.Retry
-import com.example.herbario_nacional.models.PlantSpecimen
-import com.example.herbario_nacional.models.PostPlantSpecimen
-import com.example.herbario_nacional.models.Register
 import com.example.herbario_nacional.models.Status
 import com.example.herbario_nacional.repo.PlantRepository
-import com.example.herbario_nacional.repo.RegisterRepository
 import com.example.herbario_nacional.ui.Event
 import com.example.herbario_nacional.util.StatusCode
-import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

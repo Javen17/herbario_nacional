@@ -23,7 +23,6 @@ interface ProfileInterface {
     @Multipart
     @PUT("api/me/modify_profile/")
     suspend fun updateProfileNoPhoto(
-
         @Part("number_id") number_id: RequestBody,
         @Part("phone") phone: RequestBody): Status
 

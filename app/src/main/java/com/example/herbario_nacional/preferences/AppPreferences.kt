@@ -10,25 +10,12 @@ class AppPreferences{
     private var mBulkUpdate = false
 
     enum class Key {
-        token_refresh, token_access, token_permanent, cookies
+        token_refresh, token_access, token_permanent, cookies, TokenFCM
     }
 
     init {
         mPref = BaseApplication.context.getSharedPreferences(SETTINGS_NAME, Context.MODE_PRIVATE)
     }
-
-    /*
-    val cookies = PreferenceManager.getDefaultSharedPreferences(context).getStringSet("PREF_COOKIES", HashSet()) as HashSet<String>
-            cookies.clear()
-
-            for (header in originalResponse.headers("Set-Cookie")) {
-                cookies.add(header)
-            }
-
-            val memes = PreferenceManager.getDefaultSharedPreferences(context).edit()
-            memes.putStringSet("PREF_COOKIES", cookies).apply()
-            memes.commit()
-     */
 
     fun put(key: Key, `val`: Any) {
         doEdit()

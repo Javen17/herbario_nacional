@@ -70,7 +70,6 @@
     <string name="cancel">Cancelar</string>
     <string name="registerSpecimen">Registrar</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="description">Imagen</string>
 
@@ -78,9 +77,9 @@
     <string name="logout">Cerrar sesión</string>
     <string name="my_specimens">Mis fichas técnicas</string>
     <string name="close_button">Close Button</string>
-    <string name="searching">Buscando...</string>
+    <string name="searching">Buscando…</string>
     <string name="invalid_new_type">Nuevo tipo inválido</string>
     <string name="logoutNotification">Has cerrado sesión</string>
+    <string name="msg_token_fmt">Token Message</string>
 
->>>>>>> bb662f4a5d04a44ce9cac49d7fdf57ba2bcf2b05
 </resources>
