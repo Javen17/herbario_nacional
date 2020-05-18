@@ -73,6 +73,9 @@ dependencies {
     implementation AndroidX.lifecycleViewmodelKtx
     implementation AndroidX.viewPager2
 
+    implementation 'id.zelory:compressor:2.1.0'
+
+
     implementation Coil.coil
     implementation Coil.gif
     implementation Coil.transformation

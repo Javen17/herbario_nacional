@@ -4,12 +4,12 @@ package com.example.herbario_nacional.ui.Fragments
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -30,13 +30,12 @@ import androidx.lifecycle.Observer
 import coil.api.load
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.preferences.AppPreferences
-import com.example.herbario_nacional.ui.Activities.NewPlantActivity
 import com.example.herbario_nacional.ui.Activities.NoLoginActivity
 import com.example.herbario_nacional.ui.viewModels.MeViewModel
 import com.example.herbario_nacional.ui.viewModels.ProfileViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_new_plant.*
+import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.fragment_profile.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -46,9 +45,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
-import java.io.InputStream
-import java.net.MalformedURLException
-import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -66,10 +62,17 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private var filePath: String? = ""
 
 
+
     companion object {
+
+        private var dialog : ProgressDialog? = null;
         private const val REQUEST_TAKE_PHOTO = 1
         private const val IMAGE_PICK_CODE = 1000
         private const val PERMISSION_CODE = 1001
+
+        fun stopLoading(){
+            dialog!!.dismiss();
+        }
     }
 
 
@@ -218,7 +221,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         profileParams["username"] = username_update.text.toString();
 
         if(file != null){
-            Toast.makeText(activity, "NO FILE", Toast.LENGTH_LONG).show();
+
             val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file!!)
             val image: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file!!.name, requestBody)
 
@@ -255,7 +258,16 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
         myAccountViewModel.updateAccount(AccountBody);
 
+         dialog = ProgressDialog.show(
+            activity, "UPDATING",
+            "Loading. Please wait...", true
+        )
+
+
     }
+
+
+
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
@@ -273,7 +285,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private fun galleryAddPic() {
         Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also {
 
-            file = File(currentPhotoPath)
+            file =  Compressor(activity).compressToFile(File(currentPhotoPath));
             it.data = Uri.fromFile(file)
             activity?.sendBroadcast(it)
         }
@@ -338,7 +350,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             profile_picture.setImageURI(data?.data)
             fileUri = data?.data!!
             filePath = getRealPathFromURI(fileUri)
-            file = File(filePath!!)
+            file =  Compressor(activity).compressToFile(File(filePath!!));
 
 /*
             val photo: Bitmap = BitmapFactory.decodeFile(filePath)

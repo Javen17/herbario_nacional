@@ -13,6 +13,7 @@ import com.example.herbario_nacional.models.Status
 import com.example.herbario_nacional.preferences.AppPreferences
 import com.example.herbario_nacional.repo.ProfileRepository
 import com.example.herbario_nacional.ui.Event
+import com.example.herbario_nacional.ui.Fragments.ProfileFragment
 import com.example.herbario_nacional.util.StatusCode
 import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
@@ -60,6 +61,7 @@ class ProfileViewModel (private val profileRepository: ProfileRepository): ViewM
                 }.onSuccess {
                     /*TO COMPLETE*/
                     Log.i("UPDATE PROFILE PROCESS", "SEEMS TO BE SUCCESSFUL")
+                    ProfileFragment.stopLoading();
                 }.onFailure {
                     when(it){
                         is HttpException -> {
@@ -75,6 +77,8 @@ class ProfileViewModel (private val profileRepository: ProfileRepository): ViewM
                             emitUiState(error = Event(R.string.internet_connection_error))
                         }
                     }
+
+                    ProfileFragment.stopLoading();
                 }
             }
         }
@@ -90,6 +94,7 @@ class ProfileViewModel (private val profileRepository: ProfileRepository): ViewM
                 }.onSuccess {
                     /*TO COMPLETE*/
                     Log.i("UPDATE PROFILE PROCESS", "SEEMS TO BE SUCCESSFUL")
+                    ProfileFragment.stopLoading();
                 }.onFailure {
                     when(it){
                         is HttpException -> {
@@ -105,6 +110,8 @@ class ProfileViewModel (private val profileRepository: ProfileRepository): ViewM
                             emitUiState(error = Event(R.string.internet_connection_error))
                         }
                     }
+
+                    ProfileFragment.stopLoading();
                 }
             }
         }
