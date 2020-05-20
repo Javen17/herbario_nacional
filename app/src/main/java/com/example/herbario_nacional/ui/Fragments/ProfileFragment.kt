@@ -30,6 +30,7 @@ import androidx.lifecycle.Observer
 import coil.api.load
 import com.example.herbario_nacional.R
 import com.example.herbario_nacional.preferences.AppPreferences
+import com.example.herbario_nacional.ui.Activities.ForgottenPasswordActivity
 import com.example.herbario_nacional.ui.Activities.NoLoginActivity
 import com.example.herbario_nacional.ui.viewModels.MeViewModel
 import com.example.herbario_nacional.ui.viewModels.ProfileViewModel
@@ -90,6 +91,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         var change_photo_btn: Button = view.findViewById(R.id.change_pp);
         change_photo_btn.setOnClickListener { showDialog(); }
 
+        var change_password_btn: Button = view.findViewById(R.id.change_password_btn);
+        change_password_btn.setOnClickListener { launchPassActivity(); }
 
         var logout_btn: Button = view.findViewById(R.id.logout_btn);
         logout_btn.setOnClickListener {
@@ -198,6 +201,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 }
             }
         })
+    }
+
+    private fun launchPassActivity(){
+        val intent = Intent(activity, ForgottenPasswordActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
     private fun showActivity(activityClass: Class<*>) {
