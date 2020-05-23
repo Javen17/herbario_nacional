@@ -157,7 +157,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
                     currentUser = result.data.id;
-                    Toast.makeText(context, "Usuario actual: $currentUser", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(context, "Usuario actual: $currentUser", Toast.LENGTH_LONG).show()
                     fullname.text = "${result.data.first_name} ${result.data.last_name}"
                     username.text = result.data.username
                     email.text = result.data.email
@@ -220,7 +220,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
 
-        Toast.makeText(context, "UPDATING...", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "ACTUALIZANDO...", Toast.LENGTH_LONG).show();
 
         //Profile mutable params
         val profileParams: MutableMap<String, Any> = ArrayMap();
@@ -268,8 +268,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         myAccountViewModel.updateAccount(AccountBody);
 
          dialog = ProgressDialog.show(
-            activity, "UPDATING",
-            "Loading. Please wait...", true
+            activity, "ACTUALIZANDO",
+            "Cargando. Por favor espere...", true
         )
 
 
