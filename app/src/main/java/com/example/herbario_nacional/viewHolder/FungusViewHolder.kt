@@ -27,8 +27,15 @@ class FungusViewHolder constructor(override val containerView: View) : RecyclerV
         val dateReceived: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).parse(funghi.date_received)
         val timeAgo = PrettyTime(Locale("es"))
 
-        fungusImage?.let {
-            imageLoader.load(ImageToUrl.exportImageToURL(ImageToUrl.exportImageToURL(funghi.photo_url)), it)
+        if (funghi.photo_url != null) {
+            fungusImage?.let {
+                imageLoader.load(ImageToUrl.exportImageToURL(funghi.photo_url), it)
+            }
+        }
+        else {
+            fungusImage?.let {
+                imageLoader.load("https://res.cloudinary.com/dejau9zgq/image/upload/v1589920905/placeholder.png", it)
+            }
         }
 
         fungusName.text =funghi.species.common_name
@@ -46,7 +53,7 @@ class FungusViewHolder constructor(override val containerView: View) : RecyclerV
 
     private fun showActivity(activityClass: Class<*>, funghi: FunghiSpecimen) {
         val intent = Intent(context, activityClass)
-        intent.putExtra("photo", ImageToUrl.exportImageToURL(funghi.photo_url))
+        intent.putExtra("photo", if(funghi.photo_url != null) ImageToUrl.exportImageToURL(funghi.photo_url) else "https://res.cloudinary.com/dejau9zgq/image/upload/v1589920905/placeholder.png")
         intent.putExtra("commonName", funghi.species.common_name)
         intent.putExtra("scientificName", funghi.species.scientific_name)
         intent.putExtra("family", funghi.species.genus.family.name)

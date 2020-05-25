@@ -29,8 +29,15 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
         val dateReceived: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).parse(plant.date_received)
         val timeAgo = PrettyTime(Locale("es"))
 
-        plantImage?.let {
-            imageLoader.load(ImageToUrl.exportImageToURL(plant.photo_url!!), it)
+        if (plant.photo_url != null) {
+            plantImage?.let {
+                imageLoader.load(ImageToUrl.exportImageToURL(plant.photo_url), it)
+            }
+        }
+        else {
+            plantImage?.let {
+                imageLoader.load("https://res.cloudinary.com/dejau9zgq/image/upload/v1589920905/placeholder.png", it)
+            }
         }
 
         plantName.text = plant.species.common_name
@@ -48,7 +55,7 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
 
     private fun showActivity(activityClass: Class<*>, plant: PlantSpecimen) {
         val intent = Intent(context, activityClass)
-        intent.putExtra("photo", ImageToUrl.exportImageToURL(plant.photo_url!!))
+        intent.putExtra("photo", if(plant.photo_url != null) ImageToUrl.exportImageToURL(plant.photo_url) else "https://res.cloudinary.com/dejau9zgq/image/upload/v1589920905/placeholder.png")
         intent.putExtra("commonName", plant.species.common_name)
         intent.putExtra("scientificName", plant.species.scientific_name)
         intent.putExtra("family", plant.species.genus.family.name)
