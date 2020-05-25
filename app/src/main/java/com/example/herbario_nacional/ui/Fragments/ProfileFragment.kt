@@ -62,8 +62,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private lateinit var fileUri: Uri
     private var filePath: String? = ""
 
-
-
     companion object {
 
         private var dialog : ProgressDialog? = null;
@@ -84,15 +82,15 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
         val view: View = inflater!!.inflate(R.layout.fragment_profile, container, false)
 
-        var profile_button: FloatingActionButton = view.findViewById(R.id.save_account_profile_btn);
+        var profile_button: Button = view.findViewById(R.id.save_account_profile_btn);
         profile_button.setOnClickListener(this);
 
 
         var change_photo_btn: Button = view.findViewById(R.id.change_pp);
         change_photo_btn.setOnClickListener { showDialog(); }
 
-        var change_password_btn: Button = view.findViewById(R.id.change_password_btn);
-        change_password_btn.setOnClickListener { launchPassActivity(); }
+        /*var change_password_btn: Button = view.findViewById(R.id.change_password_btn);
+        change_password_btn.setOnClickListener { launchPassActivity(); }*/
 
         var logout_btn: Button = view.findViewById(R.id.logout_btn);
         logout_btn.setOnClickListener {
@@ -103,8 +101,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
         // Inflate the layout for this fragment
         return view
-
-
     }
 
     private fun showDialog(){
@@ -148,15 +144,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var currentUser: Int?
-
-        profile_picture.load("https://api.adorable.io/avatars/200/25@adorable.png")
-
         meViewModel.uiState.observe(viewLifecycleOwner, Observer {
             val dataState = it ?: return@Observer
             if (dataState.result != null && !dataState.result.consumed){
                 dataState.result.consume()?.let { result ->
-                    currentUser = result.data.id;
+                    //currentUser = result.data.id
                     //Toast.makeText(context, "Usuario actual: $currentUser", Toast.LENGTH_LONG).show()
                     fullname.text = "${result.data.first_name} ${result.data.last_name}"
                     username.text = result.data.username
@@ -182,10 +174,9 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     }
 
                     if(result.data.profile?.photo != null){
-
                         val newLink = result.data.profile?.photo.replace("file/d/", "uc?export=view&id=");
                         val finalLink = newLink.replace("/view?usp=drivesdk", "");
-                        Picasso.get().load(finalLink).placeholder(R.drawable.ic_load_img).into(profile_picture);
+                        Picasso.get().load(finalLink).placeholder(R.drawable.placeholder).into(profile_picture)
                         //profile_picture.load(finalLink);
                     }else{
                         Log.i("HERES  NOT THE PICTURE ", "NO PICTURE FOUND");
@@ -203,11 +194,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         })
     }
 
-    private fun launchPassActivity(){
+    /*private fun launchPassActivity(){
         val intent = Intent(activity, ForgottenPasswordActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
-    }
+    }*/
 
     private fun showActivity(activityClass: Class<*>) {
         val intent = Intent(activity, activityClass)
@@ -216,11 +207,9 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         activity?.finish()
     }
 
-
-
     override fun onClick(v: View?) {
 
-        Toast.makeText(context, "ACTUALIZANDO...", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Actualizando. Espere un momento.", Toast.LENGTH_LONG).show();
 
         //Profile mutable params
         val profileParams: MutableMap<String, Any> = ArrayMap();
@@ -244,11 +233,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             val phone : RequestBody = create(MediaType.parse("multipart/form-data"), phone_update.text.toString())
 
             myProfileViewModel.updateProfileNoPhoto(number_id, phone);
-
-
         }
-
-
 
         //Account mutable params
         val accountParams: MutableMap<String, Any> =
@@ -268,15 +253,10 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         myAccountViewModel.updateAccount(AccountBody);
 
          dialog = ProgressDialog.show(
-            activity, "ACTUALIZANDO",
+            activity, "Actualizando",
             "Cargando. Por favor espere...", true
         )
-
-
     }
-
-
-
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
@@ -354,8 +334,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
         if (resultCode == Activity.RESULT_OK && requestCode == ProfileFragment.IMAGE_PICK_CODE){
             //plant_picture.setImageURI(data?.data)
-
-
             profile_picture.setImageURI(data?.data)
             fileUri = data?.data!!
             filePath = getRealPathFromURI(fileUri)
@@ -366,14 +344,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             profile_picture.setImageBitmap(photo)
             Timber.e("Uri: ${filePath!!.toUri()}")
 */
-
         }
 
         if (resultCode == Activity.RESULT_OK && requestCode == ProfileFragment.REQUEST_TAKE_PHOTO) {
             galleryAddPic()
             val photo: Bitmap = BitmapFactory.decodeFile(currentPhotoPath)
             profile_picture.setImageBitmap(photo)
-            Toast.makeText(activity, "PATH WAS: "+ currentPhotoPath.toString(), Toast.LENGTH_LONG).show();
+            // Toast.makeText(activity, "PATH WAS: "+ currentPhotoPath.toString(), Toast.LENGTH_LONG).show();
 
             Log.i("PATH WAS: ", currentPhotoPath.toString());
             Timber.e("Uri: ${currentPhotoPath.toUri()}")

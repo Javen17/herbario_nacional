@@ -1,6 +1,7 @@
 package com.example.herbario_nacional.viewHolder
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,10 +31,6 @@ class PlantViewHolder constructor(override val containerView: View) : RecyclerVi
 
         plantImage?.let {
             imageLoader.load(ImageToUrl.exportImageToURL(plant.photo_url!!), it)
-        }
-
-        profilePicture?.let {
-            imageLoader.load("https://api.adorable.io/avatars/50/12@adorable.png", it)
         }
 
         plantName.text = plant.species.common_name

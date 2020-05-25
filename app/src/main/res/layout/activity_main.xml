@@ -37,8 +37,7 @@
                 app:menu="@menu/bottom_navigation_menu"
                 app:labelVisibilityMode="unlabeled"
                 app:itemIconSize="25dp"
-                app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
-            />
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

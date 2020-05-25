@@ -30,9 +30,6 @@ class FungusViewHolder constructor(override val containerView: View) : RecyclerV
         fungusImage?.let {
             imageLoader.load(ImageToUrl.exportImageToURL(ImageToUrl.exportImageToURL(funghi.photo_url)), it)
         }
-        profilePicture?.let {
-            imageLoader.load("https://api.adorable.io/avatars/50/12@adorable.png", it)
-        }
 
         fungusName.text =funghi.species.common_name
         fungusFamily.text = funghi.species.genus.family.name

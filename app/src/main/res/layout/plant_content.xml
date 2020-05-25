@@ -82,7 +82,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             app:civ_border_width="0dp"
-            android:src="@drawable/ic_default_profile_picture"
+            android:src="@drawable/photo_profile"
             android:gravity="center"
             android:scaleType="centerCrop"
             android:contentDescription="@string/description" />

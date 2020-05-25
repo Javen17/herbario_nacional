@@ -36,7 +36,7 @@
                     android:scaleType="centerCrop"
                     app:layout_constraintTop_toTopOf="parent"
                     android:contentDescription="@string/plant"
-                    android:background="@color/primary"
+                    android:background="@drawable/placeholder"
                     />
 
                 <ImageButton

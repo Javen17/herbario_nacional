@@ -8,60 +8,62 @@
 
         <SearchView
             android:id="@+id/funghi_search_view"
-            android:layout_width="411dp"
-            android:layout_height="61dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/btnFiltersFunghi"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
+            android:layout_marginTop="5dp"
             android:weightSum="3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/funghi_search_view">
 
                 <Button
                     android:id="@+id/btn_common_name"
-                    android:layout_width="140dp"
-                    android:layout_height="110dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:text="@string/common_name"
-                    app:autoSizeMaxTextSize="13sp"
-                    app:autoSizeMinTextSize="10sp"
+                    android:textAllCaps="false"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="12sp"
                     app:autoSizeStepGranularity="2sp"
                     app:autoSizeTextType="uniform" />
 
                 <Button
                     android:id="@+id/btn_family"
-                    android:layout_width="140dp"
-                    android:layout_height="110dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
+                    android:textAllCaps="false"
                     android:text="@string/family"
-                    app:autoSizeMaxTextSize="13sp"
-                    app:autoSizeMinTextSize="10sp"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="12sp"
                     app:autoSizeStepGranularity="2sp"
                     app:autoSizeTextType="uniform" />
 
                 <Button
                     android:id="@+id/btn_genus"
-                    android:layout_width="140dp"
-                    android:layout_height="110dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
+                    android:textAllCaps="false"
                     android:text="@string/genus"
-                    app:autoSizeMaxTextSize="13sp"
-                    app:autoSizeMinTextSize="10sp"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="12sp"
                     app:autoSizeStepGranularity="2sp"
                     app:autoSizeTextType="uniform" />
 
