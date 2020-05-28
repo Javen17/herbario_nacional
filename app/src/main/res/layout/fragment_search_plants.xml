@@ -81,6 +81,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnFiltersPlants"
             app:layout_constraintVertical_bias="0.0"
+            android:paddingBottom="210dp"
+            android:clipToPadding="false"
             tools:listitem="@layout/plant_card" />
 
 
