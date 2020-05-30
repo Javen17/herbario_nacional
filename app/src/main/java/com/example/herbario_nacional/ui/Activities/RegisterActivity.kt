@@ -46,7 +46,7 @@ class RegisterActivity : AppCompatActivity() {
                 dataState.result.consume()?.let { result ->
                     if (result.result == "user added") {
                         Toast.makeText(applicationContext, getString(R.string.register_success), Toast.LENGTH_LONG).show()
-                        showActivity(MainActivity::class.java)
+                        showActivity(LoginActivity::class.java)
                     }
                 }
             }
