@@ -11,7 +11,9 @@ import com.example.herbario_nacional.models.funghi.FunghiSpecimen
 import com.example.herbario_nacional.repo.FungusRepository
 import com.example.herbario_nacional.repo.PlantRepository
 import com.example.herbario_nacional.ui.Event
+import com.example.herbario_nacional.util.StatusCode
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import java.io.PrintWriter
 import java.io.StringWriter
 
@@ -37,11 +39,15 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
             }.onSuccess {
                 emitPlantState(result = Event(it))
             }.onFailure {
-                val sw = StringWriter()
-                it.printStackTrace(PrintWriter(sw))
-                val exceptionAsString = sw.toString()
-                println(exceptionAsString)
-                emitPlantState(error = Event(R.string.internet_connection_error))
+                when(it){
+                    is HttpException -> {
+                        when(StatusCode(it.code()).description){
+                            StatusCode.Status.BadRequest -> emitPlantState(error = Event(R.string.search_bad_request))
+                            else -> emitPlantState(error = Event(R.string.internet_connection_error))
+                        }
+                    }
+                    else -> emitPlantState(error = Event(R.string.internet_connection_error))
+                }
             }
         }
     }
@@ -54,11 +60,15 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
             }.onSuccess {
                 emitPlantState(result = Event(it))
             }.onFailure {
-                val sw = StringWriter()
-                it.printStackTrace(PrintWriter(sw))
-                val exceptionAsString = sw.toString()
-                println(exceptionAsString)
-                emitPlantState(error = Event(R.string.internet_connection_error))
+                when(it){
+                    is HttpException -> {
+                        when(StatusCode(it.code()).description){
+                            StatusCode.Status.BadRequest -> emitPlantState(error = Event(R.string.search_bad_request))
+                            else -> emitPlantState(error = Event(R.string.internet_connection_error))
+                        }
+                    }
+                    else -> emitPlantState(error = Event(R.string.internet_connection_error))
+                }
             }
         }
     }
@@ -71,11 +81,15 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
             }.onSuccess {
                 emitPlantState(result = Event(it))
             }.onFailure {
-                val sw = StringWriter()
-                it.printStackTrace(PrintWriter(sw))
-                val exceptionAsString = sw.toString()
-                println(exceptionAsString)
-                emitPlantState(error = Event(R.string.internet_connection_error))
+                when(it){
+                    is HttpException -> {
+                        when(StatusCode(it.code()).description){
+                            StatusCode.Status.BadRequest -> emitPlantState(error = Event(R.string.search_bad_request))
+                            else -> emitPlantState(error = Event(R.string.internet_connection_error))
+                        }
+                    }
+                    else -> emitPlantState(error = Event(R.string.internet_connection_error))
+                }
             }
         }
     }
@@ -90,11 +104,15 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
             }.onSuccess {
                 emitFunghiState(result = Event(it))
             }.onFailure {
-                val sw = StringWriter()
-                it.printStackTrace(PrintWriter(sw))
-                val exceptionAsString = sw.toString()
-                println(exceptionAsString)
-                emitFunghiState(error = Event(R.string.internet_connection_error))
+                when(it){
+                    is HttpException -> {
+                        when(StatusCode(it.code()).description){
+                            StatusCode.Status.BadRequest -> emitFunghiState(error = Event(R.string.search_bad_request))
+                            else -> emitFunghiState(error = Event(R.string.internet_connection_error))
+                        }
+                    }
+                    else -> emitFunghiState(error = Event(R.string.internet_connection_error))
+                }
             }
         }
     }
@@ -107,11 +125,15 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
             }.onSuccess {
                 emitFunghiState(result = Event(it))
             }.onFailure {
-                val sw = StringWriter()
-                it.printStackTrace(PrintWriter(sw))
-                val exceptionAsString = sw.toString()
-                println(exceptionAsString)
-                emitFunghiState(error = Event(R.string.internet_connection_error))
+                when(it){
+                    is HttpException -> {
+                        when(StatusCode(it.code()).description){
+                            StatusCode.Status.BadRequest -> emitFunghiState(error = Event(R.string.search_bad_request))
+                            else -> emitFunghiState(error = Event(R.string.internet_connection_error))
+                        }
+                    }
+                    else -> emitFunghiState(error = Event(R.string.internet_connection_error))
+                }
             }
         }
     }
@@ -124,11 +146,15 @@ class SearchViewModel (private val plantRepository: PlantRepository, private val
             }.onSuccess {
                 emitFunghiState(result = Event(it))
             }.onFailure {
-                val sw = StringWriter()
-                it.printStackTrace(PrintWriter(sw))
-                val exceptionAsString = sw.toString()
-                println(exceptionAsString)
-                emitFunghiState(error = Event(R.string.internet_connection_error))
+                when(it){
+                    is HttpException -> {
+                        when(StatusCode(it.code()).description){
+                            StatusCode.Status.BadRequest -> emitFunghiState(error = Event(R.string.search_bad_request))
+                            else -> emitFunghiState(error = Event(R.string.internet_connection_error))
+                        }
+                    }
+                    else -> emitFunghiState(error = Event(R.string.internet_connection_error))
+                }
             }
         }
     }

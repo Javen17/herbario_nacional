@@ -64,18 +64,30 @@ class SearchPlantFragment : Fragment() {
         })
 
         btn_common_name.setOnClickListener {
-            searchViewModel.searchPlantByName(query)
-            Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+            if(query != "") {
+                searchViewModel.searchPlantByName(query)
+                Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+            } else{
+                Toast.makeText(context, getString(R.string.search_bad_request), Toast.LENGTH_SHORT).show()
+            }
         }
 
         btn_family.setOnClickListener {
-            searchViewModel.searchPlantByFamily(query)
-            Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+            if(query != "") {
+                searchViewModel.searchPlantByFamily(query)
+                Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+            } else{
+                Toast.makeText(context, getString(R.string.search_bad_request), Toast.LENGTH_SHORT).show()
+            }
         }
 
         btn_genus.setOnClickListener {
-            searchViewModel.searchPlantByGenus(query)
-            Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+            if(query != "") {
+                searchViewModel.searchPlantByGenus(query)
+                Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+            } else{
+                Toast.makeText(context, getString(R.string.search_bad_request), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

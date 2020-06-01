@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-feature android:name="android.hardware.camera" android:required="true" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="ACCESS_FINE_LOCATION"/>
@@ -72,6 +71,7 @@
         <activity android:name=".ui.Activities.NewPlantActivity" />
         <activity android:name=".ui.Activities.MainActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan"
         />
 
         <provider

@@ -38,5 +38,4 @@ interface PlantInterface {
 
     @GET("api/plant_specimen/filter/")
     suspend fun searchPlantByGenus(@Query("species__genus__name") value: String): MutableList<PlantSpecimen>
-
 }

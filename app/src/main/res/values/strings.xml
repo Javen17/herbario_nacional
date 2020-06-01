@@ -82,4 +82,7 @@
     <string name="logoutNotification">Has cerrado sesión</string>
     <string name="msg_token_fmt">Token Message</string>
 
+
+    <string name="search_bad_request">Debe introducir un valor de búsqueda</string>
+
 </resources>

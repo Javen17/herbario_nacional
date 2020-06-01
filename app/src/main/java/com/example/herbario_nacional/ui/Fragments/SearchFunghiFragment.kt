@@ -65,18 +65,30 @@ class SearchFunghiFragment : Fragment() {
         })
 
         btn_common_name.setOnClickListener {
-            searchViewModel.searchFungusByName(query)
-            Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+            if(query != "") {
+                searchViewModel.searchFungusByName(query)
+                Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+            } else{
+                Toast.makeText(context, getString(R.string.search_bad_request), Toast.LENGTH_SHORT).show()
+            }
         }
 
         btn_family.setOnClickListener {
-            searchViewModel.searchFungusByFamily(query)
-            Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+            if(query != "") {
+                searchViewModel.searchFungusByFamily(query)
+                Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+            } else{
+                Toast.makeText(context, getString(R.string.search_bad_request), Toast.LENGTH_SHORT).show()
+            }
         }
 
         btn_genus.setOnClickListener {
-            searchViewModel.searchFungusByGenus(query)
-            Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+            if(query != "") {
+                searchViewModel.searchFungusByGenus(query)
+                Toast.makeText(context, getString(R.string.searching), Toast.LENGTH_SHORT).show()
+            } else{
+                Toast.makeText(context, getString(R.string.search_bad_request), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
